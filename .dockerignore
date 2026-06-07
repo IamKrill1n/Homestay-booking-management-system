@@ -1,0 +1,11 @@
+node_modules
+dist
+build
+.git
+.env
+.env.*
+backend
+Dockerfile
+.dockerignore
+*.log
+Homestay-Booking-Management-System-1.pdf
