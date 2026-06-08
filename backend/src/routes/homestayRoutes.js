@@ -70,8 +70,4 @@ router.get("/:id/location", async (req, res, next) => {
   }
 });
 
-<<<<<<< HEAD
 export default router;
-=======
-export default router;
->>>>>>> feature/owner_admin

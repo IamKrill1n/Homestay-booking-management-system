@@ -13,6 +13,16 @@ CREATE TABLE IF NOT EXISTS homestays (
   city VARCHAR(100)
 );
 
+CREATE TABLE IF NOT EXISTS users (
+  user_id       VARCHAR(32)   PRIMARY KEY,
+  password      TEXT          NOT NULL, 
+  first_name    VARCHAR(255)  NOT NULL, 
+  last_name     VARCHAR(255)  NOT NULL, 
+  email         VARCHAR(255)  UNIQUE NOT NULL, 
+  phone_number  VARCHAR(20)   NOT NULL, 
+  role          VARCHAR(10)   NOT NULL CHECK (role IN ('common', 'owner', 'admin')) DEFAULT 'common'
+)
+
 -- Idempotent upgrades for existing databases (re-runnable via npm run db:init).
 ALTER TABLE homestays ADD COLUMN IF NOT EXISTS status VARCHAR(20) NOT NULL DEFAULT 'pending';
 ALTER TABLE homestays ADD COLUMN IF NOT EXISTS rejection_reason TEXT;

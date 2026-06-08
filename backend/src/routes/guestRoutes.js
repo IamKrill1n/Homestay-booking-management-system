@@ -11,8 +11,4 @@ router.post("/register", (req, res) => {
   res.status(status).json(result);
 });
 
-<<<<<<< HEAD
 export default router;
-=======
-export default router;
->>>>>>> feature/owner_admin
