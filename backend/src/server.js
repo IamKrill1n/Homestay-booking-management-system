@@ -3,6 +3,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import homestayRoutes from "./routes/homestayRoutes.js";
 import guestRoutes from "./routes/guestRoutes.js";
+import ownerRoutes from "./routes/ownerRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
 
 dotenv.config();
 
@@ -13,11 +15,13 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/api/health", (_req, res) => {
-  res.json({ status: "ok", module: "M_User Part 1" });
+  res.json({ status: "ok", modules: ["M_User", "M_Owner", "M_Admin"] });
 });
 
 app.use("/api/homestays", homestayRoutes);
 app.use("/api/guest", guestRoutes);
+app.use("/api/owner", ownerRoutes);
+app.use("/api/admin", adminRoutes);
 
 app.use((err, _req, res, _next) => {
   console.error(err);
