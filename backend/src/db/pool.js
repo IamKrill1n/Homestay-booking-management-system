@@ -11,4 +11,8 @@ const pool = new Pool({
     "postgresql://postgres:postgres@localhost:5432/homestay",
 });
 
+<<<<<<< HEAD
 export default pool;
+=======
+export default pool;
+>>>>>>> feature/owner_admin
