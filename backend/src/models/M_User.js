@@ -1,4 +1,8 @@
 import * as homestayRepo from "../repositories/homestayRepository.js";
+import * as userRepo from "../repositories/userRepository.js";
+import * as bookingRepo from "../repositories/bookingRepository.js";
+import * as feedbackRepo from "../repositories/feedbackRepository.js";
+
 
 const REGISTER_REQUIRED_FIELDS = [
   "email",
@@ -14,8 +18,8 @@ const ALLOWED_ROLES = [ "common", "owner", "admin" ]
  * Guest: xem/lọc/tìm homestay, xem bản đồ, kiểm tra dữ liệu đăng ký.
  */
 export class M_User {
-  constructor({ userId = null, password, firstName, lastName, email, phoneNumber, role = "common" }) {
-    this.userId = userId;
+  constructor({ userID = null, password, firstName, lastName, email, phoneNumber, role = "common" } = {}) {
+    this.userID = userID;
     this.password = password;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -71,40 +75,47 @@ export class M_User {
     return homestayRepo.searchHomestays(String(property).trim());
   }
 
-  //  Phần 2: Tài khoản, đặt phòng, đánh giá
-  // Tài khoản
+  //  Part 2: Account, booking, review
+  // Account
   async logIn( {email, password} ) {
+    const user = await userRepo.findUserByEmail(email);
     
+    if (!user || user.password !== password) 
+      return null;
+
+    return user;
   }
 
   async logOut() {
-
+    return new M_User();
   }
 
   async viewProfile() {
-
+    //TODO
+    return this;
   }
 
-  async editProfile(info) {
-
+  editProfile(info) {
+    if (!info) return this;
+    for (const field in info)
+      this[field] = info[field] ? info[field] : this[field];
   }
 
-  // Đặt phòng
-  async bookHomestay(homestay) {
-
+  async bookHomestay({ homestay, startDate, endDate, options = {} }) {
+    // TODO
   }
 
   async getBookHistory() {
-
+    return bookingRepo.findBookingByGuestId(this.userID);
   }
 
-  // Đánh giá
-  async addFeedback(feedback) {
-
+  // Review
+  async addFeedback({ homestayID, feedbackMessage }) {
+    feedbackRepo.addFeedback(this.userID, homestayID, feedbackMessage);
   }
 
-  async removeFeedback(feedback) {
-
+  async removeFeedback(feedbackID) {
+    feedbackRepo.removeFeedback(feedbackID);
   }
-
+  
 }

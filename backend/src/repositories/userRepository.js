@@ -1,7 +1,10 @@
 import pool from "../db/pool.js"
+import { M_User } from "../models/M_User.js"
 
-function mapRow (row) {
-  return {
+function mapRowToUser (row) {
+  if (!row) return null;
+
+  return new M_User({
     userID      : row.user_id, 
     password    : row.password, 
     firstName   : row.first_name, 
@@ -9,21 +12,38 @@ function mapRow (row) {
     email       : row.email,
     phoneNumber : row.phone_number, 
     role        : row.role
-  };
+  });
 }
 
 export async function findUserByEmail(email) {
-  const { rows } = await pool.query(
-    `SELECT * FROM users WHERE email = $1`,
-    [email]
-  );
-  return rows.map(mapRow);
+  try {
+    const { rows } = await pool.query(
+      `SELECT * FROM users WHERE email = $1`,
+      [email]
+    );
+
+    if (rows.length === 0) return null;
+
+    return mapRowToUser(rows[0]);
+
+  } catch (error) {
+    console.error("Database error in findUserByEmail:", error);
+    throw error;
+  }
 }
 
-export async function findUserByID(id) {
-  const { rows } = await pool.query(
-    `SELECT * FROM users WHERE user_id = $1`,
-    [userID]
-  );
-  return rows.map(mapRow);
+export async function findUserByID(userID) {
+  try {
+    const { rows } = await pool.query(
+      `SELECT * FROM users WHERE user_id = $1`,
+      [userID]
+    );
+  
+    if (rows.length == 0) return null;
+  
+      return mapRowToUser(rows[0]);
+  } catch (error) {
+    console.error("Database error in findUserByID:", error);
+    throw error;
+  }
 }
