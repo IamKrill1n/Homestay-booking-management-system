@@ -1,4 +1,6 @@
-import { mockBookings, mockHomestays } from '../data/mockData';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { mockHomestays } from '../data/mockData';
 import { useAuth } from '../context/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
@@ -8,8 +10,58 @@ import { format } from 'date-fns';
 
 export function V_MyBookingsView() {
   const { user } = useAuth();
+  const navigate = useNavigate();
   
-  const myBookings = mockBookings.filter(b => b.userId === user?.userID);
+  // 1. Replace static mockBookings with React State
+  const [myBookings, setMyBookings] = useState<any[]>([]);
+
+  // 2. Fetch real data and map it so it doesn't break your UI
+  useEffect(() => {
+    if (user?.userID) {
+      fetch(`${import.meta.env.VITE_BACKEND_URL}/api/bookings/user/${user.userID}`)
+        .then(response => response.json())
+        .then(data => {
+          // Map PostgreSQL snake_case to the frontend's camelCase
+          const formattedData = data.map((b: any) => ({
+            id: b.booking_id,
+            homestayId: b.homestay_id,
+            userId: b.guest_id,
+            checkIn: b.check_in_date,
+            checkOut: b.check_out_date,
+            totalPrice: b.total_price || 180, // Fallback since DB schema doesn't have total_price yet
+            status: b.status.toLowerCase(), // Ensures 'Pending', 'Approved', 'booked' all match
+            createdAt: b.created_at || new Date().toISOString() // Fallback for date formatting
+          }));
+          setMyBookings(formattedData);
+        })
+        .catch(error => console.error("Error fetching bookings:", error));
+    }
+  }, [user]);
+
+  const handleCancel = async (bookingId: number) => {
+    // Add a safety check so they don't accidentally click it
+    if (!window.confirm('Are you sure you want to cancel this booking?')) return;
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/bookings/${bookingId}/cancel`, {
+        method: 'PUT',
+      });
+
+      if (response.ok) {
+        // Instantly update the UI to show the red 'Cancelled' badge!
+        setMyBookings(prevBookings => 
+          prevBookings.map(b => 
+            b.id === bookingId ? { ...b, status: 'cancelled' } : b
+          )
+        );
+      } else {
+        alert('Failed to cancel the booking. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error cancelling:', error);
+      alert('Could not connect to the server.');
+    }
+  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -17,10 +69,11 @@ export function V_MyBookingsView() {
         return 'bg-[#D97706] text-white';
       case 'approved':
         return 'bg-[#16A34A] text-white';
+      case 'confirmed': // 3. Added the new Paid/Booked status color!
+        return 'bg-[#2563EB] text-white'; // A nice blue
       case 'rejected':
-        return 'bg-[#DC2626] text-white';
       case 'cancelled':
-        return 'bg-[#64748B] text-white';
+        return 'bg-[#DC2626] text-white';
       default:
         return 'bg-[#64748B] text-white';
     }
@@ -39,7 +92,7 @@ export function V_MyBookingsView() {
             {myBookings.length === 0 ? (
               <div className="text-center py-12">
                 <p className="text-muted-foreground mb-4">You haven't made any bookings yet.</p>
-                <Button onClick={() => window.location.href = '/'}>
+                <Button onClick={() => navigate('/')}>
                   Browse Homestays
                 </Button>
               </div>
@@ -62,27 +115,46 @@ export function V_MyBookingsView() {
                     return (
                       <TableRow key={booking.id}>
                         <TableCell className="font-medium">
-                          {homestay?.title || 'Unknown'}
+                          {homestay?.title || `Homestay #${booking.homestayId}`}
                         </TableCell>
                         <TableCell>{format(new Date(booking.checkIn), 'MMM dd, yyyy HH:mm')}</TableCell>
                         <TableCell>{format(new Date(booking.checkOut), 'MMM dd, yyyy HH:mm')}</TableCell>
                         <TableCell className="font-semibold text-primary">${booking.totalPrice}</TableCell>
                         <TableCell>
                           <Badge className={getStatusColor(booking.status)}>
-                            {booking.status}
+                            {/* Capitalize the first letter for the UI */}
+                            {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
                           </Badge>
                         </TableCell>
                         <TableCell>{format(new Date(booking.createdAt), 'MMM dd, yyyy')}</TableCell>
                         <TableCell className="text-right">
                           {booking.status === 'pending' && (
-                            <Button variant="outline" size="sm" className="text-destructive hover:text-destructive">
+                            <Button variant="outline" size="sm" className="text-destructive hover:text-destructive" onClick={() => handleCancel(booking.id)}>
                               Cancel
                             </Button>
                           )}
+                          
+                          {/* The updated View Details button */}
                           {booking.status === 'approved' && (
-                            <Button variant="ghost" size="sm">
+                            <Button 
+                              variant="ghost" 
+                              size="sm"
+                              onClick={() => navigate('/checkout', { 
+                                state: { 
+                                  bookingID: booking.id, 
+                                  amount: booking.totalPrice 
+                                } 
+                              })}
+                            >
                               View Details
                             </Button>
+                          )}
+
+                          {/* Optional: Show something when it is booked */}
+                          {booking.status === 'confirmed' && (
+                            <span className="text-sm text-green-600 font-medium px-3 py-1 border rounded-md">
+                              Paid
+                            </span>
                           )}
                         </TableCell>
                       </TableRow>

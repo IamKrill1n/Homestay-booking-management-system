@@ -8,6 +8,7 @@ import { Label } from '../components/ui/label';
 import { Input } from '../components/ui/input';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../components/ui/dialog';
 import { format } from 'date-fns';
+import React from 'react';
 
 export function V_BookingView() {
   const { id } = useParams<{ id: string }>();
@@ -42,8 +43,40 @@ export function V_BookingView() {
   const hours = calculateHours();
   const totalPrice = hours * homestay.pricePerHour;
 
-  const handleBooking = () => {
-    setShowSuccess(true);
+  const handleBooking = async () => {
+    // 1. Safety check
+    if (!user) {
+      alert("You must be signed in to book a homestay.");
+      return;
+    }
+
+    try {
+      // 2. Send the booking to the backend
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/bookings`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          homestayID: parseInt(id || '0'), 
+          guestID: user.id || 1, 
+          checkInDate: checkIn,
+          checkOutDate: checkOut
+        }),
+      });
+
+      // 3. Just trigger the success modal - NO redirect to checkout!
+      if (response.ok) {
+        setShowSuccess(true);
+      } else {
+        const errorData = await response.json();
+        console.error('Failed to book:', errorData);
+        alert('Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      console.error('Network Error:', error);
+      alert('Could not connect to the server. Make sure Docker is running!');
+    }
   };
 
   const handleSuccessClose = () => {
