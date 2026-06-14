@@ -50,11 +50,14 @@ export async function findUserByID(userID) {
 
 export async function createUser(user) {
   try {
-    await pool.query(
+    const result = await pool.query(
       `INSERT INTO users(password, first_name, last_name, email, phone_number, role)
-      VALUES ($1, $2, $3, $4, $5, $6);`,
+      VALUES ($1, $2, $3, $4, $5, $6)
+      RETURNING *;`,
       [user.password, user.firstName, user.lastName, user.email, user.phoneNumber, user.role]
     );
+
+    return result.rows[0];
   } catch (err) {
     console.error("Database error in addUser:", err);
     throw err;

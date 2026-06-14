@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom';
-import { User, LogOut } from 'lucide-react';
+import { LogOut } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { Avatar, AvatarFallback } from './ui/avatar';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from './ui/dropdown-menu';
 import { V_SearchBar } from './V_SearchBar';
 
 export function Header() {
-  const { user, logout, isAuthenticated, hasRole } = useAuth();
+  // Destructure only 'user' and 'logout' from the cleaned context
+  const { user, logout } = useAuth();
 
   return (
     <header className="h-[72px] bg-card border-b border-border px-[80px] flex items-center justify-between sticky top-0 z-50">
@@ -23,37 +24,41 @@ export function Header() {
           Home
         </Link>
         
-        {isAuthenticated && hasRole('user') && (
+        {/* Check if user exists and their database role token matches 'common' */}
+        {user && user.role === 'common' && (
           <Link to="/my-bookings" className="text-sm hover:text-primary transition-colors">
             My Bookings
           </Link>
         )}
         
-        {hasRole('owner') && (
+        {/* Check if user exists and their database role token matches 'owner' */}
+        {user && user.role === 'owner' && (
           <Link to="/my-homestays" className="text-sm hover:text-primary transition-colors">
             My Homestays
           </Link>
         )}
         
-        {hasRole('admin') && (
+        {/* Check if user exists and their database role token matches 'admin' */}
+        {user && user.role === 'admin' && (
           <Link to="/admin" className="text-sm hover:text-primary transition-colors">
             Admin Panel
           </Link>
         )}
 
-        {isAuthenticated ? (
+        {/* Use the existence of 'user' directly to choose between profile dropdown or login triggers */}
+        {user ? (
           <DropdownMenu>
             <DropdownMenuTrigger className="outline-none">
               <Avatar className="h-8 w-8 cursor-pointer">
                 <AvatarFallback className="bg-primary text-primary-foreground">
-                  {user?.firstName?.[0]}{user?.lastName?.[0]}
+                  {user.firstName?.[0]}{user.lastName?.[0]}
                 </AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-48">
               <div className="px-2 py-1.5 text-sm">
-                <p className="font-medium">{user?.firstName} {user?.lastName}</p>
-                <p className="text-xs text-muted-foreground">{user?.email}</p>
+                <p className="font-medium">{user.firstName} {user.lastName}</p>
+                <p className="text-xs text-muted-foreground">{user.email}</p>
               </div>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={logout} className="cursor-pointer">

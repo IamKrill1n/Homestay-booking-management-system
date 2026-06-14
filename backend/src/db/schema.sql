@@ -1,17 +1,11 @@
-CREATE TABLE IF NOT EXISTS homestays (
-  homestay_id SERIAL PRIMARY KEY,
-  owner_id INT NOT NULL REFERENCES owners(owner_id) ON DELETE CASCADE,,
-  title VARCHAR(255) NOT NULL,
-  description TEXT,
-  price_per_hour NUMERIC(12, 2) NOT NULL,
-  is_verified BOOLEAN DEFAULT FALSE,
-  status VARCHAR(20) NOT NULL DEFAULT 'pending',
-  rejection_reason TEXT,
-  latitude DOUBLE PRECISION,
-  longitude DOUBLE PRECISION,
-  address VARCHAR(255),
-  city VARCHAR(100)
-);
+DROP TABLE IF EXISTS amenities CASCADE;
+DROP TABLE IF EXISTS locations CASCADE;
+DROP TABLE IF EXISTS feedbacks CASCADE;
+DROP TABLE IF EXISTS bookings CASCADE;
+DROP TABLE IF EXISTS homestays CASCADE;
+DROP TABLE IF EXISTS owners CASCADE;
+DROP TABLE IF EXISTS admins CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
 
 CREATE TABLE IF NOT EXISTS users (
   user_id       SERIAL        PRIMARY KEY,
@@ -24,19 +18,35 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 CREATE TABLE IF NOT EXISTS admins (
-  admin_id   SERIAL      PRIMARY KEY REFERENCES users(user_id) ON DELETE CASCADE,
+  admin_id   INT         PRIMARY KEY REFERENCES users(user_id) ON DELETE CASCADE,
   admin_code VARCHAR(50) UNIQUE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS owners (
-  owner_id            SERIAL      PRIMARY KEY REFERENCES users(user_id) ON DELETE CASCADE,
+  owner_id            INT         PRIMARY KEY REFERENCES users(user_id) ON DELETE CASCADE,
   bank_account_number VARCHAR(50) NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS homestays (
+  homestay_id SERIAL PRIMARY KEY,
+  owner_id INT NOT NULL REFERENCES owners(owner_id) ON DELETE CASCADE,
+  title VARCHAR(255) NOT NULL,
+  description TEXT,
+  price_per_hour NUMERIC(12, 2) NOT NULL,
+  is_verified BOOLEAN DEFAULT FALSE,
+  status VARCHAR(20) NOT NULL DEFAULT 'pending',
+  rejection_reason TEXT,
+  latitude DOUBLE PRECISION,
+  longitude DOUBLE PRECISION,
+  address VARCHAR(255),
+  city VARCHAR(100)
+);
+
 
 CREATE TABLE IF NOT EXISTS bookings (
   booking_id    SERIAL      PRIMARY KEY,
   homestay_id   INT         NOT NULL REFERENCES homestays(homestay_id) ON DELETE CASCADE,
-  guest_id      VARCHAR(36) NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+  guest_id      INT         NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
   check_in_date TIMESTAMPTZ NOT NULL,
   check_out_date TIMESTAMPTZ NOT NULL CHECK (check_out_date > check_in_date),
   status        VARCHAR(20) NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'confirmed', 'cancelled', 'completed'))
@@ -45,7 +55,7 @@ CREATE TABLE IF NOT EXISTS bookings (
 CREATE TABLE IF NOT EXISTS feedbacks (
   feedback_id      SERIAL      PRIMARY KEY,
   homestay_id      INT         NOT NULL REFERENCES homestays(homestay_id) ON DELETE CASCADE,
-  guest_id         VARCHAR(36) NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+  guest_id         INT         NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
   feedback_date    TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
   feedback_message TEXT        NOT NULL
 );
@@ -73,6 +83,6 @@ CREATE TABLE IF NOT EXISTS amenities (
   is_pet_friendly      BOOLEAN NOT NULL DEFAULT FALSE
 );
 
--- Idempotent upgrades for existing databases (re-runnable via npm run db:init).
-ALTER TABLE homestays ADD COLUMN IF NOT EXISTS status VARCHAR(20) NOT NULL DEFAULT 'pending';
-ALTER TABLE homestays ADD COLUMN IF NOT EXISTS rejection_reason TEXT;
+-- -- Idempotent upgrades for existing databases (re-runnable via npm run db:init).
+-- ALTER TABLE homestays ADD COLUMN IF NOT EXISTS status VARCHAR(20) NOT NULL DEFAULT 'pending';
+-- ALTER TABLE homestays ADD COLUMN IF NOT EXISTS rejection_reason TEXT;

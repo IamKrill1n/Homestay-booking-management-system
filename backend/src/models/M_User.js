@@ -1,8 +1,5 @@
 import * as homestayRepo from "../repositories/homestayRepository.js";
 import * as userRepo from "../repositories/userRepository.js";
-import * as bookingRepo from "../repositories/bookingRepository.js";
-import * as feedbackRepo from "../repositories/feedbackRepository.js";
-
 
 const REGISTER_REQUIRED_FIELDS = [
   "email",
@@ -93,28 +90,10 @@ export class M_User {
     
     for (const field in info) {
       if (field !== "userID" && field !== "role" && this.hasOwnProperty(field)) {
-        if (info[field] !== undefined && String(info[field]).trim() !== "") {
+        if (info[field] !== undefined && String(info[field]).trim() !== "")
           this[field] = info[field];
-        }
       }
     }
-  }
-
-  async bookHomestay({ homestay, startDate, endDate, options = {} }) {
-    // TODO
-  }
-
-  async getBookHistory() {
-    return bookingRepo.findBookingByGuestId(this.userID);
-  }
-
-  // Review
-  async addFeedback({ homestayID, feedbackMessage }) {
-    feedbackRepo.addFeedback(this.userID, homestayID, feedbackMessage);
-  }
-
-  async removeFeedback(feedbackID) {
-    feedbackRepo.removeFeedback(feedbackID);
   }
 
   // Utils

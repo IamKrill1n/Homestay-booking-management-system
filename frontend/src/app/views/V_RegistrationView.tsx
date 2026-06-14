@@ -12,9 +12,10 @@ export function V_RegistrationView() {
     firstName: '',
     lastName: '',
     email: '',
-    phone: '',
+    phoneNumber: '',
     password: '',
     confirmPassword: '',
+    role: 'common',
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const { register } = useAuth();
@@ -27,25 +28,31 @@ export function V_RegistrationView() {
     if (!formData.lastName) newErrors.lastName = 'Last name is required';
     if (!formData.email) newErrors.email = 'Email is required';
     else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Email is invalid';
-    if (!formData.phone) newErrors.phone = 'Phone is required';
+    if (!formData.phoneNumber) newErrors.phoneNumber = 'Phone is required';
     if (!formData.password) newErrors.password = 'Password is required';
     else if (formData.password.length < 6) newErrors.password = 'Password must be at least 6 characters';
     if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = 'Passwords do not match';
+    
+    if (formData.role !== 'common' && formData.role !== 'owner') {
+      newErrors.role = 'Invalid account role selected';
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!validate()) return;
 
-    const success = register({
+    const success = await register({
       firstName: formData.firstName,
       lastName: formData.lastName,
       email: formData.email,
-      phone: formData.phone,
+      phoneNumber: formData.phoneNumber,
+      password: formData.password,
+      role: formData.role as 'common' | 'owner',
     });
 
     if (success) {
@@ -70,6 +77,7 @@ export function V_RegistrationView() {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
+              {/* Name */}
               <div className="space-y-2">
                 <Label htmlFor="firstName">First Name</Label>
                 <Input
@@ -97,6 +105,7 @@ export function V_RegistrationView() {
               </div>
             </div>
 
+            {/* Email */}
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -111,20 +120,57 @@ export function V_RegistrationView() {
               )}
             </div>
 
+            {/* Phone number */}
             <div className="space-y-2">
-              <Label htmlFor="phone">Phone</Label>
+              <Label htmlFor="phoneNumber">Phone</Label>
               <Input
-                id="phone"
+                id="phoneNumber"
                 type="tel"
-                value={formData.phone}
-                onChange={(e) => handleChange('phone', e.target.value)}
+                value={formData.phoneNumber}
+                onChange={(e) => handleChange('phoneNumber', e.target.value)}
                 className="bg-input-background"
               />
-              {errors.phone && (
-                <p className="text-xs text-error">{errors.phone}</p>
+              {errors.phoneNumber && (
+                <p className="text-xs text-error">{errors.phoneNumber}</p>
               )}
             </div>
 
+            {/* Role */}
+            <div className="space-y-3">
+              <label className="text-sm font-medium text-gray-700">
+                I want to register as a:
+              </label>
+              
+              <div className="flex flex-col space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0">
+                {/* Bullet Option 1: Common */}
+                <label className="flex items-center space-x-3 cursor-pointer rounded-lg border border-gray-200 p-3 hover:bg-gray-50 transition w-full">
+                  <input
+                    type="radio"
+                    name="role"
+                    value="common"
+                    checked={formData.role === 'common'}
+                    onChange={(e) => handleChange('role', e.target.value)}
+                    className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                  />
+                  <span className="text-sm font-medium text-gray-900">Guest / Customer</span>
+                </label>
+
+                {/* Bullet Option 2: Owner */}
+                <label className="flex items-center space-x-3 cursor-pointer rounded-lg border border-gray-200 p-3 hover:bg-gray-50 transition w-full">
+                  <input
+                    type="radio"
+                    name="role"
+                    value="owner"
+                    checked={formData.role === 'owner'}
+                    onChange={(e) => handleChange('role', e.target.value)}
+                    className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                  />
+                  <span className="text-sm font-medium text-gray-900">Homestay Owner</span>
+                </label>
+              </div>
+            </div>
+
+            {/* Password */}
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
               <Input
@@ -139,6 +185,7 @@ export function V_RegistrationView() {
               )}
             </div>
 
+            {/* Confirm password */}
             <div className="space-y-2">
               <Label htmlFor="confirmPassword">Confirm Password</Label>
               <Input
@@ -153,6 +200,7 @@ export function V_RegistrationView() {
               )}
             </div>
 
+            {/* Submit */}
             <Button type="submit" className="w-full">
               Register
             </Button>

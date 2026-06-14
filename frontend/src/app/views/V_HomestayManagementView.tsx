@@ -11,7 +11,7 @@ export function V_HomestayManagementView() {
   const { user } = useAuth();
   
   // Filter homestays by owner
-  const myHomestays = mockHomestays.filter(h => h.ownerId === user?.id);
+  const myHomestays = mockHomestays.filter(h => h.ownerId === user?.userID);
 
   const getStatusColor = (status: string) => {
     switch (status) {

@@ -9,7 +9,7 @@ import { format } from 'date-fns';
 export function V_MyBookingsView() {
   const { user } = useAuth();
   
-  const myBookings = mockBookings.filter(b => b.userId === user?.id);
+  const myBookings = mockBookings.filter(b => b.userId === user?.userID);
 
   const getStatusColor = (status: string) => {
     switch (status) {

@@ -15,9 +15,13 @@ function mapRowToFeedback (row) {
 
 export function addFeedback({ homestayID, guestID, feedbackMessage }) {
   const result = await pool.query(
-    `INSERT INTO feedbacks (homestay_id, guest_id, feedback_message) VALUES ($1, $2, $3)`,
+    `INSERT INTO feedbacks (homestay_id, guest_id, feedback_message) 
+    VALUES ($1, $2, $3)
+    RETURNING *;`,
     [homestayID, guestID, feedbackMessage]
   );
+
+  return result.rows[0];
 }
 
 export function removeFeedback(feedbackID) {

@@ -34,7 +34,7 @@ class C_User {
       return res.status(201).json({
         status: "success",
         message: "User registration completed successfully.",
-        user: createdUser.toSafeJSON()
+        user: newUser.toSafeJSON()
       });
 
     } catch (error) {
