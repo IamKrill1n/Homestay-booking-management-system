@@ -12,10 +12,8 @@ export function V_MyBookingsView() {
   const { user } = useAuth();
   const navigate = useNavigate();
   
-  // 1. Replace static mockBookings with React State
   const [myBookings, setMyBookings] = useState<any[]>([]);
 
-  // 2. Fetch real data and map it so it doesn't break your UI
   useEffect(() => {
     if (user?.userID) {
       fetch(`${import.meta.env.VITE_BACKEND_URL}/api/bookings/user/${user.userID}`)
@@ -39,7 +37,6 @@ export function V_MyBookingsView() {
   }, [user]);
 
   const handleCancel = async (bookingId: number) => {
-    // Add a safety check so they don't accidentally click it
     if (!window.confirm('Are you sure you want to cancel this booking?')) return;
 
     try {
@@ -48,7 +45,6 @@ export function V_MyBookingsView() {
       });
 
       if (response.ok) {
-        // Instantly update the UI to show the red 'Cancelled' badge!
         setMyBookings(prevBookings => 
           prevBookings.map(b => 
             b.id === bookingId ? { ...b, status: 'cancelled' } : b
@@ -69,8 +65,8 @@ export function V_MyBookingsView() {
         return 'bg-[#D97706] text-white';
       case 'approved':
         return 'bg-[#16A34A] text-white';
-      case 'confirmed': // 3. Added the new Paid/Booked status color!
-        return 'bg-[#2563EB] text-white'; // A nice blue
+      case 'confirmed':
+        return 'bg-[#2563EB] text-white';
       case 'rejected':
       case 'cancelled':
         return 'bg-[#DC2626] text-white';
@@ -134,7 +130,6 @@ export function V_MyBookingsView() {
                             </Button>
                           )}
                           
-                          {/* The updated View Details button */}
                           {booking.status === 'approved' && (
                             <Button 
                               variant="ghost" 
@@ -150,7 +145,6 @@ export function V_MyBookingsView() {
                             </Button>
                           )}
 
-                          {/* Optional: Show something when it is booked */}
                           {booking.status === 'confirmed' && (
                             <span className="text-sm text-green-600 font-medium px-3 py-1 border rounded-md">
                               Paid

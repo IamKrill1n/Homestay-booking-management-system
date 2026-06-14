@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { M_User } from "../models/M_User.js";
-import C_User from "../controllers/C_User.js";
+import C_User from "../controllers/C_UserController.js";
 
 const router = Router();
 const guest = new M_User();
