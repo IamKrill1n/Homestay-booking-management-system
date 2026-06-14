@@ -84,6 +84,72 @@ INSERT INTO homestays (
     'rejected',
     'Please upload clearer property details.',
     '2026-01-04T10:00:00Z'
+  ),
+  (
+    5,
+    2,
+    'Hanoi Old Quarter Loft',
+    'Bright loft tucked inside the Old Quarter with easy access to cafes, Hoan Kiem Lake, and weekend walking streets.',
+    180000,
+    TRUE,
+    'approved',
+    NULL,
+    '2026-01-05T10:00:00Z'
+  ),
+  (
+    6,
+    2,
+    'Hoi An Lantern Villa',
+    'Quiet villa near the ancient town with a garden courtyard for families and small groups.',
+    220000,
+    TRUE,
+    'approved',
+    NULL,
+    '2026-01-06T10:00:00Z'
+  ),
+  (
+    7,
+    2,
+    'Da Nang Beach Studio',
+    'Modern studio close to My Khe Beach with workspace, balcony, and quick access to seafood restaurants.',
+    170000,
+    FALSE,
+    'pending',
+    NULL,
+    '2026-01-07T10:00:00Z'
+  ),
+  (
+    8,
+    2,
+    'Sa Pa Mountain Retreat',
+    'Wooden retreat overlooking terraced rice fields, suitable for guests planning trekking trips.',
+    160000,
+    TRUE,
+    'approved',
+    NULL,
+    '2026-01-08T10:00:00Z'
+  ),
+  (
+    9,
+    2,
+    'Hue Riverside Heritage Room',
+    'Heritage-style room near the Perfume River and imperial sites, pending document verification.',
+    130000,
+    FALSE,
+    'pending',
+    NULL,
+    '2026-01-09T10:00:00Z'
+  ),
+  (
+    10,
+    2,
+    'Phu Quoc Sunset Bungalow',
+    'Beach bungalow sample rejected for admin review workflows and owner resubmission testing.',
+    240000,
+    FALSE,
+    'rejected',
+    'Please provide updated safety certification and clearer exterior photos.',
+    '2026-01-10T10:00:00Z'
   );
 
 INSERT INTO locations (homestay_id, latitude, longitude, address, city)
@@ -91,7 +157,13 @@ VALUES
   (1, 11.940400, 108.458300, '123 Tran Phu', 'Da Lat'),
   (2, 12.238800, 109.196700, '45 Tran Phu', 'Nha Trang'),
   (3, 11.946500, 108.441900, '8 Nguyen Chi Thanh', 'Da Lat'),
-  (4, 10.762622, 106.660172, '10 Le Loi', 'Ho Chi Minh City');
+  (4, 10.762622, 106.660172, '10 Le Loi', 'Ho Chi Minh City'),
+  (5, 21.030653, 105.847130, '18 Hang Gai', 'Hanoi'),
+  (6, 15.879444, 108.335000, '27 Nguyen Thai Hoc', 'Hoi An'),
+  (7, 16.054407, 108.244789, '92 Vo Nguyen Giap', 'Da Nang'),
+  (8, 22.336360, 103.843786, '15 Fansipan', 'Sa Pa'),
+  (9, 16.463713, 107.590866, '6 Le Loi', 'Hue'),
+  (10, 10.289879, 103.984020, '44 Tran Hung Dao', 'Phu Quoc');
 
 INSERT INTO amenities (
   homestay_id,
@@ -109,7 +181,13 @@ INSERT INTO amenities (
   (1, 3, 2, 4, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE),
   (2, 4, 3, 6, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE),
   (3, 1, 1, 2, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE),
-  (4, 2, 2, 4, TRUE, TRUE, TRUE, FALSE, TRUE, FALSE, TRUE);
+  (4, 2, 2, 4, TRUE, TRUE, TRUE, FALSE, TRUE, FALSE, TRUE),
+  (5, 2, 1, 3, TRUE, TRUE, FALSE, FALSE, TRUE, FALSE, FALSE),
+  (6, 5, 3, 7, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE),
+  (7, 1, 1, 2, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE),
+  (8, 3, 2, 5, TRUE, FALSE, TRUE, FALSE, FALSE, TRUE, TRUE),
+  (9, 2, 1, 4, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE, FALSE),
+  (10, 4, 2, 6, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE);
 
 INSERT INTO bookings (
   booking_id, homestay_id, guest_id, check_in_date, check_out_date, total_price, status, created_at
