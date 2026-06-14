@@ -4,6 +4,16 @@ import { M_Admin } from "../models/M_Admin.js";
 const router = Router();
 const admin = new M_Admin();
 
+/** GET /api/admin/homestays — viewAllHomestays */
+router.get("/homestays", async (_req, res, next) => {
+  try {
+    const list = await admin.viewAllHomestays();
+    res.json(list);
+  } catch (err) {
+    next(err);
+  }
+});
+
 /** GET /api/admin/homestays/pending — viewPendingHomestays (UC 4.1) */
 router.get("/homestays/pending", async (_req, res, next) => {
   try {

@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
-import { User } from '../data/user';
+import { RegistrationPayload, User } from '../data/user';
 import { userService } from '../../services/userService';
 
 interface AuthContextType {
@@ -7,7 +7,7 @@ interface AuthContextType {
   isLoading: boolean;
   error: string | null;
   login: (email: string, password: string) => Promise<boolean>;
-  register: (userData: Omit<User, 'userID'> & { password?: string }) => Promise<boolean>;
+  register: (userData: RegistrationPayload) => Promise<boolean>;
   isAuthenticated: boolean;
   logout: () => void;
 }
@@ -42,7 +42,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   const register = async (
-    userData: Omit<User, 'userID'> & { password?: string }
+    userData: RegistrationPayload
   ): Promise<boolean> => {
     setIsLoading(true);
     setError(null);

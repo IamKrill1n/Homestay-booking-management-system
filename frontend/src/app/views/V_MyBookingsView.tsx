@@ -1,24 +1,31 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { mockHomestays } from '../data/mockData';
 import { useAuth } from '../context/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
+import { Label } from '../components/ui/label';
+import { Textarea } from '../components/ui/textarea';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../components/ui/dialog';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../components/ui/table';
 import { format } from 'date-fns';
+import { toast } from 'sonner';
+import { BookingRow, bookingService } from '../../services/bookingService';
+import { feedbackService } from '../../services/feedbackService';
 
-const API_BASE_URL = ((import.meta as any).env.VITE_API_BASE_URL as string) || 'http://localhost:3001/api';
+function formatPrice(value: number) {
+  return new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+    maximumFractionDigits: 0,
+  }).format(value);
+}
 
-interface BookingRow {
-  id: string;
-  homestayId: string;
-  userId: string;
-  checkIn: string;
-  checkOut: string;
-  totalPrice: number;
-  status: string;
-  createdAt: string;
+function canLeaveFeedback(booking: BookingRow) {
+  const status = booking.status.toLowerCase();
+  const checkoutHasPassed = new Date(booking.checkOut) <= new Date();
+  return !booking.hasFeedback && status !== 'cancelled' && (status === 'completed' || checkoutHasPassed);
 }
 
 export function V_MyBookingsView() {
@@ -26,32 +33,18 @@ export function V_MyBookingsView() {
   const navigate = useNavigate();
   const [myBookings, setMyBookings] = useState<BookingRow[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedBooking, setSelectedBooking] = useState<BookingRow | null>(null);
+  const [rating, setRating] = useState('5');
+  const [feedbackMessage, setFeedbackMessage] = useState('');
+  const [isSubmittingFeedback, setIsSubmittingFeedback] = useState(false);
 
   useEffect(() => {
     if (!user?.userID) return;
 
     setIsLoading(true);
-    fetch(`${API_BASE_URL}/bookings/user/${user.userID}`)
-      .then(async (response) => {
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || 'Failed to fetch bookings.');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        const formattedBookings = data.map((booking: any) => ({
-          id: String(booking.bookingID),
-          homestayId: String(booking.homestayID),
-          userId: String(booking.guestID),
-          checkIn: booking.checkInDate,
-          checkOut: booking.checkOutDate,
-          totalPrice: Number(booking.totalPrice ?? 0),
-          status: String(booking.status).toLowerCase(),
-          createdAt: booking.createdAt || new Date().toISOString(),
-        }));
-        setMyBookings(formattedBookings);
-      })
+    bookingService
+      .listForUser(user.userID)
+      .then(setMyBookings)
       .catch((error) => {
         console.error('Error fetching bookings:', error);
         setMyBookings([]);
@@ -63,22 +56,47 @@ export function V_MyBookingsView() {
     if (!window.confirm('Are you sure you want to cancel this booking?')) return;
 
     try {
-      const response = await fetch(`${API_BASE_URL}/bookings/${bookingId}/cancel`, {
-        method: 'PUT',
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to cancel booking.');
-      }
-
+      const result = await bookingService.cancel(bookingId);
       setMyBookings((bookings) =>
         bookings.map((booking) =>
-          booking.id === bookingId ? { ...booking, status: 'cancelled' } : booking
+          booking.id === bookingId ? { ...booking, status: result.booking.status } : booking
         )
       );
+      toast.success(result.message || 'Booking cancelled.');
     } catch (error: any) {
-      alert(error.message || 'Could not cancel booking.');
+      toast.error(error.message || 'Could not cancel booking.');
+    }
+  };
+
+  const openFeedbackDialog = (booking: BookingRow) => {
+    setSelectedBooking(booking);
+    setRating('5');
+    setFeedbackMessage('');
+  };
+
+  const handleFeedbackSubmit = async () => {
+    if (!selectedBooking || !user?.userID) return;
+
+    setIsSubmittingFeedback(true);
+    try {
+      const result = await feedbackService.submit({
+        bookingID: selectedBooking.id,
+        guestID: user.userID,
+        rating: Number(rating),
+        feedbackMessage,
+      });
+      setMyBookings((bookings) =>
+        bookings.map((booking) =>
+          booking.id === selectedBooking.id ? { ...booking, hasFeedback: true } : booking
+        )
+      );
+      toast.success(result.message || 'Feedback submitted.');
+      setSelectedBooking(null);
+      setFeedbackMessage('');
+    } catch (error: any) {
+      toast.error(error.message || 'Could not submit feedback.');
+    } finally {
+      setIsSubmittingFeedback(false);
     }
   };
 
@@ -132,23 +150,22 @@ export function V_MyBookingsView() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {myBookings.map(booking => {
-                    const homestay = mockHomestays.find(h => h.id === booking.homestayId);
-                    return (
-                      <TableRow key={booking.id}>
-                        <TableCell className="font-medium">
-                          {homestay?.title || 'Unknown'}
-                        </TableCell>
-                        <TableCell>{format(new Date(booking.checkIn), 'MMM dd, yyyy HH:mm')}</TableCell>
-                        <TableCell>{format(new Date(booking.checkOut), 'MMM dd, yyyy HH:mm')}</TableCell>
-                        <TableCell className="font-semibold text-primary">${booking.totalPrice}</TableCell>
-                        <TableCell>
-                          <Badge className={getStatusColor(booking.status)}>
-                            {booking.status}
-                          </Badge>
-                        </TableCell>
-                        <TableCell>{format(new Date(booking.createdAt), 'MMM dd, yyyy')}</TableCell>
-                        <TableCell className="text-right">
+                  {myBookings.map((booking) => (
+                    <TableRow key={booking.id}>
+                      <TableCell className="font-medium">
+                        {booking.homestay?.title || `Homestay ${booking.homestayId}`}
+                      </TableCell>
+                      <TableCell>{format(new Date(booking.checkIn), 'MMM dd, yyyy HH:mm')}</TableCell>
+                      <TableCell>{format(new Date(booking.checkOut), 'MMM dd, yyyy HH:mm')}</TableCell>
+                      <TableCell className="font-semibold text-primary">{formatPrice(booking.totalPrice)}</TableCell>
+                      <TableCell>
+                        <Badge className={getStatusColor(booking.status)}>
+                          {booking.status}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>{format(new Date(booking.createdAt), 'MMM dd, yyyy')}</TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex justify-end gap-2">
                           {booking.status === 'pending' && (
                             <Button
                               variant="outline"
@@ -159,21 +176,78 @@ export function V_MyBookingsView() {
                               Cancel
                             </Button>
                           )}
-                          {(booking.status === 'approved' || booking.status === 'confirmed') && (
-                            <Button variant="ghost" size="sm">
-                              View Details
+                          {canLeaveFeedback(booking) && (
+                            <Button variant="outline" size="sm" onClick={() => openFeedbackDialog(booking)}>
+                              Leave Feedback
                             </Button>
                           )}
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
+                          {booking.hasFeedback && (
+                            <Badge variant="secondary">Feedback sent</Badge>
+                          )}
+                          <Button variant="ghost" size="sm" onClick={() => navigate(`/homestay/${booking.homestayId}`)}>
+                            View Details
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
                 </TableBody>
               </Table>
             )}
           </CardContent>
         </Card>
       </div>
+
+      <Dialog open={!!selectedBooking} onOpenChange={(open) => !open && setSelectedBooking(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Leave Feedback</DialogTitle>
+            <DialogDescription>
+              Share feedback for {selectedBooking?.homestay?.title || 'this homestay'}.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-2">
+            <div>
+              <Label htmlFor="rating">Rating</Label>
+              <Input
+                id="rating"
+                type="number"
+                min="1"
+                max="5"
+                value={rating}
+                onChange={(e) => setRating(e.target.value)}
+                className="mt-1"
+              />
+            </div>
+            <div>
+              <Label htmlFor="feedbackMessage">Feedback</Label>
+              <Textarea
+                id="feedbackMessage"
+                value={feedbackMessage}
+                onChange={(e) => setFeedbackMessage(e.target.value)}
+                rows={4}
+                className="mt-1"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setSelectedBooking(null)} disabled={isSubmittingFeedback}>
+              Cancel
+            </Button>
+            <Button
+              onClick={handleFeedbackSubmit}
+              disabled={
+                isSubmittingFeedback ||
+                !feedbackMessage.trim() ||
+                Number(rating) < 1 ||
+                Number(rating) > 5
+              }
+            >
+              Submit Feedback
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

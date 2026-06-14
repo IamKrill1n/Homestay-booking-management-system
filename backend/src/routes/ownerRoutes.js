@@ -14,6 +14,23 @@ router.get("/homestays", async (req, res, next) => {
   }
 });
 
+/** GET /api/owner/homestays/:id?ownerId= — owner-scoped homestay detail */
+router.get("/homestays/:id", async (req, res, next) => {
+  try {
+    const ownerId = req.query.ownerId || "";
+    const list = await owner.viewMyHomestays(ownerId);
+    const homestay = list.find(
+      (item) => String(item.homestayID) === String(req.params.id)
+    );
+    if (!homestay) {
+      return res.status(404).json({ error: "Homestay not found" });
+    }
+    res.json(homestay);
+  } catch (err) {
+    next(err);
+  }
+});
+
 /** POST /api/owner/homestays — createHomestay (UC 3.1) */
 router.post("/homestays", async (req, res, next) => {
   try {

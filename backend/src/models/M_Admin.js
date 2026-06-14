@@ -10,6 +10,10 @@ export class M_Admin {
     return homestayRepo.findPendingHomestays();
   }
 
+  async viewAllHomestays() {
+    return homestayRepo.findAllHomestaysForAdmin();
+  }
+
   async approveHomestay(homestayID) {
     const homestay = await homestayRepo.setHomestayStatus(
       homestayID,

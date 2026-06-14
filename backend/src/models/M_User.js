@@ -16,14 +16,26 @@ const ALLOWED_ROLES = [ "common", "owner", "admin" ]
  * Guest: xem/lọc/tìm homestay, xem bản đồ, kiểm tra dữ liệu đăng ký.
  */
 export class M_User {
-  constructor({ userID = null, password, firstName, lastName, email, phoneNumber, role = "common" } = {}) {
+  constructor({
+    userID = null,
+    password,
+    passwordHash,
+    passwordSalt,
+    firstName,
+    lastName,
+    email,
+    phoneNumber,
+    role = "common",
+  } = {}) {
     this.userID = userID;
     this.password = password;
+    this.passwordHash = passwordHash;
+    this.passwordSalt = passwordSalt;
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.phoneNumber = phoneNumber;
-    this.role = role;
+    this.role = String(role || "common").toLowerCase();
   }
 
   static validateRegistration(fieldList) {
@@ -41,6 +53,13 @@ export class M_User {
     const email = String(fieldList.email);
     if (!email.includes("@")) {
       return { valid: false, message: "Invalid email format." };
+    }
+
+    if (
+      fieldList.role != null &&
+      !ALLOWED_ROLES.includes(String(fieldList.role).toLowerCase())
+    ) {
+      return { valid: false, message: "Invalid account role." };
     }
 
     return { valid: true };
@@ -74,7 +93,7 @@ export class M_User {
   // Account
   async logIn( {email, password} ) {
     const user = await userRepo.findUserByEmail(email);
-    return (user && user.password === password) ? user : null;
+    return userRepo.verifyPassword(password, user) ? user : null;
   }
 
   async logOut() {
@@ -89,7 +108,8 @@ export class M_User {
     if (!info || typeof info !== "object") return;
     
     for (const field in info) {
-      if (field !== "userID" && field !== "role" && this.hasOwnProperty(field)) {
+      const lockedFields = ["userID", "role", "password", "passwordHash", "passwordSalt"];
+      if (!lockedFields.includes(field) && this.hasOwnProperty(field)) {
         if (info[field] !== undefined && String(info[field]).trim() !== "")
           this[field] = info[field];
       }

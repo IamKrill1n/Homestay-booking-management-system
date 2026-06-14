@@ -12,6 +12,14 @@ function mapRowToBooking(row) {
     totalPrice  : row.total_price == null ? null : Number(row.total_price),
     status      : row.status,
     createdAt   : row.created_at,
+    homestay: row.title
+      ? {
+          title: row.title,
+          address: row.address ?? "",
+          city: row.city ?? "",
+        }
+      : null,
+    hasFeedback: Boolean(row.feedback_id),
   };
 }
 
@@ -37,7 +45,18 @@ export async function createBooking(booking) {
 
 export async function findBookingByGuestId(guestID) {
   const { rows } = await pool.query(
-    `SELECT * FROM bookings WHERE guest_id = $1 ORDER BY booking_id DESC`,
+    `SELECT
+       b.*,
+       h.title,
+       l.address,
+       l.city,
+       f.feedback_id
+     FROM bookings b
+     LEFT JOIN homestays h ON h.homestay_id = b.homestay_id
+     LEFT JOIN locations l ON l.homestay_id = b.homestay_id
+     LEFT JOIN feedbacks f ON f.booking_id = b.booking_id
+     WHERE b.guest_id = $1
+     ORDER BY b.booking_id DESC`,
     [guestID]
   );
 

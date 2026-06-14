@@ -27,14 +27,31 @@ class C_User {
         });
       }
 
+      const requestedRole = String(fieldList.role || "common").toLowerCase();
+      if (requestedRole === "admin") {
+        return res.status(400).json({
+          status: "error",
+          message: "Admin accounts cannot be created through public registration."
+        });
+      }
+
+      if (requestedRole === "owner" && (!fieldList.bankAccountNumber || String(fieldList.bankAccountNumber).trim() === "")) {
+        return res.status(400).json({
+          status: "error",
+          message: "Bank account number is required for owner registration."
+        });
+      }
+
       const newUser = new M_User(fieldList);
 
-      const createdUser = await userRepo.createUser(newUser);
+      const createdUser = await userRepo.createUserWithRole(newUser, {
+        bankAccountNumber: fieldList.bankAccountNumber,
+      });
 
       return res.status(201).json({
         status: "success",
         message: "User registration completed successfully.",
-        user: newUser.toSafeJSON()
+        user: createdUser.toSafeJSON()
       });
 
     } catch (error) {
@@ -59,7 +76,7 @@ class C_User {
 
       const userInstance = await userRepo.findUserByEmail(email);
 
-      if (!userInstance || userInstance.password !== password) {
+      if (!userRepo.verifyPassword(password, userInstance)) {
         return res.status(401).json({
           status: "error",
           message: "Invalid email or password credentials."
@@ -119,9 +136,9 @@ class C_User {
 
       userInstance.editProfile(updateData);
 
-      const success = await userRepo.updateUser(userInstance);
+      const updatedUser = await userRepo.updateUser(userInstance);
 
-      if (!success) {
+      if (!updatedUser) {
         return res.status(400).json({
           status: "error",
           message: "No modifications were saved to the database."
@@ -131,7 +148,7 @@ class C_User {
       return res.status(200).json({
         status: "success",
         message: "Profile information updated successfully.",
-        user: userInstance.toSafeJSON()
+        user: updatedUser.toSafeJSON()
       });
 
     } catch (error) {

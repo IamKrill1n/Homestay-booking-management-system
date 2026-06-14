@@ -7,6 +7,7 @@ import ownerRoutes from "./routes/ownerRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import bookingRoutes from "./routes/bookingRoutes.js";
 import transactionRoutes from "./routes/transactionRoutes.js";
+import feedbackRoutes from "./routes/feedbackRoutes.js";
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use("/api/owner", ownerRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/transactions", transactionRoutes);
+app.use("/api/feedback", feedbackRoutes);
 
 app.use((err, _req, res, _next) => {
   console.error(err);

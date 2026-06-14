@@ -83,9 +83,10 @@ export function V_LoginView() {
 
             <div className="pt-4 border-t border-border text-xs text-muted-foreground">
               <p className="mb-2">Quick login options:</p>
-              <p>• Admin: admin@example.com</p>
-              <p>• Owner: owner@example.com</p>
-              <p>• User: user@example.com</p>
+              <p>- Admin: admin@example.com</p>
+              <p>- Owner: owner@example.com</p>
+              <p>- User: user@example.com</p>
+              <p>Password: password123</p>
             </div>
           </form>
         </CardContent>

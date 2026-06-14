@@ -6,6 +6,7 @@ const CREATE_REQUIRED_FIELDS = [
   "pricePerHour",
   "address",
   "city",
+  "maxGuests",
 ];
 
 function validateFields(fieldList) {
@@ -20,6 +21,9 @@ function validateFields(fieldList) {
   }
   if (isNaN(Number(fieldList.pricePerHour))) {
     return { valid: false, message: "pricePerHour must be a number" };
+  }
+  if (isNaN(Number(fieldList.maxGuests)) || Number(fieldList.maxGuests) < 1) {
+    return { valid: false, message: "maxGuests must be a positive number" };
   }
   return { valid: true };
 }
@@ -48,6 +52,12 @@ export class M_Owner {
     if (!existing) {
       return { valid: false, message: "Homestay not found" };
     }
+    if (
+      fieldList.ownerId != null &&
+      String(fieldList.ownerId) !== String(existing.ownerID)
+    ) {
+      return { valid: false, message: "Homestay not found" };
+    }
 
     const check = validateFields({
       ownerId: existing.ownerID,
@@ -70,8 +80,20 @@ export class M_Owner {
       longitude: fieldList.longitude,
       address: fieldList.address,
       city: fieldList.city,
+      maxGuests: fieldList.maxGuests,
+      numberOfBeds: fieldList.numberOfBeds,
+      numberOfBedrooms: fieldList.numberOfBedrooms,
+      amenities: fieldList.amenities,
+      hasWifi: fieldList.hasWifi,
+      hasAirConditioning: fieldList.hasAirConditioning,
+      hasKitchen: fieldList.hasKitchen,
+      hasBathtub: fieldList.hasBathtub,
+      hasTv: fieldList.hasTv,
+      hasParking: fieldList.hasParking,
+      isPetFriendly: fieldList.isPetFriendly,
       status: reverify ? "pending" : existing.status,
       isVerified: reverify ? false : existing.isVerified,
+      rejectionReason: reverify ? null : existing.rejectionReason,
     });
 
     return {

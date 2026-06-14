@@ -1,14 +1,22 @@
 import { Search } from 'lucide-react';
 import { Input } from './ui/input';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export function V_SearchBar() {
   const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname !== '/') return;
+    setSearchQuery(new URLSearchParams(location.search).get('q') || '');
+  }, [location.pathname, location.search]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real app, this would trigger a search or navigate to search results
-    console.log('Searching for:', searchQuery);
+    const query = searchQuery.trim();
+    navigate(query ? `/?q=${encodeURIComponent(query)}` : '/');
   };
 
   return (
@@ -18,7 +26,13 @@ export function V_SearchBar() {
         type="search"
         placeholder="Search homestays..."
         value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
+        onChange={(e) => {
+          const value = e.target.value;
+          setSearchQuery(value);
+          if (!value && location.pathname === '/' && location.search) {
+            navigate('/');
+          }
+        }}
         className="pl-10 bg-input-background border-border"
       />
     </form>

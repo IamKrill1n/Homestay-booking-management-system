@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { M_User } from "../models/M_User.js";
+import C_Feedback from "../controllers/C_Feedback.js";
 
 const router = Router();
 const guest = new M_User();
@@ -7,17 +8,24 @@ const guest = new M_User();
 /** GET /api/homestays — viewHomestays */
 router.get("/", async (req, res, next) => {
   try {
-    const { city, maxPrice, verified, q } = req.query;
+    const { city, minPrice, maxPrice, maxGuests, amenities, verified, q } = req.query;
 
-    if (q) {
-      const results = await guest.searchHomestays(q);
-      return res.json(results);
-    }
-
-    if (city || maxPrice != null || verified != null) {
+    if (
+      q ||
+      city ||
+      minPrice != null ||
+      maxPrice != null ||
+      maxGuests != null ||
+      amenities ||
+      verified != null
+    ) {
       const results = await guest.filterHomestays({
+        q,
         city,
+        minPrice,
         maxPrice,
+        maxGuests,
+        amenities,
         verified,
       });
       return res.json(results);
@@ -39,6 +47,9 @@ router.get("/search", async (req, res, next) => {
     next(err);
   }
 });
+
+/** GET /api/homestays/:id/feedback — viewFeedback */
+router.get("/:id/feedback", C_Feedback.listByHomestay);
 
 /** GET /api/homestays/:id — viewHomestayDetails */
 router.get("/:id", async (req, res, next) => {

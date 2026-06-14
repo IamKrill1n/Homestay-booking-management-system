@@ -16,6 +16,7 @@ export function V_RegistrationView() {
     password: '',
     confirmPassword: '',
     role: 'common',
+    bankAccountNumber: '',
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const { register } = useAuth();
@@ -36,6 +37,9 @@ export function V_RegistrationView() {
     if (formData.role !== 'common' && formData.role !== 'owner') {
       newErrors.role = 'Invalid account role selected';
     }
+    if (formData.role === 'owner' && !formData.bankAccountNumber.trim()) {
+      newErrors.bankAccountNumber = 'Bank account number is required for owners';
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -53,6 +57,7 @@ export function V_RegistrationView() {
       phoneNumber: formData.phoneNumber,
       password: formData.password,
       role: formData.role as 'common' | 'owner',
+      bankAccountNumber: formData.role === 'owner' ? formData.bankAccountNumber : undefined,
     });
 
     if (success) {
@@ -169,6 +174,21 @@ export function V_RegistrationView() {
                 </label>
               </div>
             </div>
+
+            {formData.role === 'owner' && (
+              <div className="space-y-2">
+                <Label htmlFor="bankAccountNumber">Bank Account Number</Label>
+                <Input
+                  id="bankAccountNumber"
+                  value={formData.bankAccountNumber}
+                  onChange={(e) => handleChange('bankAccountNumber', e.target.value)}
+                  className="bg-input-background"
+                />
+                {errors.bankAccountNumber && (
+                  <p className="text-xs text-error">{errors.bankAccountNumber}</p>
+                )}
+              </div>
+            )}
 
             {/* Password */}
             <div className="space-y-2">

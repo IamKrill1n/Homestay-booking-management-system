@@ -1,17 +1,58 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { mockHomestays } from '../data/mockData';
 import { useAuth } from '../context/AuthContext';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../components/ui/table';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { Edit, Eye, Trash2 } from 'lucide-react';
+import { toast } from 'sonner';
+import { Homestay, homestayService } from '../../services/homestayService';
+
+function formatPrice(value: number) {
+  return new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+    maximumFractionDigits: 0,
+  }).format(value);
+}
 
 export function V_HomestayManagementView() {
   const { user } = useAuth();
-  
-  // Filter homestays by owner
-  const myHomestays = mockHomestays.filter(h => h.ownerId === user?.userID);
+  const [myHomestays, setMyHomestays] = useState<Homestay[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (!user?.userID) return;
+
+    setIsLoading(true);
+    setError('');
+    homestayService
+      .listOwner(user.userID)
+      .then(setMyHomestays)
+      .catch((err: Error) => {
+        setError(err.message || 'Failed to load your homestays.');
+        setMyHomestays([]);
+      })
+      .finally(() => setIsLoading(false));
+  }, [user?.userID]);
+
+  const handleDelete = async (id: string) => {
+    if (!window.confirm('Archive this homestay?')) return;
+
+    try {
+      const result = await homestayService.deleteOwner(id);
+      if (result.homestay) {
+        setMyHomestays((items) =>
+          items.map((item) => (item.id === id ? result.homestay as Homestay : item))
+        );
+      }
+      toast.success(result.message || 'Homestay archived.');
+    } catch (err: any) {
+      toast.error(err.message || 'Could not archive homestay.');
+    }
+  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -43,7 +84,15 @@ export function V_HomestayManagementView() {
             <CardTitle>Manage Your Homestays</CardTitle>
           </CardHeader>
           <CardContent>
-            {myHomestays.length === 0 ? (
+            {error && (
+              <div className="mb-4 rounded-md border border-destructive p-4 text-sm text-destructive">
+                {error}
+              </div>
+            )}
+
+            {isLoading ? (
+              <div className="text-center py-12 text-muted-foreground">Loading homestays...</div>
+            ) : myHomestays.length === 0 ? (
               <div className="text-center py-12">
                 <p className="text-muted-foreground mb-4">You haven't listed any homestays yet.</p>
                 <Link to="/homestay/new">
@@ -63,11 +112,11 @@ export function V_HomestayManagementView() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {myHomestays.map(homestay => (
+                  {myHomestays.map((homestay) => (
                     <TableRow key={homestay.id}>
                       <TableCell className="font-medium">{homestay.title}</TableCell>
                       <TableCell>{homestay.city}</TableCell>
-                      <TableCell>${homestay.pricePerHour}</TableCell>
+                      <TableCell>{formatPrice(homestay.pricePerHour)}</TableCell>
                       <TableCell>
                         <Badge className={getStatusColor(homestay.status)}>
                           {homestay.status}
@@ -90,7 +139,13 @@ export function V_HomestayManagementView() {
                               <Edit className="h-4 w-4" />
                             </Button>
                           </Link>
-                          <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="text-destructive hover:text-destructive"
+                            onClick={() => handleDelete(homestay.id)}
+                            disabled={homestay.status === 'archived'}
+                          >
                             <Trash2 className="h-4 w-4" />
                           </Button>
                         </div>

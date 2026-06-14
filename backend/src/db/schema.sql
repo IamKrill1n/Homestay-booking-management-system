@@ -10,7 +10,8 @@ DROP TABLE IF EXISTS users CASCADE;
 
 CREATE TABLE IF NOT EXISTS users (
   user_id       SERIAL        PRIMARY KEY,
-  password      TEXT          NOT NULL, 
+  password_hash TEXT          NOT NULL,
+  password_salt TEXT          NOT NULL,
   first_name    VARCHAR(255)  NOT NULL, 
   last_name     VARCHAR(255)  NOT NULL, 
   email         VARCHAR(255)  UNIQUE NOT NULL, 
@@ -37,10 +38,7 @@ CREATE TABLE IF NOT EXISTS homestays (
   is_verified BOOLEAN DEFAULT FALSE,
   status VARCHAR(20) NOT NULL DEFAULT 'pending',
   rejection_reason TEXT,
-  latitude DOUBLE PRECISION,
-  longitude DOUBLE PRECISION,
-  address VARCHAR(255),
-  city VARCHAR(100)
+  created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 
@@ -66,8 +64,10 @@ CREATE TABLE IF NOT EXISTS transactions (
 
 CREATE TABLE IF NOT EXISTS feedbacks (
   feedback_id      SERIAL      PRIMARY KEY,
+  booking_id       INT         NOT NULL UNIQUE REFERENCES bookings(booking_id) ON DELETE CASCADE,
   homestay_id      INT         NOT NULL REFERENCES homestays(homestay_id) ON DELETE CASCADE,
   guest_id         INT         NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+  rating           INT         NOT NULL CHECK (rating BETWEEN 1 AND 5),
   feedback_date    TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
   feedback_message TEXT        NOT NULL
 );
@@ -75,8 +75,8 @@ CREATE TABLE IF NOT EXISTS feedbacks (
 CREATE TABLE IF NOT EXISTS locations (
   location_id SERIAL        PRIMARY KEY,
   homestay_id INT           NOT NULL UNIQUE REFERENCES homestays(homestay_id) ON DELETE CASCADE,
-  latitude    DECIMAL(9,6)  NOT NULL,
-  longitude   DECIMAL(9,6)  NOT NULL,
+  latitude    DECIMAL(9,6),
+  longitude   DECIMAL(9,6),
   address     VARCHAR(255)  NOT NULL,
   city        VARCHAR(100)  NOT NULL
 );
