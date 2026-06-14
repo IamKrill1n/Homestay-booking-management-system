@@ -16,6 +16,7 @@ import { V_MyBookingsView } from "./views/V_MyBookingsView";
 import { V_HomestayManagementView } from "./views/V_HomestayManagementView";
 import { V_HomestayFormView } from "./views/V_HomestayFormView";
 import { V_AdminVerificationView } from "./views/V_AdminVerificationView";
+import { V_ProfileView } from "./views/V_ProfileView";
 import { Toaster } from "./components/ui/sonner";
 
 function ProtectedRoute({
@@ -73,6 +74,7 @@ function AppContent() {
               </ProtectedRoute>
             }
           />
+          <Route path="/profile" element={<V_ProfileView />} />
 
           {/* Owner Routes */}
           <Route
