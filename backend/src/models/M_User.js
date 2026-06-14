@@ -7,6 +7,7 @@ import * as feedbackRepo from "../repositories/feedbackRepository.js";
 const REGISTER_REQUIRED_FIELDS = [
   "email",
   "password",
+  "phoneNumber",
   "firstName",
   "lastName",
 ];
@@ -28,9 +29,9 @@ export class M_User {
     this.role = role;
   }
 
-  register(fieldList) {
+  static validateRegistration(fieldList) {
     if (!fieldList || typeof fieldList !== "object") {
-      return { valid: false, message: "fieldList is required" };
+      return { valid: false, message: "Registration configuration payload is required." };
     }
 
     for (const field of REGISTER_REQUIRED_FIELDS) {
@@ -42,13 +43,10 @@ export class M_User {
 
     const email = String(fieldList.email);
     if (!email.includes("@")) {
-      return { valid: false, message: "Invalid email format" };
+      return { valid: false, message: "Invalid email format." };
     }
 
-    return {
-      valid: true,
-      message: "Registration data is valid (account creation is Part 2)",
-    };
+    return { valid: true };
   }
 
   async viewHomestays() {
@@ -79,11 +77,7 @@ export class M_User {
   // Account
   async logIn( {email, password} ) {
     const user = await userRepo.findUserByEmail(email);
-    
-    if (!user || user.password !== password) 
-      return null;
-
-    return user;
+    return (user && user.password === password) ? user : null;
   }
 
   async logOut() {
@@ -91,14 +85,19 @@ export class M_User {
   }
 
   async viewProfile() {
-    //TODO
-    return this;
+    return { ...this }
   }
 
   editProfile(info) {
-    if (!info) return this;
-    for (const field in info)
-      this[field] = info[field] ? info[field] : this[field];
+    if (!info || typeof info !== "object") return;
+    
+    for (const field in info) {
+      if (field !== "userID" && field !== "role" && this.hasOwnProperty(field)) {
+        if (info[field] !== undefined && String(info[field]).trim() !== "") {
+          this[field] = info[field];
+        }
+      }
+    }
   }
 
   async bookHomestay({ homestay, startDate, endDate, options = {} }) {
@@ -116,6 +115,18 @@ export class M_User {
 
   async removeFeedback(feedbackID) {
     feedbackRepo.removeFeedback(feedbackID);
+  }
+
+  // Utils
+  toSafeJSON() {
+    return {
+      userID: this.userID,
+      firstName: this.firstName,
+      lastName: this.lastName,
+      email: this.email,
+      phoneNumber: this.phoneNumber,
+      role: this.role
+    };
   }
   
 }

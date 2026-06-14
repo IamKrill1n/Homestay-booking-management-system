@@ -1,0 +1,183 @@
+import { M_User } from "../models/M_User.js";
+import * as userRepo from "../repositories/userRepository.js";
+
+// create : success 201 | fail 400
+// read   : success 200 | fail 500 | empty 404
+// update : success 200 | fail 400 | empty 204
+// delete : success 200 | fail 500 | empty 204
+
+class C_User {
+  async register(req, res) {
+    try {
+      const fieldList = req.body;
+
+      const validation = M_User.validateRegistration(fieldList);
+      if (!validation.valid) {
+        return res.status(400).json({
+          status: "error",
+          message: validation.message
+        });
+      }
+
+      const existingUser = await userRepo.findUserByEmail(fieldList.email);
+      if (existingUser) {
+        return res.status(409).json({
+          status: "error",
+          message: "A user account with this email address already exists."
+        });
+      }
+
+      const newUser = new M_User(fieldList);
+
+      const createdUser = await userRepo.createUser(newUser);
+
+      return res.status(201).json({
+        status: "success",
+        message: "User registration completed successfully.",
+        user: createdUser.toSafeJSON()
+      });
+
+    } catch (error) {
+      console.error("Controller Exception in register:", error);
+      return res.status(500).json({
+        status: "error",
+        message: "An internal server error occurred during account registration."
+      });
+    }
+  }
+
+  async login(req, res) {
+    try {
+      const { email, password } = req.body;
+
+      if (!email || !password) {
+        return res.status(400).json({
+          status: "error",
+          message: "Both email and password are required fields."
+        });
+      }
+
+      const userInstance = await userRepo.findUserByEmail(email);
+
+      if (!userInstance || userInstance.password !== password) {
+        return res.status(401).json({
+          status: "error",
+          message: "Invalid email or password credentials."
+        });
+      }
+
+      return res.status(200).json({
+        status: "success",
+        message: "Authentication successful.",
+        user: userInstance.toSafeJSON()
+      });
+
+    } catch (error) {
+      console.error("Controller Exception in login:", error);
+      return res.status(500).json({
+        status: "error",
+        message: "An internal server error occurred during logging in."
+      });
+    }
+  }
+
+  async getProfile(req, res) {
+    try {
+      const { id } = req.params;
+
+      const userInstance = await userRepo.findUserByID(id);
+      if (!userInstance) {
+        return res.status(404).json({
+          status: "error",
+          message: "User profile not found."
+        });
+      }
+
+      return res.status(200).json(userInstance.toSafeJSON());
+
+    } catch (error) {
+      console.error("Controller Exception in getProfile:", error);
+      return res.status(500).json({
+        status: "error",
+        message: "Failed to locate user profile information."
+      });
+    }
+  }
+
+  async updateProfile(req, res) {
+    try {
+      const { id } = req.params;
+      const updateData = req.body;
+
+      const userInstance = await userRepo.findUserByID(id);
+      if (!userInstance) {
+        return res.status(404).json({
+          status: "error",
+          message: "Cannot update profile. User does not exist."
+        });
+      }
+
+      userInstance.editProfile(updateData);
+
+      const success = await userRepo.updateUser(userInstance);
+
+      if (!success) {
+        return res.status(400).json({
+          status: "error",
+          message: "No modifications were saved to the database."
+        });
+      }
+
+      return res.status(200).json({
+        status: "success",
+        message: "Profile information updated successfully.",
+        user: userInstance.toSafeJSON()
+      });
+
+    } catch (error) {
+      console.error("Controller Exception in updateProfile:", error);
+      return res.status(500).json({
+        status: "error",
+        message: "An internal server error occurred while updating the profile."
+      });
+    }
+  }
+
+  async deleteAccount(req, res) {
+    try {
+      const { id } = req.params;
+
+      const userInstance = await userRepo.findUserByID(id);
+      if (!userInstance) {
+        return res.status(404).json({
+          status: "error",
+          message: "Deletion failed. User account could not be found."
+        });
+      }
+
+      const wasDeleted = await userRepo.deleteUserByID(id);
+
+      if (!wasDeleted) {
+        return res.status(400).json({
+          status: "error",
+          message: "Account deletion could not be executed."
+        });
+      }
+
+      return res.status(200).json({
+        status: "success",
+        message: "The user account and all associated records have been permanently deleted."
+      });
+
+    } catch (error) {
+      console.error("Controller Exception in deleteAccount:", error);
+      return res.status(500).json({
+        status: "error",
+        message: "An internal server error occurred while deleting the account."
+      });
+    }
+  }
+
+}
+
+export default new C_User();
