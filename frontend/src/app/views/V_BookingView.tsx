@@ -7,7 +7,8 @@ import { Button } from '../components/ui/button';
 import { Label } from '../components/ui/label';
 import { Input } from '../components/ui/input';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../components/ui/dialog';
-import { format } from 'date-fns';
+
+const API_BASE_URL = ((import.meta as any).env.VITE_API_BASE_URL as string) || 'http://localhost:3001/api';
 
 export function V_BookingView() {
   const { id } = useParams<{ id: string }>();
@@ -42,8 +43,34 @@ export function V_BookingView() {
   const hours = calculateHours();
   const totalPrice = hours * homestay.pricePerHour;
 
-  const handleBooking = () => {
-    setShowSuccess(true);
+  const handleBooking = async () => {
+    if (!user?.userID) {
+      alert('You must be signed in to book a homestay.');
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/bookings`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          homestayID: Number(id),
+          guestID: Number(user.userID),
+          checkInDate: checkIn,
+          checkOutDate: checkOut,
+          totalPrice,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Booking failed.');
+      }
+
+      setShowSuccess(true);
+    } catch (error: any) {
+      alert(error.message || 'Could not create booking. Please try again.');
+    }
   };
 
   const handleSuccessClose = () => {

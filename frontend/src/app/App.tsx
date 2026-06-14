@@ -16,6 +16,7 @@ import { V_MyBookingsView } from "./views/V_MyBookingsView";
 import { V_HomestayManagementView } from "./views/V_HomestayManagementView";
 import { V_HomestayFormView } from "./views/V_HomestayFormView";
 import { V_AdminVerificationView } from "./views/V_AdminVerificationView";
+import { V_TransactionView } from "./views/V_TransactionView";
 import { Toaster } from "./components/ui/sonner";
 
 function ProtectedRoute({
@@ -70,6 +71,14 @@ function AppContent() {
             element={
               <ProtectedRoute requiredRole="common">
                 <V_MyBookingsView />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/checkout"
+            element={
+              <ProtectedRoute requiredRole="common">
+                <V_TransactionView />
               </ProtectedRoute>
             }
           />

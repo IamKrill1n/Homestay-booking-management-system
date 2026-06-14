@@ -5,6 +5,8 @@ import homestayRoutes from "./routes/homestayRoutes.js";
 import guestRoutes from "./routes/guestRoutes.js";
 import ownerRoutes from "./routes/ownerRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
+import bookingRoutes from "./routes/bookingRoutes.js";
+import transactionRoutes from "./routes/transactionRoutes.js";
 
 dotenv.config();
 
@@ -22,6 +24,8 @@ app.use("/api/homestays", homestayRoutes);
 app.use("/api/guest", guestRoutes);
 app.use("/api/owner", ownerRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/bookings", bookingRoutes);
+app.use("/api/transactions", transactionRoutes);
 
 app.use((err, _req, res, _next) => {
   console.error(err);

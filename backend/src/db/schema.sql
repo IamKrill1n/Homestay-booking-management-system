@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS amenities CASCADE;
 DROP TABLE IF EXISTS locations CASCADE;
 DROP TABLE IF EXISTS feedbacks CASCADE;
+DROP TABLE IF EXISTS transactions CASCADE;
 DROP TABLE IF EXISTS bookings CASCADE;
 DROP TABLE IF EXISTS homestays CASCADE;
 DROP TABLE IF EXISTS owners CASCADE;
@@ -49,7 +50,18 @@ CREATE TABLE IF NOT EXISTS bookings (
   guest_id      INT         NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
   check_in_date TIMESTAMPTZ NOT NULL,
   check_out_date TIMESTAMPTZ NOT NULL CHECK (check_out_date > check_in_date),
-  status        VARCHAR(20) NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'confirmed', 'cancelled', 'completed'))
+  total_price   NUMERIC(12, 2),
+  status        VARCHAR(20) NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'confirmed', 'cancelled', 'completed')),
+  created_at    TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS transactions (
+  transaction_id   SERIAL        PRIMARY KEY,
+  booking_id       INT           NOT NULL REFERENCES bookings(booking_id) ON DELETE CASCADE,
+  amount           NUMERIC(12,2) NOT NULL,
+  payment_method   VARCHAR(50)   NOT NULL,
+  transaction_date TIMESTAMPTZ   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  status           VARCHAR(50)   NOT NULL DEFAULT 'pending'
 );
 
 CREATE TABLE IF NOT EXISTS feedbacks (
