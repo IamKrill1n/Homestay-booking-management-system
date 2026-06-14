@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   BrowserRouter,
   Routes,
@@ -16,6 +17,7 @@ import { V_MyBookingsView } from "./views/V_MyBookingsView";
 import { V_HomestayManagementView } from "./views/V_HomestayManagementView";
 import { V_HomestayFormView } from "./views/V_HomestayFormView";
 import { V_AdminVerificationView } from "./views/V_AdminVerificationView";
+import { V_TransactionView } from './views/V_TransactionView';
 import { Toaster } from "./components/ui/sonner";
 
 // Protected Route wrapper
@@ -110,6 +112,7 @@ function AppContent() {
               </ProtectedRoute>
             }
           />
+          <Route path="/checkout" element={<V_TransactionView />} />
 
           {/* Catch all */}
           <Route
