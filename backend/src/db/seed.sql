@@ -199,8 +199,8 @@ INSERT INTO bookings (
 INSERT INTO transactions (
   transaction_id, booking_id, amount, payment_method, transaction_date, status
 ) VALUES
-  (1, 1, 900000, 'credit_card', '2026-01-10T10:05:00Z', 'confirmed'),
-  (2, 2, 1200000, 'bank_transfer', '2026-01-20T10:05:00Z', 'confirmed');
+  (1, 1, 900000, 'credit_card', '2026-01-10T10:05:00Z', 'success'),
+  (2, 2, 1200000, 'bank_transfer', '2026-01-20T10:05:00Z', 'success');
 
 INSERT INTO feedbacks (
   feedback_id, booking_id, homestay_id, guest_id, rating, feedback_date, feedback_message

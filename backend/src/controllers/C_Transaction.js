@@ -26,6 +26,27 @@ class C_Transaction {
 
       const transaction = new M_Transaction(0, finalBookingID, Number(amount), paymentMethod); 
 
+      const bookingResult = await pool.query(
+        `SELECT status FROM bookings WHERE booking_id = $1`,
+        [transaction.bookingID]
+      );
+
+      if (bookingResult.rows.length === 0) {
+        return res.status(404).json({
+          status: "error",
+          error: "Booking not found.",
+          message: "Booking not found.",
+        });
+      }
+
+      if (bookingResult.rows[0].status !== "approved") {
+        return res.status(400).json({
+          status: "error",
+          error: "Booking must be approved before payment.",
+          message: "The owner must approve this booking before payment.",
+        });
+      }
+
       // Insert transaction (Using strict lowercase 'success' to match schema)
       const result = await pool.query(
         `INSERT INTO transactions (booking_id, amount, payment_method, status)

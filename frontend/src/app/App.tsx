@@ -17,6 +17,7 @@ import { V_HomestayManagementView } from "./views/V_HomestayManagementView";
 import { V_HomestayFormView } from "./views/V_HomestayFormView";
 import { V_AdminVerificationView } from "./views/V_AdminVerificationView";
 import { V_TransactionView } from "./views/V_TransactionView";
+import { V_OwnerBookingsView } from "./views/V_OwnerBookingsView";
 import { Toaster } from "./components/ui/sonner";
 
 function ProtectedRoute({
@@ -89,6 +90,14 @@ function AppContent() {
             element={
               <ProtectedRoute requiredRole="owner">
                 <V_HomestayManagementView />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/owner/bookings"
+            element={
+              <ProtectedRoute requiredRole="owner">
+                <V_OwnerBookingsView />
               </ProtectedRoute>
             }
           />
