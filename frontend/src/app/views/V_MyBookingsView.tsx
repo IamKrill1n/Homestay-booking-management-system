@@ -108,6 +108,8 @@ export function V_MyBookingsView() {
       case 'confirmed':
       case 'completed':
         return 'bg-[#16A34A] text-white';
+      case 'confirmed':
+        return 'bg-[#2563EB] text-white';
       case 'rejected':
         return 'bg-[#DC2626] text-white';
       case 'cancelled':
