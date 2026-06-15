@@ -19,7 +19,7 @@ export function V_RegistrationView() {
     bankAccountNumber: '',
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const { register } = useAuth();
+  const { register, error, isLoading } = useAuth();
   const navigate = useNavigate();
 
   const validate = () => {
@@ -81,6 +81,12 @@ export function V_RegistrationView() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
+            {error && (
+              <Alert variant="destructive">
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
+
             <div className="grid grid-cols-2 gap-4">
               {/* Name */}
               <div className="space-y-2">
@@ -221,8 +227,8 @@ export function V_RegistrationView() {
             </div>
 
             {/* Submit */}
-            <Button type="submit" className="w-full">
-              Register
+            <Button type="submit" className="w-full" disabled={isLoading}>
+              {isLoading ? 'Registering...' : 'Register'}
             </Button>
 
             <div className="text-center text-sm text-muted-foreground">
