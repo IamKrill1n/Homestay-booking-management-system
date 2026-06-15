@@ -1,16 +1,20 @@
 {
-  "name": "hst-backend",
+  "name": "homestay-backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "Part 1 — M_User (guest) API",
+  "main": "src/server.js",
+  "type": "module",
   "scripts": {
-    "start": "node dist/app.js",
-    "dev": "tsx watch src/app.ts",
-    "test": "jest"  
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "db:init": "node src/db/init.js",
+    "test": "node --test"
   },
   "dependencies": {
     "cors": "^2.8.6",
-    "express": "^4.18.2",
-    "pg": "^8.11.3"
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "pg": "^8.21.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
@@ -19,10 +23,6 @@
     "@types/node": "^25.9.3",
     "@types/pg": "^8.20.0",
     "@types/supertest": "^7.2.0",
-    "jest": "^30.4.2",
-    "supertest": "^7.2.2",
-    "ts-jest": "^29.4.11",
-    "tsx": "^4.22.4",
-    "typescript": "^6.0.3"
+    "supertest": "^7.2.2"
   }
 }

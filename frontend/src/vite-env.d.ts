@@ -1,10 +1,4 @@
-/// <reference types="vite/client" />
-
-interface ImportMetaEnv {
-    readonly VITE_BACKEND_URL: string;
-    // Add any other environment variables you create here later!
-  }
-  
-  interface ImportMeta {
-    readonly env: ImportMetaEnv;
-  }
+declare module '*.css' {
+  const content: { [className: string]: string };
+  export default content;
+}

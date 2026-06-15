@@ -2,7 +2,7 @@
 
 A web platform for managing the full homestay rental lifecycle — guests browse, search, and book properties; owners list and manage homestays; and admins verify listings before they go public. Built around an event-triggered, privacy-by-design data model.
 
-The complete requirements are in [Homestay-Booking-Management-System-1.pdf](Homestay-Booking-Management-System-1.pdf). Architecture and conventions for contributors are in [CLAUDE.md](CLAUDE.md).
+The complete requirements are in [Homestay-Booking-Management-System-1.pdf](Homestay-Booking-Management-System-1.pdf). Architecture and conventions for contributors are in [CLAUDE.md](CLAUDE.md). Backend owner/admin class documentation is in [docs/owner-admin-classes.md](docs/owner-admin-classes.md).
 
 ## Tech stack
 

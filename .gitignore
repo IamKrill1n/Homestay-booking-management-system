@@ -35,6 +35,11 @@ Thumbs.db
 
 # Testing / coverage
 coverage/
+tests/
+
+# Java
+target/
+*.class
 
 # Misc
 .cache/

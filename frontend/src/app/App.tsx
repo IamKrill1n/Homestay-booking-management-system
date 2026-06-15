@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   BrowserRouter,
   Routes,
@@ -17,24 +16,23 @@ import { V_MyBookingsView } from "./views/V_MyBookingsView";
 import { V_HomestayManagementView } from "./views/V_HomestayManagementView";
 import { V_HomestayFormView } from "./views/V_HomestayFormView";
 import { V_AdminVerificationView } from "./views/V_AdminVerificationView";
-import { V_TransactionView } from './views/V_TransactionView';
+import { V_TransactionView } from "./views/V_TransactionView";
 import { Toaster } from "./components/ui/sonner";
 
-// Protected Route wrapper
 function ProtectedRoute({
   children,
   requiredRole,
 }: {
   children: React.ReactNode;
-  requiredRole?: "user" | "owner" | "admin";
+  requiredRole?: "common" | "owner" | "admin"; 
 }) {
-  const { isAuthenticated, hasRole } = useAuth();
+  const { user } = useAuth();
 
-  if (!isAuthenticated) {
+  if (!user) {
     return <Navigate to="/login" replace />;
   }
 
-  if (requiredRole && !hasRole(requiredRole)) {
+  if (requiredRole && user.role !== requiredRole) {
     return <Navigate to="/" replace />;
   }
 
@@ -63,7 +61,7 @@ function AppContent() {
           <Route
             path="/book/:id"
             element={
-              <ProtectedRoute requiredRole="user">
+              <ProtectedRoute requiredRole="common">
                 <V_BookingView />
               </ProtectedRoute>
             }
@@ -71,8 +69,16 @@ function AppContent() {
           <Route
             path="/my-bookings"
             element={
-              <ProtectedRoute requiredRole="user">
+              <ProtectedRoute requiredRole="common">
                 <V_MyBookingsView />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/checkout"
+            element={
+              <ProtectedRoute requiredRole="common">
+                <V_TransactionView />
               </ProtectedRoute>
             }
           />
@@ -112,7 +118,6 @@ function AppContent() {
               </ProtectedRoute>
             }
           />
-          <Route path="/checkout" element={<V_TransactionView />} />
 
           {/* Catch all */}
           <Route
@@ -127,11 +132,31 @@ function AppContent() {
   );
 }
 
+function Temp() {
+  return (
+    <div className="w-10 h-10 bg-blue-300">
+
+    </div>
+  );
+}
+
+function Temp2() {
+  return (
+    <div className="min-h-screen flex flex-col bg-background">
+      <Header />
+      {/* <Temp /> */}
+      <Footer />
+      <Toaster />
+    </div>
+  );
+}
+
 export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
         <AppContent />
+        {/* <Temp2 /> */}
       </AuthProvider>
     </BrowserRouter>
   );

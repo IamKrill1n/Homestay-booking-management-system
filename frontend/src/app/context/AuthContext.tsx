@@ -1,60 +1,62 @@
-import React, { createContext, useContext, useState } from 'react';
-import { User, UserRole } from '../data/mockData';
+import React, { createContext, useState, useContext, ReactNode } from 'react';
+import { RegistrationPayload, User } from '../data/user';
+import { userService } from '../../services/userService';
 
 interface AuthContextType {
   user: User | null;
-  login: (email: string, password: string) => boolean;
-  logout: () => void;
-  register: (userData: Omit<User, 'id' | 'role'>) => boolean;
+  isLoading: boolean;
+  error: string | null;
+  login: (email: string, password: string) => Promise<boolean>;
+  register: (userData: RegistrationPayload) => Promise<boolean>;
   isAuthenticated: boolean;
-  hasRole: (role: UserRole) => boolean;
+  logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const login = (email: string, password: string): boolean => {
-    // Mock login - in real app, this would call an API
-    const mockUser: User = {
-      id: '1',
-      firstName: 'John',
-      lastName: 'Doe',
-      email: email,
-      phone: '+1234567890',
-      role: email.includes('admin') ? 'admin' : email.includes('owner') ? 'owner' : 'user',
-    };
-    setUser(mockUser);
-    return true;
+  const login = async (email: string, password: string): Promise<boolean> => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const result = await userService.login(email, password);
+      if (result.user) {
+        setUser(result.user);
+        return true;
+      }
+      return false;
+    } catch (err: any) {
+      setError(err.message || "An unknown error occurred");
+      return false;
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const logout = () => {
+  const logout = (): void => {
     setUser(null);
   };
 
-  const register = (userData: Omit<User, 'id' | 'role'>): boolean => {
-    // Mock registration
-    const newUser: User = {
-      ...userData,
-      id: Math.random().toString(36).substr(2, 9),
-      role: 'user',
-    };
-    setUser(newUser);
-    return true;
-  };
-
-  const hasRole = (role: UserRole): boolean => {
-    if (role === 'guest') return !user;
-    if (!user) return false;
-    
-    // Admin has all permissions
-    if (user.role === 'admin') return true;
-    
-    // Owner can access owner and user features
-    if (role === 'user' && user.role === 'owner') return true;
-    
-    return user.role === role;
+  const register = async (
+    userData: RegistrationPayload
+  ): Promise<boolean> => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const result = await userService.register(userData);
+      if (result.user) setUser(result.user);
+      
+      return true;
+    } catch (err: any) {
+      setError(err.message || "An error occurred during registration.");
+      return false;
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -65,18 +67,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         logout,
         register,
         isAuthenticated: !!user,
-        hasRole,
+        isLoading,
+        error 
       }}
     >
       {children}
     </AuthContext.Provider>
   );
-}
+};
 
-export function useAuth() {
+export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
-}
+};

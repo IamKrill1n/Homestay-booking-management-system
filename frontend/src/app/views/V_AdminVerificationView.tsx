@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { mockHomestays } from '../data/mockData';
+import { useEffect, useMemo, useState } from 'react';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../components/ui/table';
@@ -9,26 +8,92 @@ import { Textarea } from '../components/ui/textarea';
 import { Label } from '../components/ui/label';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '../components/ui/sheet';
 import { format } from 'date-fns';
+import { toast } from 'sonner';
+import { Homestay, homestayService } from '../../services/homestayService';
+
+function formatPrice(value: number) {
+  return new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+    maximumFractionDigits: 0,
+  }).format(value);
+}
 
 export function V_AdminVerificationView() {
   const [selectedHomestay, setSelectedHomestay] = useState<string | null>(null);
   const [showRejectDialog, setShowRejectDialog] = useState(false);
   const [rejectReason, setRejectReason] = useState('');
+  const [pendingHomestays, setPendingHomestays] = useState<Homestay[]>([]);
+  const [allHomestays, setAllHomestays] = useState<Homestay[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isMutating, setIsMutating] = useState(false);
+  const [error, setError] = useState('');
 
-  // Filter pending and all homestays
-  const pendingHomestays = mockHomestays.filter(h => h.status === 'pending');
-  const homestayDetail = mockHomestays.find(h => h.id === selectedHomestay);
+  const homestayDetail = useMemo(
+    () => allHomestays.find((homestay) => homestay.id === selectedHomestay)
+      || pendingHomestays.find((homestay) => homestay.id === selectedHomestay),
+    [allHomestays, pendingHomestays, selectedHomestay]
+  );
 
-  const handleApprove = (id: string) => {
-    console.log('Approved homestay:', id);
-    setSelectedHomestay(null);
+  const loadHomestays = async () => {
+    setIsLoading(true);
+    setError('');
+    try {
+      const [pending, all] = await Promise.all([
+        homestayService.listPendingAdmin(),
+        homestayService.listAdmin(),
+      ]);
+      setPendingHomestays(pending);
+      setAllHomestays(all);
+    } catch (err: any) {
+      setError(err.message || 'Failed to load admin homestays.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleReject = () => {
-    console.log('Rejected homestay:', selectedHomestay, 'Reason:', rejectReason);
-    setShowRejectDialog(false);
-    setSelectedHomestay(null);
-    setRejectReason('');
+  useEffect(() => {
+    loadHomestays();
+  }, []);
+
+  const mergeUpdatedHomestay = (updated: Homestay | null) => {
+    if (!updated) return;
+    setPendingHomestays((items) => items.filter((item) => item.id !== updated.id));
+    setAllHomestays((items) =>
+      items.map((item) => (item.id === updated.id ? updated : item))
+    );
+  };
+
+  const handleApprove = async (id: string) => {
+    setIsMutating(true);
+    try {
+      const result = await homestayService.approveAdmin(id);
+      mergeUpdatedHomestay(result.homestay);
+      toast.success(result.message || 'Homestay approved.');
+      setSelectedHomestay(null);
+    } catch (err: any) {
+      toast.error(err.message || 'Could not approve homestay.');
+    } finally {
+      setIsMutating(false);
+    }
+  };
+
+  const handleReject = async () => {
+    if (!selectedHomestay) return;
+
+    setIsMutating(true);
+    try {
+      const result = await homestayService.rejectAdmin(selectedHomestay, rejectReason);
+      mergeUpdatedHomestay(result.homestay);
+      toast.success(result.message || 'Homestay rejected.');
+      setShowRejectDialog(false);
+      setSelectedHomestay(null);
+      setRejectReason('');
+    } catch (err: any) {
+      toast.error(err.message || 'Could not reject homestay.');
+    } finally {
+      setIsMutating(false);
+    }
   };
 
   const getStatusColor = (status: string) => {
@@ -49,14 +114,21 @@ export function V_AdminVerificationView() {
       <div className="px-[80px] py-8">
         <h1 className="mb-6">Admin - Verify Homestays</h1>
 
+        {error && (
+          <div className="mb-4 rounded-md border border-destructive p-4 text-sm text-destructive">
+            {error}
+          </div>
+        )}
+
         <div className="grid gap-6">
-          {/* Pending Homestays */}
           <Card>
             <CardHeader>
               <CardTitle>Pending Verification ({pendingHomestays.length})</CardTitle>
             </CardHeader>
             <CardContent>
-              {pendingHomestays.length === 0 ? (
+              {isLoading ? (
+                <div className="text-center py-8 text-muted-foreground">Loading pending homestays...</div>
+              ) : pendingHomestays.length === 0 ? (
                 <div className="text-center py-8 text-muted-foreground">
                   No pending homestays to verify.
                 </div>
@@ -73,12 +145,12 @@ export function V_AdminVerificationView() {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {pendingHomestays.map(homestay => (
+                    {pendingHomestays.map((homestay) => (
                       <TableRow key={homestay.id}>
                         <TableCell className="font-medium">{homestay.title}</TableCell>
                         <TableCell>Owner {homestay.ownerId}</TableCell>
                         <TableCell>{homestay.city}</TableCell>
-                        <TableCell>${homestay.pricePerHour}</TableCell>
+                        <TableCell>{formatPrice(homestay.pricePerHour)}</TableCell>
                         <TableCell>{format(new Date(homestay.createdAt), 'MMM dd, yyyy')}</TableCell>
                         <TableCell className="text-right">
                           <Button
@@ -97,58 +169,60 @@ export function V_AdminVerificationView() {
             </CardContent>
           </Card>
 
-          {/* All Homestays */}
           <Card>
             <CardHeader>
               <CardTitle>All Homestays</CardTitle>
             </CardHeader>
             <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Homestay</TableHead>
-                    <TableHead>Owner</TableHead>
-                    <TableHead>City</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Availability</TableHead>
-                    <TableHead className="text-right">Action</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {mockHomestays.map(homestay => (
-                    <TableRow key={homestay.id}>
-                      <TableCell className="font-medium">{homestay.title}</TableCell>
-                      <TableCell>Owner {homestay.ownerId}</TableCell>
-                      <TableCell>{homestay.city}</TableCell>
-                      <TableCell>
-                        <Badge className={getStatusColor(homestay.status)}>
-                          {homestay.status}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant={homestay.availability === 'available' ? 'default' : 'secondary'}>
-                          {homestay.availability}
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => setSelectedHomestay(homestay.id)}
-                        >
-                          View
-                        </Button>
-                      </TableCell>
+              {isLoading ? (
+                <div className="text-center py-8 text-muted-foreground">Loading homestays...</div>
+              ) : (
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Homestay</TableHead>
+                      <TableHead>Owner</TableHead>
+                      <TableHead>City</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead>Availability</TableHead>
+                      <TableHead className="text-right">Action</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {allHomestays.map((homestay) => (
+                      <TableRow key={homestay.id}>
+                        <TableCell className="font-medium">{homestay.title}</TableCell>
+                        <TableCell>Owner {homestay.ownerId}</TableCell>
+                        <TableCell>{homestay.city}</TableCell>
+                        <TableCell>
+                          <Badge className={getStatusColor(homestay.status)}>
+                            {homestay.status}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant={homestay.availability === 'available' ? 'default' : 'secondary'}>
+                            {homestay.availability}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => setSelectedHomestay(homestay.id)}
+                          >
+                            View
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              )}
             </CardContent>
           </Card>
         </div>
       </div>
 
-      {/* Detail Side Panel */}
       <Sheet open={!!selectedHomestay} onOpenChange={(open) => !open && setSelectedHomestay(null)}>
         <SheetContent className="sm:max-w-[600px] overflow-y-auto">
           {homestayDetail && (
@@ -161,11 +235,10 @@ export function V_AdminVerificationView() {
               </SheetHeader>
 
               <div className="mt-6 space-y-6">
-                {/* Images */}
                 <div className="grid grid-cols-2 gap-2">
                   {homestayDetail.images.map((img, idx) => (
                     <img
-                      key={idx}
+                      key={img}
                       src={img}
                       alt={`${homestayDetail.title} ${idx + 1}`}
                       className="w-full h-32 object-cover rounded-md"
@@ -173,7 +246,6 @@ export function V_AdminVerificationView() {
                   ))}
                 </div>
 
-                {/* Details */}
                 <div>
                   <h3>{homestayDetail.title}</h3>
                   <p className="text-sm text-muted-foreground mt-1">{homestayDetail.address}</p>
@@ -183,7 +255,7 @@ export function V_AdminVerificationView() {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <Label>Price per Hour</Label>
-                    <p className="mt-1 font-semibold text-primary">${homestayDetail.pricePerHour}</p>
+                    <p className="mt-1 font-semibold text-primary">{formatPrice(homestayDetail.pricePerHour)}</p>
                   </div>
                   <div>
                     <Label>Max Guests</Label>
@@ -200,14 +272,25 @@ export function V_AdminVerificationView() {
                   </div>
                 </div>
 
+                {homestayDetail.rejectionReason && (
+                  <div>
+                    <Label>Rejection Reason</Label>
+                    <p className="mt-1 text-sm">{homestayDetail.rejectionReason}</p>
+                  </div>
+                )}
+
                 <div>
                   <Label>Amenities</Label>
                   <div className="mt-2 flex flex-wrap gap-2">
-                    {homestayDetail.amenities.map(amenity => (
-                      <Badge key={amenity} variant="outline">
-                        {amenity}
-                      </Badge>
-                    ))}
+                    {homestayDetail.amenities.length === 0 ? (
+                      <span className="text-sm text-muted-foreground">No amenities listed.</span>
+                    ) : (
+                      homestayDetail.amenities.map((amenity) => (
+                        <Badge key={amenity} variant="outline">
+                          {amenity}
+                        </Badge>
+                      ))
+                    )}
                   </div>
                 </div>
 
@@ -221,12 +304,12 @@ export function V_AdminVerificationView() {
                   <p className="mt-1 text-sm">{format(new Date(homestayDetail.createdAt), 'MMMM dd, yyyy')}</p>
                 </div>
 
-                {/* Action Buttons */}
                 {homestayDetail.status === 'pending' && (
                   <div className="flex gap-3 pt-4 border-t">
                     <Button 
                       onClick={() => handleApprove(homestayDetail.id)}
                       className="flex-1 bg-[#16A34A] hover:bg-[#16A34A]/90"
+                      disabled={isMutating}
                     >
                       Approve
                     </Button>
@@ -234,6 +317,7 @@ export function V_AdminVerificationView() {
                       onClick={() => setShowRejectDialog(true)}
                       variant="destructive"
                       className="flex-1"
+                      disabled={isMutating}
                     >
                       Reject
                     </Button>
@@ -245,7 +329,6 @@ export function V_AdminVerificationView() {
         </SheetContent>
       </Sheet>
 
-      {/* Reject Dialog */}
       <Dialog open={showRejectDialog} onOpenChange={setShowRejectDialog}>
         <DialogContent>
           <DialogHeader>
@@ -266,13 +349,13 @@ export function V_AdminVerificationView() {
             />
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setShowRejectDialog(false)}>
+            <Button variant="outline" onClick={() => setShowRejectDialog(false)} disabled={isMutating}>
               Cancel
             </Button>
             <Button 
               variant="destructive" 
               onClick={handleReject}
-              disabled={!rejectReason.trim()}
+              disabled={!rejectReason.trim() || isMutating}
             >
               Confirm Reject
             </Button>

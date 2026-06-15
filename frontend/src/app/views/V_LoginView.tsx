@@ -14,7 +14,7 @@ export function V_LoginView() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
@@ -23,7 +23,7 @@ export function V_LoginView() {
       return;
     }
 
-    const success = login(email, password);
+    const success = await login(email, password);
     if (success) {
       navigate('/');
     } else {
@@ -83,9 +83,10 @@ export function V_LoginView() {
 
             <div className="pt-4 border-t border-border text-xs text-muted-foreground">
               <p className="mb-2">Quick login options:</p>
-              <p>• Admin: admin@example.com</p>
-              <p>• Owner: owner@example.com</p>
-              <p>• User: user@example.com</p>
+              <p>- Admin: admin@example.com</p>
+              <p>- Owner: owner@example.com</p>
+              <p>- User: user@example.com</p>
+              <p>Password: password123</p>
             </div>
           </form>
         </CardContent>

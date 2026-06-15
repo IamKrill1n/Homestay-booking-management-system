@@ -32,7 +32,7 @@ export interface Booking {
   checkIn: string;
   checkOut: string;
   totalPrice: number;
-  status: 'pending' | 'approved' | 'rejected' | 'cancelled';
+  status: 'pending' | 'approved' | 'rejected' | 'cancelled' | 'confirmed' | 'completed';
   createdAt: string;
 }
 
