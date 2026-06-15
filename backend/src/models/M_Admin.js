@@ -1,4 +1,9 @@
-import * as homestayRepo from "../repositories/homestayRepository.js";
+let homestayRepoPromise;
+
+function loadHomestayRepository() {
+  homestayRepoPromise ??= import("../repositories/homestayRepository.js");
+  return homestayRepoPromise;
+}
 
 /**
  * M_Admin — platform administrator (UC 4.1 on the class diagram).
@@ -6,15 +11,26 @@ import * as homestayRepo from "../repositories/homestayRepository.js";
  * Approved listings become visible on the dashboard; rejected ones stay hidden.
  */
 export class M_Admin {
+  constructor(repository = null) {
+    this.homestayRepo = repository;
+  }
+
+  async getHomestayRepository() {
+    return this.homestayRepo ?? loadHomestayRepository();
+  }
+
   async viewPendingHomestays() {
+    const homestayRepo = await this.getHomestayRepository();
     return homestayRepo.findPendingHomestays();
   }
 
   async viewAllHomestays() {
+    const homestayRepo = await this.getHomestayRepository();
     return homestayRepo.findAllHomestaysForAdmin();
   }
 
   async approveHomestay(homestayID) {
+    const homestayRepo = await this.getHomestayRepository();
     const homestay = await homestayRepo.setHomestayStatus(
       homestayID,
       "approved",
@@ -36,6 +52,7 @@ export class M_Admin {
       return { valid: false, message: "A rejection reason is required" };
     }
 
+    const homestayRepo = await this.getHomestayRepository();
     const homestay = await homestayRepo.setHomestayStatus(
       homestayID,
       "rejected",
