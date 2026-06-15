@@ -1,9 +1,9 @@
 export class M_Transaction {
     // --- Private Attributes ---
-    private transactionID: number;
-    private bookingID: number;
-    private amount: number;
-    private paymentMethod: string;
+    public transactionID: number;
+    public bookingID: number;
+    public amount: number;
+    public paymentMethod: string;
     private transactionDate: Date;
     private status: string;
   
