@@ -177,6 +177,21 @@ export function V_MyBookingsView() {
                               Cancel
                             </Button>
                           )}
+                          {booking.status === 'approved' && (
+                            <Button
+                              size="sm"
+                              onClick={() =>
+                                navigate('/checkout', {
+                                  state: {
+                                    bookingID: booking.id,
+                                    amount: booking.totalPrice,
+                                  },
+                                })
+                              }
+                            >
+                              Pay
+                            </Button>
+                          )}
                           {canLeaveFeedback(booking) && (
                             <Button variant="outline" size="sm" onClick={() => openFeedbackDialog(booking)}>
                               Leave Feedback

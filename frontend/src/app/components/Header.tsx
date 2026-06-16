@@ -25,7 +25,6 @@ export function Header() {
           Home
         </Link>
         
-        {/* Check if user exists and their database role token matches 'common' */}
         {user && user.role === 'common' && (
           <Link to="/my-bookings" className="text-sm hover:text-primary transition-colors">
             My Bookings
@@ -34,9 +33,14 @@ export function Header() {
         
         {/* Check if user exists and their database role token matches 'owner' */}
         {user && user.role === 'owner' && (
-          <Link to="/my-homestays" className="text-sm hover:text-primary transition-colors">
-            My Homestays
-          </Link>
+          <>
+            <Link to="/my-homestays" className="text-sm hover:text-primary transition-colors">
+              My Homestays
+            </Link>
+            <Link to="/owner/bookings" className="text-sm hover:text-primary transition-colors">
+              Manage Bookings
+            </Link>
+          </>
         )}
         
         {/* Check if user exists and their database role token matches 'admin' */}

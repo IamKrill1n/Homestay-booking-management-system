@@ -14,6 +14,12 @@ export interface BookingRow {
     address: string;
     city: string;
   } | null;
+  guest?: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
+  } | null;
   hasFeedback: boolean;
 }
 
@@ -27,6 +33,7 @@ interface ApiBooking {
   status: string;
   createdAt?: string;
   homestay?: BookingRow['homestay'];
+  guest?: BookingRow['guest'];
   hasFeedback?: boolean;
 }
 
@@ -47,6 +54,7 @@ function toBooking(apiBooking: ApiBooking): BookingRow {
     status: String(apiBooking.status).toLowerCase(),
     createdAt: apiBooking.createdAt || new Date().toISOString(),
     homestay: apiBooking.homestay ?? null,
+    guest: apiBooking.guest ?? null,
     hasFeedback: Boolean(apiBooking.hasFeedback),
   };
 }
@@ -72,6 +80,33 @@ export const bookingService = {
   async listForUser(userId: string | number) {
     const data = await apiRequest<ApiBooking[]>(`/bookings/user/${userId}`);
     return data.map(toBooking);
+  },
+
+  async listForOwner(ownerId: string | number) {
+    const data = await apiRequest<ApiBooking[]>(`/bookings/owner/${ownerId}`);
+    return data.map(toBooking);
+  },
+
+  async approve(bookingId: string, ownerId: string | number) {
+    const data = await apiRequest<BookingResponse>(`/bookings/${bookingId}/approve`, {
+      method: 'PUT',
+      body: JSON.stringify({ ownerID: ownerId }),
+    });
+    return {
+      message: data.message,
+      booking: toBooking(data.booking),
+    };
+  },
+
+  async reject(bookingId: string, ownerId: string | number) {
+    const data = await apiRequest<BookingResponse>(`/bookings/${bookingId}/reject`, {
+      method: 'PUT',
+      body: JSON.stringify({ ownerID: ownerId }),
+    });
+    return {
+      message: data.message,
+      booking: toBooking(data.booking),
+    };
   },
 
   async cancel(bookingId: string) {

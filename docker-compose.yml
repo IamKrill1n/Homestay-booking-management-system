@@ -34,6 +34,8 @@ services:
       - "8080:80"
     depends_on:
       - backend
+    environment:
+      - HOST=0.0.0.0
 
 volumes:
   pgdata:

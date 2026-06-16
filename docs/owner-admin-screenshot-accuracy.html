@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Owner/Admin Screenshot Accuracy Check</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      line-height: 1.5;
+      color: #1f2937;
+      background: #f8fafc;
+    }
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 32px 20px;
+    }
+    section {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      padding: 20px;
+    }
+    h1, h2 {
+      margin-top: 0;
+      color: #111827;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+    }
+    th, td {
+      border: 1px solid #d1d5db;
+      padding: 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: #f3f4f6;
+    }
+    code {
+      background: #eef2ff;
+      border-radius: 4px;
+      padding: 1px 4px;
+    }
+    .status {
+      font-weight: 700;
+      color: #b45309;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section>
+      <h1>Owner/Admin Screenshot Accuracy Check</h1>
+      <p><span class="status">Summary:</span> The screenshots are only partially accurate. They match the broad domain idea, but several method names, inputs, outputs, and behaviors do not match the current implementation.</p>
+    </section>
+
+    <section>
+      <h2>M_Owner</h2>
+      <p>The implemented class is <code>backend/src/models/M_Owner.js</code>. It does not expose <code>getOwnedHomestays</code>, <code>addHomestay</code>, <code>removeHomestay</code>, <code>editHomestayInfo</code>, or <code>viewOwnedHomestay</code> as shown in the screenshot.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Screenshot item</th>
+            <th>Current code</th>
+            <th>Accuracy</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>bankAccountNumber</code></td>
+            <td>Stored in <code>owners.bank_account_number</code>.</td>
+            <td>Mostly accurate as role data, but not a private field on the JS class.</td>
+          </tr>
+          <tr>
+            <td><code>ownedHomestayList</code></td>
+            <td>No class attribute. Listings are fetched through <code>viewMyHomestays(ownerID)</code>.</td>
+            <td>Not accurate as an implemented attribute.</td>
+          </tr>
+          <tr>
+            <td><code>addHomestay(info)</code></td>
+            <td><code>createHomestay(fieldList)</code>.</td>
+            <td>Name and input are inaccurate.</td>
+          </tr>
+          <tr>
+            <td><code>removeHomestay(homestay)</code></td>
+            <td><code>deleteHomestay(homestayID)</code>, which soft-archives the listing.</td>
+            <td>Name, input, and behavior wording should be corrected.</td>
+          </tr>
+          <tr>
+            <td><code>editHomestayInfo(homestay, info)</code></td>
+            <td><code>updateHomestay(homestayID, fieldList)</code>. Address or price changes trigger re-verification.</td>
+            <td>Name and input are inaccurate; missing verification behavior.</td>
+          </tr>
+          <tr>
+            <td><code>viewOwnedHomestay(homestayID)</code></td>
+            <td>No direct model method. Route loads <code>viewMyHomestays(ownerId)</code> and filters by ID.</td>
+            <td>Not accurate as a class method.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>M_Admin</h2>
+      <p>The implemented class is <code>backend/src/models/M_Admin.js</code>. It handles homestay approval and rejection, not booking verification.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Screenshot item</th>
+            <th>Current code</th>
+            <th>Accuracy</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>adminCode</code></td>
+            <td>Stored in <code>admins.admin_code</code>.</td>
+            <td>Mostly accurate as database role data, but not a JS class field.</td>
+          </tr>
+          <tr>
+            <td><code>approveHomestayVerification(homestayID)</code></td>
+            <td><code>approveHomestay(homestayID)</code>, returning an object with <code>valid</code>, <code>homestay</code>, and <code>message</code>.</td>
+            <td>Name and output are inaccurate.</td>
+          </tr>
+          <tr>
+            <td><code>approveBookingVerification(booking)</code></td>
+            <td>No equivalent method in <code>M_Admin</code>.</td>
+            <td>Not accurate to current code.</td>
+          </tr>
+          <tr>
+            <td>Only approval methods</td>
+            <td>Current code also has <code>viewPendingHomestays()</code>, <code>viewAllHomestays()</code>, and <code>rejectHomestay(homestayID, reason)</code>.</td>
+            <td>Incomplete.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Next Steps</h2>
+      <p>Use <code>docs/owner-admin-classes.md</code> as the source for a corrected class documentation table. If the screenshots are for a report, update the method names and outputs to match the current code instead of the older/spec-level names.</p>
+    </section>
+  </main>
+</body>
+</html>

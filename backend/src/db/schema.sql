@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS amenities CASCADE;
 DROP TABLE IF EXISTS locations CASCADE;
 DROP TABLE IF EXISTS feedbacks CASCADE;
+DROP TABLE IF EXISTS payouts CASCADE;
 DROP TABLE IF EXISTS transactions CASCADE;
 DROP TABLE IF EXISTS bookings CASCADE;
 DROP TABLE IF EXISTS homestays CASCADE;
@@ -38,6 +39,7 @@ CREATE TABLE IF NOT EXISTS homestays (
   is_verified BOOLEAN DEFAULT FALSE,
   status VARCHAR(20) NOT NULL DEFAULT 'pending',
   rejection_reason TEXT,
+  cancellation_policy VARCHAR(20) NOT NULL DEFAULT 'flexible' CHECK (cancellation_policy IN ('flexible', 'moderate', 'strict')),
   created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -49,7 +51,7 @@ CREATE TABLE IF NOT EXISTS bookings (
   check_in_date TIMESTAMPTZ NOT NULL,
   check_out_date TIMESTAMPTZ NOT NULL CHECK (check_out_date > check_in_date),
   total_price   NUMERIC(12, 2),
-  status        VARCHAR(20) NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'confirmed', 'cancelled', 'completed')),
+  status        VARCHAR(20) NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'rejected', 'confirmed', 'cancelled', 'completed', 'refunded')),
   created_at    TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -59,7 +61,17 @@ CREATE TABLE IF NOT EXISTS transactions (
   amount           NUMERIC(12,2) NOT NULL,
   payment_method   VARCHAR(50)   NOT NULL,
   transaction_date TIMESTAMPTZ   NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  status           VARCHAR(50)   NOT NULL DEFAULT 'pending'
+  status           VARCHAR(50)   NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'success', 'failed', 'refunded'))
+);
+
+CREATE TABLE IF NOT EXISTS payouts (
+  payout_id        SERIAL        PRIMARY KEY,
+  booking_id       INT           NOT NULL UNIQUE REFERENCES bookings(booking_id) ON DELETE CASCADE,
+  owner_id         INT           NOT NULL REFERENCES owners(owner_id) ON DELETE CASCADE,
+  amount           NUMERIC(12,2) NOT NULL, 
+  status           VARCHAR(20)   NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'processing', 'completed', 'failed')),
+  payout_date      TIMESTAMPTZ,
+  created_at       TIMESTAMPTZ   NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS feedbacks (
@@ -94,6 +106,8 @@ CREATE TABLE IF NOT EXISTS amenities (
   has_parking          BOOLEAN NOT NULL DEFAULT FALSE,
   is_pet_friendly      BOOLEAN NOT NULL DEFAULT FALSE
 );
+
+
 
 -- -- Idempotent upgrades for existing databases (re-runnable via npm run db:init).
 -- ALTER TABLE homestays ADD COLUMN IF NOT EXISTS status VARCHAR(20) NOT NULL DEFAULT 'pending';
