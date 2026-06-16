@@ -105,7 +105,6 @@ export function V_MyBookingsView() {
       case 'pending':
         return 'bg-[#D97706] text-white';
       case 'approved':
-      case 'confirmed':
       case 'completed':
         return 'bg-[#16A34A] text-white';
       case 'confirmed':

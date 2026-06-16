@@ -123,39 +123,58 @@ class C_User {
 
   async updateProfile(req, res) {
     try {
-      const { id } = req.params;
-      const updateData = req.body;
+      const targetUserId = req.params.id || req.user?.userID || req.body.userID;
+      const incomingUpdates = req.body;
 
-      const userInstance = await userRepo.findUserByID(id);
-      if (!userInstance) {
-        return res.status(404).json({
+      if (!targetUserId) {
+        return res.status(401).json({
           status: "error",
-          message: "Cannot update profile. User does not exist."
+          message: "Unauthorized: Missing account identifier validation keys."
         });
       }
 
-      userInstance.editProfile(updateData);
+      const rawUser = await userRepo.findUserByID(targetUserId);
+      if (!rawUser) {
+        return res.status(4404).json({
+          status: "error",
+          message: "User account records could not be found."
+        });
+      }
 
-      const updatedUser = await userRepo.updateUser(userInstance);
+      const userInstance = new M_User(rawUser);
 
-      if (!updatedUser) {
+      if (incomingUpdates.email && incomingUpdates.email !== userInstance.email) {
+        const emailOwner = await userRepo.findUserByEmail(incomingUpdates.email);
+        
+        if (emailOwner && String(emailOwner.user_id) !== String(targetUserId)) {
+          return res.status(409).json({
+            status: "error",
+            message: "A user account with this email address already exists."
+          });
+        }
+      }
+
+      const mutationResult = userInstance.editProfile(incomingUpdates);
+      if (!mutationResult.valid) {
         return res.status(400).json({
           status: "error",
-          message: "No modifications were saved to the database."
+          message: mutationResult.message
         });
       }
+
+      const updatedRecord = await userRepo.updateUser(userInstance.toSafeJSON());
 
       return res.status(200).json({
         status: "success",
-        message: "Profile information updated successfully.",
-        user: updatedUser.toSafeJSON()
+        message: "Profile updated successfully.",
+        user: updatedRecord
       });
 
     } catch (error) {
       console.error("Controller Exception in updateProfile:", error);
       return res.status(500).json({
         status: "error",
-        message: "An internal server error occurred while updating the profile."
+        message: "An internal server error occurred while updating the profile configuration."
       });
     }
   }

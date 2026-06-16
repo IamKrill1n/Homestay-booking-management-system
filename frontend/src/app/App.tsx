@@ -17,6 +17,7 @@ import { V_HomestayManagementView } from "./views/V_HomestayManagementView";
 import { V_HomestayFormView } from "./views/V_HomestayFormView";
 import { V_AdminVerificationView } from "./views/V_AdminVerificationView";
 import { V_ProfileView } from "./views/V_ProfileView";
+import { V_EditProfileView } from "./views/V_EditProfileView";
 import { V_TransactionView } from "./views/V_TransactionView";
 import { Toaster } from "./components/ui/sonner";
 
@@ -84,6 +85,7 @@ function AppContent() {
             }
           />
           <Route path="/profile" element={<V_ProfileView />} />
+          <Route path="/profile/edit" element={<V_EditProfileView />} />
 
           {/* Owner Routes */}
           <Route
