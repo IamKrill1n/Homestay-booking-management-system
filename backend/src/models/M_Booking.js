@@ -1,6 +1,6 @@
 import * as bookingRepo from "../repositories/bookingRepository.js";
 
-const ALLOWED_STATUSES = ["pending", "confirmed", "cancelled", "completed"];
+const ALLOWED_STATUSES = ["pending", "confirmed", "cancelled", "completed", "refunded"];
 
 export class M_Booking {
   constructor({
@@ -57,6 +57,67 @@ export class M_Booking {
     const checkIn = new Date(this.checkInDate);
     const checkOut = new Date(this.checkOutDate);
     return Math.max(0, Math.ceil((checkOut.getTime() - checkIn.getTime()) / 3_600_000));
+  }
+
+  // 2. NEW: Daily Math (86_400_000 ms = 24 hours)
+  calculateTotalNights() {
+    const checkIn = new Date(this.checkInDate);
+    const checkOut = new Date(this.checkOutDate);
+    return Math.max(0, Math.ceil((checkOut.getTime() - checkIn.getTime()) / 86_400_000));
+  }
+
+  // 3. NEW: Master Price Calculator
+  calculateAndSetTotalPrice(rate, rentalType) {
+    if (rentalType === 'hourly') {
+      this.totalPrice = this.calculateTotalHours() * Number(rate);
+    } else if (rentalType === 'daily') {
+      this.totalPrice = this.calculateTotalNights() * Number(rate);
+    }
+      return this.totalPrice;
+    }
+  
+  calculateRefund(policy) {
+    const now = new Date();
+    const checkIn = new Date(this.checkInDate);
+      
+    // Calculate exact hours remaining until check-in
+    const msDifference = checkIn.getTime() - now.getTime();
+    const hoursRemaining = msDifference / (1000 * 60 * 60);
+  
+    // If they are cancelling AFTER check-in time, $0 refund
+    if (hoursRemaining <= 0) {
+      return { refundAmount: 0, refundPercentage: 0 };
+    }
+  
+    let refundPercentage = 0;
+  
+    // The Tiered Math
+    switch (String(policy).toLowerCase()) {
+      case 'flexible':
+        if (hoursRemaining >= 24) refundPercentage = 1.0; // 100%
+        else refundPercentage = 50;                        
+        break;
+  
+      case 'moderate':
+        if (hoursRemaining >= 72) refundPercentage = 1.0;      // 100%
+        else if (hoursRemaining >= 24) refundPercentage = 0.75;  
+        else refundPercentage = 25;                              
+        break;
+  
+      case 'strict':
+        if (hoursRemaining >= 120) refundPercentage = 0.5; 
+        else refundPercentage = 0;                         
+        break;
+  
+      default:
+        refundPercentage = 0; // Failsafe
+    }
+  
+    return {
+      refundPercentage,
+      // Math.round ensures we don't get weird decimal fractions in VND
+      refundAmount: Math.round(Number(this.totalPrice) * refundPercentage) 
+    };
   }
 
   async bookHomestay() {

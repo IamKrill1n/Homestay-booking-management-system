@@ -7,6 +7,9 @@ const HOMESTAY_SELECT = `
     h.title,
     h.description,
     h.price_per_hour,
+    h.rental_type,
+    h.check_in_time,
+    h.check_out_time,
     h.is_verified,
     h.status,
     h.rejection_reason,
@@ -111,6 +114,10 @@ function mapRow(row) {
     title: row.title,
     description: row.description,
     pricePerHour: Number(row.price_per_hour),
+    rental_type: row.rental_type,
+    check_in_time: row.check_in_time,
+    check_out_time: row.check_out_time,
+    isVerified: row.is_verified,
     isVerified: row.is_verified,
     status: row.status,
     rejectionReason: row.rejection_reason,
@@ -253,6 +260,11 @@ export async function filterHomestays(options = {}) {
     params.push(String(options.city));
   }
 
+  if (options.rental_type && options.rental_type !== "All" && options.rental_type !== "all") {
+    conditions.push(`h.rental_type = $${idx++}`);
+    params.push(String(options.rental_type));
+  }
+
   if (options.minPrice != null && options.minPrice !== "") {
     conditions.push(`h.price_per_hour >= $${idx++}`);
     params.push(Number(options.minPrice));
@@ -299,14 +311,17 @@ export async function createHomestay(data) {
     await client.query("BEGIN");
     const { rows } = await client.query(
       `INSERT INTO homestays (
-         owner_id, title, description, price_per_hour, is_verified, status, rejection_reason
-       ) VALUES ($1, $2, $3, $4, FALSE, 'pending', NULL)
+         owner_id, title, description, price_per_hour, rental_type, check_in_time, check_out_time, is_verified, status, rejection_reason
+       ) VALUES ($1, $2, $3, $4, $5, $6, $7, FALSE, 'pending', NULL)
        RETURNING homestay_id`,
       [
         Number(data.ownerId),
         data.title,
         data.description ?? null,
         Number(data.pricePerHour),
+        data.rental_type || 'hourly',
+        data.check_in_time || '14:00:00',
+        data.check_out_time || '10:00:00'
       ]
     );
 
@@ -349,9 +364,12 @@ export async function updateHomestay(homestayID, fields) {
          title = $2,
          description = $3,
          price_per_hour = $4,
-         status = $5,
-         is_verified = $6,
-         rejection_reason = $7
+         rental_type = $5,
+         check_in_time = $6,
+         check_out_time = $7,
+         status = $8,
+         is_verified = $9,
+         rejection_reason = $10
        WHERE homestay_id = $1
        RETURNING homestay_id`,
       [
@@ -359,6 +377,9 @@ export async function updateHomestay(homestayID, fields) {
         fields.title,
         fields.description ?? null,
         Number(fields.pricePerHour),
+        fields.rental_type || 'hourly',
+        fields.check_in_time || '14:00:00',
+        fields.check_out_time || '10:00:00',
         fields.status,
         fields.isVerified,
         fields.rejectionReason ?? null,

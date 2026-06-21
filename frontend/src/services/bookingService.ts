@@ -36,6 +36,11 @@ interface BookingResponse {
   booking: ApiBooking;
 }
 
+interface BookedRange {
+  check_in_date: string;
+  check_out_date: string;
+}
+
 function toBooking(apiBooking: ApiBooking): BookingRow {
   return {
     id: String(apiBooking.bookingID),
@@ -72,6 +77,13 @@ export const bookingService = {
   async listForUser(userId: string | number) {
     const data = await apiRequest<ApiBooking[]>(`/bookings/user/${userId}`);
     return data.map(toBooking);
+  },
+
+  async getUnavailableDates(homestayId: string | number): Promise<BookedRange[]> {
+    const data = await apiRequest<{ status: string, bookedRanges: BookedRange[] }>(
+      `/bookings/homestay/${homestayId}/availability`
+    );
+    return data.bookedRanges || [];
   },
 
   async cancel(bookingId: string) {

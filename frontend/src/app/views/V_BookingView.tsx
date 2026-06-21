@@ -5,9 +5,18 @@ import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 import { Button } from '../components/ui/button';
 import { Label } from '../components/ui/label';
 import { Input } from '../components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../components/ui/dialog';
 import { Homestay, homestayService } from '../../services/homestayService';
 import { bookingService } from '../../services/bookingService';
+
+
+function normalizeTime(timeStr?: string, defaultTime = '14:00:00') {
+  if (!timeStr) return defaultTime;
+  // If it's just "14:00", append ":00"
+  if (timeStr.length === 5) return `${timeStr}:00`;
+  return timeStr;
+}
 
 function formatPrice(value: number) {
   return new Intl.NumberFormat('vi-VN', {
@@ -28,15 +37,49 @@ export function V_BookingView() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [bookedRanges, setBookedRanges] = useState<any[]>([]);
+  const [hourlyDate, setHourlyDate] = useState('');
+  const [hourlyTime, setHourlyTime] = useState('14:00');
+  const [hourlyDuration, setHourlyDuration] = useState('1');
+
+  const timeOptions = Array.from({ length: 48 }).map((_, i) => {
+    const hour = Math.floor(i / 2).toString().padStart(2, '0');
+    const min = i % 2 === 0 ? '00' : '30';
+    return `${hour}:${min}`;
+  });
+
+  useEffect(() => {
+    if (homestay?.rental_type === 'hourly' && hourlyDate) {
+      const start = new Date(`${hourlyDate}T${hourlyTime}:00`);
+      if (!isNaN(start.getTime())) {
+        // Set Check-in
+        setCheckIn(`${hourlyDate}T${hourlyTime}:00`);
+        
+        // Calculate Check-out (add duration in hours)
+        const end = new Date(start.getTime() + Number(hourlyDuration) * 60 * 60 * 1000);
+        
+        // Format local time safely back to YYYY-MM-DDTHH:mm:00
+        const pad = (n: number) => n.toString().padStart(2, '0');
+        const endStr = `${end.getFullYear()}-${pad(end.getMonth() + 1)}-${pad(end.getDate())}T${pad(end.getHours())}:${pad(end.getMinutes())}:00`;
+        setCheckOut(endStr);
+      }
+    }
+  }, [hourlyDate, hourlyTime, hourlyDuration, homestay?.rental_type]);
 
   useEffect(() => {
     if (!id) return;
-
+  
     setIsLoading(true);
     setError('');
-    homestayService
-      .get(id)
-      .then(setHomestay)
+    
+    Promise.all([
+      homestayService.get(id),
+      bookingService.getUnavailableDates(id)
+    ])
+      .then(([fetchedHomestay, ranges]) => {
+        setHomestay(fetchedHomestay);
+        setBookedRanges(ranges);
+      })
       .catch((err: Error) => {
         setHomestay(null);
         setError(err.message || 'Homestay not found.');
@@ -44,15 +87,47 @@ export function V_BookingView() {
       .finally(() => setIsLoading(false));
   }, [id]);
 
-  const calculateHours = () => {
-    if (!checkIn || !checkOut) return 0;
+  const calculateDuration = () => {
+    if (!checkIn || !checkOut || !homestay) return 0;
     const start = new Date(checkIn);
     const end = new Date(checkOut);
-    return Math.max(0, Math.floor((end.getTime() - start.getTime()) / (1000 * 60 * 60)));
+    const diffMs = end.getTime() - start.getTime();
+
+    if (homestay.rental_type === 'daily') {
+      return Math.max(0, Math.ceil(diffMs / (1000 * 60 * 60 * 24)));
+    } else {
+      return Math.max(0, Math.floor(diffMs / (1000 * 60 * 60)));
+    }
   };
 
-  const hours = calculateHours();
-  const totalPrice = homestay ? hours * homestay.pricePerHour : 0;
+  const hasOverlap = () => {
+    if (!checkIn || !checkOut || bookedRanges.length === 0) return false;
+    
+    const reqStart = new Date(checkIn).getTime();
+    const reqEnd = new Date(checkOut).getTime();
+  
+    return bookedRanges.some(range => {
+      const bookedStart = new Date(range.check_in_date).getTime();
+      const bookedEnd = new Date(range.check_out_date).getTime();
+  
+      if (homestay?.rental_type === 'daily') {
+        // For daily: We only care about the date part (nights). 
+        // If a booking ends on the 25th, a new booking CAN start on the 25th.
+        const isOverlapping = reqStart < bookedEnd && reqEnd > bookedStart;
+        return isOverlapping;
+      } else {
+        // For hourly: Strict time overlap check
+        return reqStart < bookedEnd && reqEnd > bookedStart;
+      }
+    });
+  };
+  
+  const isOverlapping = hasOverlap();
+
+  const duration = calculateDuration();
+  const totalPrice = homestay ? duration * homestay.pricePerHour : 0;
+
+  const unit = homestay?.rental_type === 'daily' ? 'night' : 'hour';
 
   const handleBooking = async () => {
     if (!user?.userID || !id) {
@@ -65,8 +140,8 @@ export function V_BookingView() {
       await bookingService.create({
         homestayID: Number(id),
         guestID: Number(user.userID),
-        checkInDate: checkIn,
-        checkOutDate: checkOut,
+        checkInDate: homestay?.rental_type === 'daily' ? checkIn.split('T')[0] : checkIn,
+        checkOutDate: homestay?.rental_type === 'daily' ? checkOut.split('T')[0] : checkOut,
         totalPrice,
       });
       setShowSuccess(true);
@@ -128,42 +203,115 @@ export function V_BookingView() {
                     <p className="text-sm text-muted-foreground">{homestay.address}</p>
                     <p className="text-sm text-muted-foreground">{homestay.city}</p>
                     <p className="text-sm font-semibold text-primary mt-2">
-                      {formatPrice(homestay.pricePerHour)}/hour
+                      {formatPrice(homestay.pricePerHour)}/{unit}
                     </p>
                   </div>
                 </div>
               </div>
 
-              <div className="space-y-4">
-                <div>
-                  <Label htmlFor="checkIn">Check-in Date & Time</Label>
-                  <Input
-                    id="checkIn"
-                    type="datetime-local"
-                    value={checkIn}
-                    onChange={(e) => setCheckIn(e.target.value)}
-                    className="mt-1"
-                  />
-                </div>
+              {homestay.rental_type === 'hourly' ? (
+                // --- HOURLY UI: Pick Date, Time, and Duration ---
+                <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="hourlyDate">Date</Label>
+                    <Input
+                      id="hourlyDate"
+                      type="date"
+                      value={hourlyDate}
+                      onChange={(e) => setHourlyDate(e.target.value)}
+                      className="mt-1"
+                    />
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label>Start Time</Label>
+                      <Select value={hourlyTime} onValueChange={setHourlyTime}>
+                        <SelectTrigger className="mt-1">
+                          <SelectValue placeholder="Select time" />
+                        </SelectTrigger>
+                        <SelectContent className="max-h-[200px]">
+                          {timeOptions.map((time) => (
+                            <SelectItem key={time} value={time}>
+                              {time}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
 
-                <div>
-                  <Label htmlFor="checkOut">Check-out Date & Time</Label>
-                  <Input
-                    id="checkOut"
-                    type="datetime-local"
-                    value={checkOut}
-                    onChange={(e) => setCheckOut(e.target.value)}
-                    className="mt-1"
-                  />
+                    <div>
+                      <Label>Duration</Label>
+                      <div className="flex items-center gap-3 mt-1">
+                        <Select value={hourlyDuration} onValueChange={setHourlyDuration}>
+                          <SelectTrigger className="flex-1">
+                            <SelectValue placeholder="Select" />
+                          </SelectTrigger>
+                          <SelectContent className="max-h-[200px]">
+                            {/* Generates numbers 1 through 24 */}
+                            {Array.from({ length: 24 }, (_, i) => i + 1).map((num) => (
+                              <SelectItem key={num} value={num.toString()}>
+                                {num}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        {/* Fixed unit label outside the scroller */}
+                        <span className="text-sm text-muted-foreground w-10">
+                          {hourlyDuration === '1' ? 'hour' : 'hours'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                // --- DAILY UI: Pick Date Only ---
+                <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="checkIn">Check-in Date</Label>
+                    <Input
+                      id="checkIn"
+                      type="date"
+                      value={checkIn ? checkIn.split('T')[0] : ''}
+                      onChange={(e) => {
+                        const dateVal = e.target.value;
+                        if (!dateVal) return setCheckIn('');
+                        const time = normalizeTime(homestay.check_in_time, '14:00:00');
+                        setCheckIn(`${dateVal}T${time}`);
+                      }}
+                      className="mt-1"
+                    />
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Check-in time is fixed at {homestay.check_in_time?.slice(0, 5) || '14:00'}
+                    </p>
+                  </div>
+                  <div>
+                    <Label htmlFor="checkOut">Check-out Date</Label>
+                    <Input
+                      id="checkOut"
+                      type="date"
+                      value={checkOut ? checkOut.split('T')[0] : ''}
+                      onChange={(e) => {
+                        const dateVal = e.target.value;
+                        if (!dateVal) return setCheckOut('');
+                        const time = normalizeTime(homestay.check_out_time, '10:00:00');
+                        setCheckOut(`${dateVal}T${time}`);
+                      }}
+                      className="mt-1"
+                    />
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Check-out time is fixed at {homestay.check_out_time?.slice(0, 5) || '10:00'}
+                    </p>
+                  </div>
+                </div>
+              )}
 
-              {checkIn && checkOut && hours > 0 && (
+              {checkIn && checkOut && duration > 0 && (
                 <div className="p-4 bg-muted rounded-lg space-y-2">
                   <h4>Price Breakdown</h4>
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">
-                      {formatPrice(homestay.pricePerHour)}/hour x {hours} hours
+                    {formatPrice(homestay.pricePerHour)}/{unit} x {duration} {unit}{duration > 1 ? 's' : ''}
                     </span>
                     <span>{formatPrice(totalPrice)}</span>
                   </div>
@@ -174,10 +322,16 @@ export function V_BookingView() {
                 </div>
               )}
 
+              {isOverlapping && (
+                <div className="p-3 bg-red-100 text-red-700 rounded-md text-sm">
+                  These dates/times overlap with an existing booking. Please select different dates.
+                </div>
+              )}
+
               <div className="flex gap-3">
                 <Button 
                   onClick={handleBooking}
-                  disabled={!checkIn || !checkOut || hours <= 0 || isSubmitting}
+                  disabled={!checkIn || !checkOut || duration <= 0 || isSubmitting || isOverlapping}
                   className="flex-1"
                 >
                   {isSubmitting ? 'Submitting...' : 'Confirm Booking'}

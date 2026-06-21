@@ -1,0 +1,17 @@
+Post 24 hours review, to be implemented.
+1. The Admin Resolution
+
+Once a booking is disputed, it enters a queue for your Platform Admins to review. The Admin acts as the judge:
+
+Scenario A (Guest is right): The homestay was fake or uninhabitable. The Admin clicks "Force Refund," which overrides the cancellation policy, sends 100% of the money back to the guest, and updates the status to refunded.
+
+Scenario B (Guest is wrong): The guest is complaining about something trivial (like the Wi-Fi being slightly slow) to get a free stay. The Admin clicks "Dismiss Dispute." The status changes back to confirmed, and the 24-hour payout clock resumes normally.
+
+Scenario C (Partial fault): The Admin manually negotiates a 50/50 split, triggering a custom refund/payout.
+
+2. Add
+New Controller Endpoint: POST /dispute (Updates booking status to disputed and logs the complaint).
+
+New Database Table: complaints or disputes (To store the guest's message, photo URLs, and the Admin's final decision).
+
+Admin UI: A simple dashboard to review active disputes and click "Refund Guest" or "Pay Host".

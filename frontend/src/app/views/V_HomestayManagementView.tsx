@@ -105,7 +105,7 @@ export function V_HomestayManagementView() {
                   <TableRow>
                     <TableHead>Title</TableHead>
                     <TableHead>City</TableHead>
-                    <TableHead>Price/Hour</TableHead>
+                    <TableHead>Price</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead>Availability</TableHead>
                     <TableHead className="text-right">Actions</TableHead>
@@ -116,7 +116,7 @@ export function V_HomestayManagementView() {
                     <TableRow key={homestay.id}>
                       <TableCell className="font-medium">{homestay.title}</TableCell>
                       <TableCell>{homestay.city}</TableCell>
-                      <TableCell>{formatPrice(homestay.pricePerHour)}</TableCell>
+                      <TableCell>{formatPrice(homestay.pricePerHour)}{homestay.rental_type === 'daily' ? '/night' : '/hr'}</TableCell>
                       <TableCell>
                         <Badge className={getStatusColor(homestay.status)}>
                           {homestay.status}

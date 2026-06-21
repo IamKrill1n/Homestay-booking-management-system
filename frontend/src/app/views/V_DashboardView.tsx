@@ -32,6 +32,7 @@ function parseAmenities(value: string | null) {
 export function V_DashboardView() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [homestays, setHomestays] = useState<Homestay[]>([]);
+  const [rentalType, setRentalType] = useState('All');
   const [cityOptions, setCityOptions] = useState<string[]>(['All']);
   const [priceRange, setPriceRange] = useState(defaultPriceRange);
   const [selectedCity, setSelectedCity] = useState('All');
@@ -60,6 +61,7 @@ export function V_DashboardView() {
     setSelectedCity(searchParams.get('city') || 'All');
     setMaxGuests(searchParams.get('maxGuests') || 'All');
     setSelectedAmenities(parseAmenities(searchParams.get('amenities')));
+    setRentalType(searchParams.get('rental_type') || 'All');
   }, [searchParams]);
 
   useEffect(() => {
@@ -74,6 +76,7 @@ export function V_DashboardView() {
         maxPrice: searchParams.get('maxPrice'),
         maxGuests: searchParams.get('maxGuests'),
         amenities: parseAmenities(searchParams.get('amenities')),
+        rental_type: searchParams.get('rental_type') as 'hourly' | 'daily' | null,
       })
       .then(setHomestays)
       .catch((err: Error) => {
@@ -136,7 +139,7 @@ export function V_DashboardView() {
             <Card>
               <CardContent className="p-6 space-y-6">
                 <div>
-                  <Label className="mb-4 block">Price Range (VND/hour)</Label>
+                  <Label className="mb-4 block">Price Range (VND)</Label>
                   <Slider
                     value={priceRange}
                     onValueChange={setPriceRange}
@@ -152,6 +155,26 @@ export function V_DashboardView() {
                     <span>{formatPrice(priceRange[0])}</span>
                     <span>{formatPrice(priceRange[1])}</span>
                   </div>
+                </div>
+
+                <div>
+                  <Label className="mb-2 block">Rental Type</Label>
+                  <Select
+                    value={rentalType}
+                    onValueChange={(value) => {
+                      setRentalType(value);
+                      updateParam('rental_type', value);
+                    }}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="All" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="All">All Stays</SelectItem>
+                      <SelectItem value="hourly">Hourly Stays</SelectItem>
+                      <SelectItem value="daily">Daily Stays</SelectItem>
+                      </SelectContent>
+                  </Select>
                 </div>
 
                 <div>
@@ -248,7 +271,7 @@ export function V_DashboardView() {
                       <h3 className="mb-1">{homestay.title}</h3>
                       <p className="text-sm text-muted-foreground mb-2">{homestay.city}</p>
                       <div className="flex items-center justify-between mb-2">
-                        <p className="font-semibold text-primary">{formatPrice(homestay.pricePerHour)}/hour</p>
+                        <p className="font-semibold text-primary">{formatPrice(homestay.pricePerHour)} / {homestay.rental_type === 'daily' ? 'night' : 'hour'}</p>
                         <Badge variant={homestay.availability === 'available' ? 'default' : 'secondary'}>
                           {homestay.availability}
                         </Badge>

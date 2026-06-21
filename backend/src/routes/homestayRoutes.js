@@ -8,7 +8,7 @@ const guest = new M_User();
 /** GET /api/homestays — viewHomestays */
 router.get("/", async (req, res, next) => {
   try {
-    const { city, minPrice, maxPrice, maxGuests, amenities, verified, q } = req.query;
+    const { city, minPrice, maxPrice, maxGuests, amenities, verified, q, rental_type } = req.query;
 
     if (
       q ||
@@ -17,8 +17,10 @@ router.get("/", async (req, res, next) => {
       maxPrice != null ||
       maxGuests != null ||
       amenities ||
-      verified != null
+      verified != null ||
+      rental_type // <-- ADDED CONDITION
     ) {
+      console.log("DEBUG: Calling filterHomestays with rental_type =", rental_type);
       const results = await guest.filterHomestays({
         q,
         city,
@@ -27,6 +29,7 @@ router.get("/", async (req, res, next) => {
         maxGuests,
         amenities,
         verified,
+        rental_type, // <-- PASSED TO MODEL
       });
       return res.json(results);
     }

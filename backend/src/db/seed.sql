@@ -39,118 +39,18 @@ INSERT INTO admins (admin_id, admin_code)
 VALUES (3, 'ADMIN-001');
 
 INSERT INTO homestays (
-  homestay_id, owner_id, title, description, price_per_hour, is_verified, status, rejection_reason, created_at
+  homestay_id, owner_id, title, description, rental_type, price_per_hour, is_verified, status, rejection_reason, created_at
 ) VALUES
-  (
-    1,
-    2,
-    'Homestay Da Lat View',
-    'Room with hillside view near the center, suitable for small groups and remote work.',
-    150000,
-    TRUE,
-    'approved',
-    NULL,
-    '2026-01-01T10:00:00Z'
-  ),
-  (
-    2,
-    2,
-    'Coastal Homestay Nha Trang',
-    'Near the beach with an open layout, convenient for families.',
-    200000,
-    TRUE,
-    'approved',
-    NULL,
-    '2026-01-02T10:00:00Z'
-  ),
-  (
-    3,
-    2,
-    'Budget Room Da Lat',
-    'Budget room near the market and main attractions.',
-    80000,
-    FALSE,
-    'pending',
-    NULL,
-    '2026-01-03T10:00:00Z'
-  ),
-  (
-    4,
-    2,
-    'Rejected Garden House',
-    'Sample rejected listing for status checks.',
-    120000,
-    FALSE,
-    'rejected',
-    'Please upload clearer property details.',
-    '2026-01-04T10:00:00Z'
-  ),
-  (
-    5,
-    2,
-    'Hanoi Old Quarter Loft',
-    'Bright loft tucked inside the Old Quarter with easy access to cafes, Hoan Kiem Lake, and weekend walking streets.',
-    180000,
-    TRUE,
-    'approved',
-    NULL,
-    '2026-01-05T10:00:00Z'
-  ),
-  (
-    6,
-    2,
-    'Hoi An Lantern Villa',
-    'Quiet villa near the ancient town with a garden courtyard for families and small groups.',
-    220000,
-    TRUE,
-    'approved',
-    NULL,
-    '2026-01-06T10:00:00Z'
-  ),
-  (
-    7,
-    2,
-    'Da Nang Beach Studio',
-    'Modern studio close to My Khe Beach with workspace, balcony, and quick access to seafood restaurants.',
-    170000,
-    FALSE,
-    'pending',
-    NULL,
-    '2026-01-07T10:00:00Z'
-  ),
-  (
-    8,
-    2,
-    'Sa Pa Mountain Retreat',
-    'Wooden retreat overlooking terraced rice fields, suitable for guests planning trekking trips.',
-    160000,
-    TRUE,
-    'approved',
-    NULL,
-    '2026-01-08T10:00:00Z'
-  ),
-  (
-    9,
-    2,
-    'Hue Riverside Heritage Room',
-    'Heritage-style room near the Perfume River and imperial sites, pending document verification.',
-    130000,
-    FALSE,
-    'pending',
-    NULL,
-    '2026-01-09T10:00:00Z'
-  ),
-  (
-    10,
-    2,
-    'Phu Quoc Sunset Bungalow',
-    'Beach bungalow sample rejected for admin review workflows and owner resubmission testing.',
-    240000,
-    FALSE,
-    'rejected',
-    'Please provide updated safety certification and clearer exterior photos.',
-    '2026-01-10T10:00:00Z'
-  );
+  (1, 2, 'Homestay Da Lat View', 'Room with hillside view near the center, suitable for small groups and remote work.', 'hourly', 150000, TRUE, 'approved', NULL, '2026-01-01T10:00:00Z'),
+  (2, 2, 'Coastal Homestay Nha Trang', 'Near the beach with an open layout, convenient for families.', 'hourly', 200000, TRUE, 'approved', NULL, '2026-01-02T10:00:00Z'),
+  (3, 2, 'Budget Room Da Lat', 'Budget room near the market and main attractions.', 'daily', 1200000, FALSE, 'pending', NULL, '2026-01-03T10:00:00Z'),
+  (4, 2, 'Rejected Garden House', 'Sample rejected listing for status checks.', 'hourly', 120000, FALSE, 'rejected', 'Please upload clearer property details.', '2026-01-04T10:00:00Z'),
+  (5, 2, 'Hanoi Old Quarter Loft', 'Bright loft tucked inside the Old Quarter with easy access to cafes, Hoan Kiem Lake, and weekend walking streets.', 'hourly', 180000, TRUE, 'approved', NULL, '2026-01-05T10:00:00Z'),
+  (6, 2, 'Hoi An Lantern Villa', 'Quiet villa near the ancient town with a garden courtyard for families and small groups.', 'daily', 2000000, TRUE, 'approved', NULL, '2026-01-06T10:00:00Z'),
+  (7, 2, 'Da Nang Beach Studio', 'Modern studio close to My Khe Beach with workspace, balcony, and quick access to seafood restaurants.', 'hourly', 170000, FALSE, 'pending', NULL, '2026-01-07T10:00:00Z'),
+  (8, 2, 'Sa Pa Mountain Retreat', 'Wooden retreat overlooking terraced rice fields, suitable for guests planning trekking trips.', 'hourly', 160000, TRUE, 'approved', NULL, '2026-01-08T10:00:00Z'),
+  (9, 2, 'Hue Riverside Heritage Room', 'Heritage-style room near the Perfume River and imperial sites, pending document verification.', 'hourly', 130000, FALSE, 'pending', NULL, '2026-01-09T10:00:00Z'),
+  (10, 2, 'Phu Quoc Sunset Bungalow', 'Beach bungalow sample rejected for admin review workflows and owner resubmission testing.', 'hourly', 240000, FALSE, 'rejected', 'Please provide updated safety certification and clearer exterior photos.', '2026-01-10T10:00:00Z');
 
 INSERT INTO locations (homestay_id, latitude, longitude, address, city)
 VALUES
@@ -199,8 +99,8 @@ INSERT INTO bookings (
 INSERT INTO transactions (
   transaction_id, booking_id, amount, payment_method, transaction_date, status
 ) VALUES
-  (1, 1, 900000, 'credit_card', '2026-01-10T10:05:00Z', 'confirmed'),
-  (2, 2, 1200000, 'bank_transfer', '2026-01-20T10:05:00Z', 'confirmed');
+  (1, 1, 900000, 'credit_card', '2026-01-10T10:05:00Z', 'success'),
+  (2, 2, 1200000, 'bank_transfer', '2026-01-20T10:05:00Z', 'success');
 
 INSERT INTO feedbacks (
   feedback_id, booking_id, homestay_id, guest_id, rating, feedback_date, feedback_message
