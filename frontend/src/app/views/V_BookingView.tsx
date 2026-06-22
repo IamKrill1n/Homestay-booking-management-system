@@ -240,7 +240,7 @@ export function V_BookingView() {
                       </Select>
                     </div>
 
-                    <div>
+                    {/* <div>
                       <Label>Duration</Label>
                       <div className="flex items-center gap-3 mt-1">
                         <Select value={hourlyDuration} onValueChange={setHourlyDuration}>
@@ -248,7 +248,6 @@ export function V_BookingView() {
                             <SelectValue placeholder="Select" />
                           </SelectTrigger>
                           <SelectContent className="max-h-[200px]">
-                            {/* Generates numbers 1 through 24 */}
                             {Array.from({ length: 24 }, (_, i) => i + 1).map((num) => (
                               <SelectItem key={num} value={num.toString()}>
                                 {num}
@@ -256,12 +255,50 @@ export function V_BookingView() {
                             ))}
                           </SelectContent>
                         </Select>
-                        {/* Fixed unit label outside the scroller */}
+                        <span className="text-sm text-muted-foreground w-10">
+                          {hourlyDuration === '1' ? 'hour' : 'hours'}
+                        </span>
+                      </div>
+                    </div> */}
+
+                    <div>
+                      <Label>Duration</Label>
+                      <div className="flex items-center gap-3 mt-1">
+                        <Input
+                          type="number"
+                          min={1}
+                          max={24}
+                          placeholder="Enter hours"
+                          value={hourlyDuration}
+                          className="flex-1"
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            
+                            if (val === "") {
+                              setHourlyDuration("");
+                              return;
+                            }
+
+                            const parsed = parseInt(val, 10);
+                            
+                            if (!isNaN(parsed)) {
+                              if (parsed > 24) {
+                                setHourlyDuration("24");
+                              } else if (parsed < 1) {
+                                setHourlyDuration("1");
+                              } else {
+                                setHourlyDuration(parsed.toString());
+                              }
+                            }
+                          }}
+                        />
+                        
                         <span className="text-sm text-muted-foreground w-10">
                           {hourlyDuration === '1' ? 'hour' : 'hours'}
                         </span>
                       </div>
                     </div>
+                    
                   </div>
                 </div>
               ) : (

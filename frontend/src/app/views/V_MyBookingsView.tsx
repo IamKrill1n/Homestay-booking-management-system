@@ -105,9 +105,10 @@ export function V_MyBookingsView() {
       case 'pending':
         return 'bg-[#D97706] text-white';
       case 'approved':
-      case 'confirmed':
       case 'completed':
         return 'bg-[#16A34A] text-white';
+      case 'confirmed':
+        return 'bg-[#2563EB] text-white';
       case 'rejected':
         return 'bg-[#DC2626] text-white';
       case 'cancelled':
@@ -174,6 +175,21 @@ export function V_MyBookingsView() {
                               onClick={() => handleCancel(booking.id)}
                             >
                               Cancel
+                            </Button>
+                          )}
+                          {booking.status === 'approved' && (
+                            <Button
+                              size="sm"
+                              onClick={() =>
+                                navigate('/checkout', {
+                                  state: {
+                                    bookingID: booking.id,
+                                    amount: booking.totalPrice,
+                                  },
+                                })
+                              }
+                            >
+                              Pay
                             </Button>
                           )}
                           {canLeaveFeedback(booking) && (

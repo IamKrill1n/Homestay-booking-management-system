@@ -1,6 +1,6 @@
 import * as bookingRepo from "../repositories/bookingRepository.js";
 
-const ALLOWED_STATUSES = ["pending", "confirmed", "cancelled", "completed", "refunded"];
+const ALLOWED_STATUSES = ["pending", "approved", "rejected", "confirmed", "cancelled", "completed", "refunded"];
 
 export class M_Booking {
   constructor({
@@ -126,6 +126,18 @@ export class M_Booking {
 
   async getBookHistory(userID) {
     return bookingRepo.findBookingByGuestId(userID);
+  }
+
+  async getOwnerBookings(ownerID) {
+    return bookingRepo.findBookingsByOwnerId(ownerID);
+  }
+
+  async approveBooking(bookingID, ownerID) {
+    return bookingRepo.updateOwnerBookingStatus(bookingID, ownerID, "approved");
+  }
+
+  async rejectBooking(bookingID, ownerID) {
+    return bookingRepo.updateOwnerBookingStatus(bookingID, ownerID, "rejected");
   }
 
   async cancelBooking(bookingID) {

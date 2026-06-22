@@ -16,7 +16,10 @@ import { V_MyBookingsView } from "./views/V_MyBookingsView";
 import { V_HomestayManagementView } from "./views/V_HomestayManagementView";
 import { V_HomestayFormView } from "./views/V_HomestayFormView";
 import { V_AdminVerificationView } from "./views/V_AdminVerificationView";
+import { V_ProfileView } from "./views/V_ProfileView";
+import { V_EditProfileView } from "./views/V_EditProfileView";
 import { V_TransactionView } from "./views/V_TransactionView";
+import { V_OwnerBookingsView } from "./views/V_OwnerBookingsView";
 import { Toaster } from "./components/ui/sonner";
 
 function ProtectedRoute({
@@ -82,6 +85,8 @@ function AppContent() {
               </ProtectedRoute>
             }
           />
+          <Route path="/profile" element={<V_ProfileView />} />
+          <Route path="/profile/edit" element={<V_EditProfileView />} />
 
           {/* Owner Routes */}
           <Route
@@ -89,6 +94,14 @@ function AppContent() {
             element={
               <ProtectedRoute requiredRole="owner">
                 <V_HomestayManagementView />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/owner/bookings"
+            element={
+              <ProtectedRoute requiredRole="owner">
+                <V_OwnerBookingsView />
               </ProtectedRoute>
             }
           />
@@ -132,31 +145,11 @@ function AppContent() {
   );
 }
 
-function Temp() {
-  return (
-    <div className="w-10 h-10 bg-blue-300">
-
-    </div>
-  );
-}
-
-function Temp2() {
-  return (
-    <div className="min-h-screen flex flex-col bg-background">
-      <Header />
-      {/* <Temp /> */}
-      <Footer />
-      <Toaster />
-    </div>
-  );
-}
-
 export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
         <AppContent />
-        {/* <Temp2 /> */}
       </AuthProvider>
     </BrowserRouter>
   );

@@ -18,5 +18,12 @@ export const userService = {
 
   async getProfile(userId: string): Promise<User> {
     return apiRequest<User>(`/guest/profile/${userId}`);
-  }
+  },
+
+  async updateProfile(userId: string | number, userData: Partial<User>): Promise<ApiResponse<User>> {
+    return apiRequest<ApiResponse<User>>(`/guest/profile/${userId}`, {
+      method: "PUT",
+      body: JSON.stringify(userData),
+    });
+  },
 };

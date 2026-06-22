@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS bookings (
   check_in_date TIMESTAMPTZ NOT NULL,
   check_out_date TIMESTAMPTZ NOT NULL CHECK (check_out_date > check_in_date),
   total_price   NUMERIC(12, 2),
-  status        VARCHAR(20) NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'confirmed', 'cancelled', 'completed', 'refunded')),
+  status        VARCHAR(20) NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'rejected', 'confirmed', 'cancelled', 'completed', 'refunded')),
   created_at    TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 

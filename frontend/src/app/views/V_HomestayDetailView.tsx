@@ -27,7 +27,7 @@ function mapQuery(homestay: Homestay) {
 export function V_HomestayDetailView() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const [selectedImage, setSelectedImage] = useState(0);
   const [homestay, setHomestay] = useState<Homestay | null>(null);
   const [feedback, setFeedback] = useState<Feedback[]>([]);
@@ -82,6 +82,8 @@ export function V_HomestayDetailView() {
       </div>
     );
   }
+
+  const canBook = !isAuthenticated || user?.role === 'common';
 
   const handleBooking = () => {
     if (!isAuthenticated) {
@@ -245,14 +247,16 @@ export function V_HomestayDetailView() {
                   </div>
                 </div>
 
-                <Button
-                  className="w-full"
-                  size="lg"
-                  onClick={handleBooking}
-                  disabled={!isAuthenticated || homestay.availability !== 'available'}
-                >
-                  {!isAuthenticated ? 'Login to Book' : 'Book Homestay'}
-                </Button>
+                {canBook && (
+                  <Button
+                    className="w-full"
+                    size="lg"
+                    onClick={handleBooking}
+                    disabled={isAuthenticated && homestay.availability !== 'available'}
+                  >
+                    {!isAuthenticated ? 'Login to Book' : 'Book Homestay'}
+                  </Button>
+                )}
 
                 {!isAuthenticated && (
                   <p className="text-sm text-muted-foreground text-center">

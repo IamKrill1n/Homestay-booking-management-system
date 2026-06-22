@@ -32,8 +32,8 @@ INSERT INTO users (
     'admin'
   );
 
-INSERT INTO owners (owner_id, bank_account_number)
-VALUES (2, '0123456789');
+INSERT INTO owners (owner_id, bank_name, bank_account_name, bank_account_number)
+VALUES (2, 'VCB', '1111', '0123456789');
 
 INSERT INTO admins (admin_id, admin_code)
 VALUES (3, 'ADMIN-001');
