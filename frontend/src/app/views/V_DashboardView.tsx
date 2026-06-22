@@ -20,7 +20,10 @@ function formatPrice(value: number) {
   }).format(value);
 }
 
-function parseNumberParam(value: string | null, fallback: number) {
+function parseNumberParam(value: string | null | undefined, fallback: number): number {
+  if (value === null || value === undefined || value.trim() === '') {
+    return fallback;
+  }
   const number = Number(value);
   return Number.isFinite(number) ? number : fallback;
 }
@@ -54,10 +57,9 @@ export function V_DashboardView() {
   }, []);
 
   useEffect(() => {
-    setPriceRange([
-      parseNumberParam(searchParams.get('minPrice'), defaultPriceRange[0]),
-      parseNumberParam(searchParams.get('maxPrice'), defaultPriceRange[1]),
-    ]);
+    const currentMin = parseNumberParam(searchParams.get('minPrice'), defaultPriceRange[0]);
+    const currentMax = parseNumberParam(searchParams.get('maxPrice'), defaultPriceRange[1]);
+    setPriceRange([currentMin, currentMax]);
     setSelectedCity(searchParams.get('city') || 'All');
     setMaxGuests(searchParams.get('maxGuests') || 'All');
     setSelectedAmenities(parseAmenities(searchParams.get('amenities')));
