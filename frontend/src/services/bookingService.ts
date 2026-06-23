@@ -4,6 +4,7 @@ export interface BookingRow {
   id: string;
   homestayId: string;
   userId: string;
+  numberOfGuests: number;
   checkIn: string;
   checkOut: string;
   totalPrice: number;
@@ -27,6 +28,7 @@ interface ApiBooking {
   bookingID: number | string;
   homestayID: number | string;
   guestID: number | string;
+  numberOfGuests: number;
   checkInDate: string;
   checkOutDate: string;
   totalPrice: number | string | null;
@@ -53,6 +55,7 @@ function toBooking(apiBooking: ApiBooking): BookingRow {
     id: String(apiBooking.bookingID),
     homestayId: String(apiBooking.homestayID),
     userId: String(apiBooking.guestID),
+    numberOfGuests: Number(apiBooking.numberOfGuests),
     checkIn: apiBooking.checkInDate,
     checkOut: apiBooking.checkOutDate,
     totalPrice: Number(apiBooking.totalPrice ?? 0),
@@ -68,6 +71,7 @@ export const bookingService = {
   async create(payload: {
     homestayID: number;
     guestID: number;
+    numberOfGuests: number;
     checkInDate: string;
     checkOutDate: string;
     totalPrice: number;

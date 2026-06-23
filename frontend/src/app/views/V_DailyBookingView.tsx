@@ -23,6 +23,7 @@ export function V_DailyBookingView() {
   const { user } = useAuth();
   
   // These now only hold the YYYY-MM-DD string
+  const [numberOfGuests, setNumberOfGuests] = useState('1');
   const [checkIn, setCheckIn] = useState('');
   const [checkOut, setCheckOut] = useState('');
   
@@ -72,6 +73,7 @@ export function V_DailyBookingView() {
       await bookingService.create({
         homestayID: Number(id),
         guestID: Number(user.userID),
+        numberOfGuests: Number(numberOfGuests),
         checkInDate: checkIn,
         checkOutDate: checkOut,
         totalPrice,
@@ -168,6 +170,45 @@ export function V_DailyBookingView() {
                     onChange={(e) => setCheckOut(e.target.value)}
                     className="mt-1"
                   />
+                </div>
+              </div>
+
+              {/* Number of guests */}
+              <div>
+                <Label>Number of guests</Label>
+                <div className="flex items-center gap-3 mt-1">
+                  <Input
+                    type="number"
+                    min={1}
+                    max={20}
+                    placeholder="Enter number of guests"
+                    value={numberOfGuests}
+                    className="flex-1"
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      
+                      if (val === "") {
+                        setNumberOfGuests("");
+                        return;
+                      }
+
+                      const parsed = parseInt(val, 10);
+                      
+                      if (!isNaN(parsed)) {
+                        if (parsed > 24) {
+                          setNumberOfGuests("20");
+                        } else if (parsed < 1) {
+                          setNumberOfGuests("1");
+                        } else {
+                          setNumberOfGuests(parsed.toString());
+                        }
+                      }
+                    }}
+                  />
+                  
+                  <span className="text-sm text-muted-foreground w-10">
+                    {numberOfGuests === '1' ? 'person' : 'people'}
+                  </span>
                 </div>
               </div>
 

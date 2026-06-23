@@ -90,11 +90,11 @@ INSERT INTO amenities (
   (10, 4, 2, 6, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE);
 
 INSERT INTO bookings (
-  booking_id, homestay_id, guest_id, check_in_date, check_out_date, total_price, status, created_at
+  booking_id, homestay_id, guest_id, number_of_guests, check_in_date, check_out_date, total_price, status, created_at
 ) VALUES
-  (1, 1, 1, '2026-01-15T09:00:00Z', '2026-01-15T15:00:00Z', 900000, 'completed', '2026-01-10T10:00:00Z'),
-  (2, 2, 1, '2026-02-01T10:00:00Z', '2026-02-01T16:00:00Z', 1200000, 'confirmed', '2026-01-20T10:00:00Z'),
-  (3, 1, 1, '2026-07-01T10:00:00Z', '2026-07-01T14:00:00Z', 600000, 'pending', '2026-06-01T10:00:00Z');
+  (1, 1, 1, 2, '2026-01-15T09:00:00Z', '2026-01-15T15:00:00Z', 900000, 'completed', '2026-01-10T10:00:00Z'),
+  (2, 2, 1, 3, '2026-02-01T10:00:00Z', '2026-02-01T16:00:00Z', 1200000, 'confirmed', '2026-01-20T10:00:00Z'),
+  (3, 1, 1, 1, '2026-07-01T10:00:00Z', '2026-07-01T14:00:00Z', 600000, 'pending', '2026-06-01T10:00:00Z');
 
 INSERT INTO transactions (
   transaction_id, booking_id, amount, payment_method, transaction_date, status

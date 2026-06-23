@@ -30,6 +30,7 @@ export function V_BookingView() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const [numberOfGuests, setNumberOfGuests] = useState('1');
   const [checkIn, setCheckIn] = useState('');
   const [checkOut, setCheckOut] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
@@ -52,6 +53,9 @@ export function V_BookingView() {
     if (homestay?.rental_type === 'hourly' && hourlyDate) {
       const start = new Date(`${hourlyDate}T${hourlyTime}:00`);
       if (!isNaN(start.getTime())) {
+        // Set numberOfGuests
+        setNumberOfGuests(numberOfGuests);
+
         // Set Check-in
         setCheckIn(`${hourlyDate}T${hourlyTime}:00`);
         
@@ -64,7 +68,7 @@ export function V_BookingView() {
         setCheckOut(endStr);
       }
     }
-  }, [hourlyDate, hourlyTime, hourlyDuration, homestay?.rental_type]);
+  }, [numberOfGuests, hourlyDate, hourlyTime, hourlyDuration, homestay?.rental_type]);
 
   useEffect(() => {
     if (!id) return;
@@ -140,6 +144,7 @@ export function V_BookingView() {
       await bookingService.create({
         homestayID: Number(id),
         guestID: Number(user.userID),
+        numberOfGuests: Number(numberOfGuests),
         checkInDate: homestay?.rental_type === 'daily' ? checkIn.split('T')[0] : checkIn,
         checkOutDate: homestay?.rental_type === 'daily' ? checkOut.split('T')[0] : checkOut,
         totalPrice,
@@ -212,17 +217,61 @@ export function V_BookingView() {
               {homestay.rental_type === 'hourly' ? (
                 // --- HOURLY UI: Pick Date, Time, and Duration ---
                 <div className="space-y-4">
-                  <div>
-                    <Label htmlFor="hourlyDate">Date</Label>
-                    <Input
-                      id="hourlyDate"
-                      type="date"
-                      value={hourlyDate}
-                      onChange={(e) => setHourlyDate(e.target.value)}
-                      className="mt-1"
-                    />
+                  <div className="grid grid-cols-2 gap-4">
+                    
+                    {/* Date */}
+                    <div>
+                      <Label htmlFor="hourlyDate">Date</Label>
+                      <Input
+                        id="hourlyDate"
+                        type="date"
+                        value={hourlyDate}
+                        onChange={(e) => setHourlyDate(e.target.value)}
+                        className="mt-1"
+                      />
+                    </div>
+
+                    {/* Number of guests */}
+                    <div>
+                      <Label>Number of guests</Label>
+                      <div className="flex items-center gap-3 mt-1">
+                        <Input
+                          type="number"
+                          min={1}
+                          max={20}
+                          placeholder="Enter number of guests"
+                          value={numberOfGuests}
+                          className="flex-1"
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            
+                            if (val === "") {
+                              setNumberOfGuests("");
+                              return;
+                            }
+
+                            const parsed = parseInt(val, 10);
+                            
+                            if (!isNaN(parsed)) {
+                              if (parsed > 24) {
+                                setNumberOfGuests("20");
+                              } else if (parsed < 1) {
+                                setNumberOfGuests("1");
+                              } else {
+                                setNumberOfGuests(parsed.toString());
+                              }
+                            }
+                          }}
+                        />
+                        
+                        <span className="text-sm text-muted-foreground w-10">
+                          {numberOfGuests === '1' ? 'person' : 'people'}
+                        </span>
+                      </div>
+                    </div>
                   </div>
                   
+                  {/* Start time */}
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <Label>Start Time</Label>
@@ -340,6 +389,44 @@ export function V_BookingView() {
                       Check-out time is fixed at {homestay.check_out_time?.slice(0, 5) || '10:00'}
                     </p>
                   </div>
+                  {/* Number of guests */}
+                    <div>
+                      <Label>Number of guests</Label>
+                      <div className="flex items-center gap-3 mt-1">
+                        <Input
+                          type="number"
+                          min={1}
+                          max={20}
+                          placeholder="Enter number of guests"
+                          value={numberOfGuests}
+                          className="flex-1"
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            
+                            if (val === "") {
+                              setNumberOfGuests("");
+                              return;
+                            }
+
+                            const parsed = parseInt(val, 10);
+                            
+                            if (!isNaN(parsed)) {
+                              if (parsed > 24) {
+                                setNumberOfGuests("20");
+                              } else if (parsed < 1) {
+                                setNumberOfGuests("1");
+                              } else {
+                                setNumberOfGuests(parsed.toString());
+                              }
+                            }
+                          }}
+                        />
+                        
+                        <span className="text-sm text-muted-foreground w-10">
+                          {numberOfGuests === '1' ? 'person' : 'people'}
+                        </span>
+                      </div>
+                    </div>                  
                 </div>
               )}
 

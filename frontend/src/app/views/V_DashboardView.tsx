@@ -137,6 +137,8 @@ export function V_DashboardView() {
         <h1 className="mb-6">{resultLabel}</h1>
         
         <div className="flex gap-6">
+
+          {/* Filter */}
           <div className="w-[280px] flex-shrink-0">
             <Card>
               <CardContent className="p-6 space-y-6">

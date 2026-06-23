@@ -43,7 +43,7 @@ describe('Booking API Endpoints', () => {
     });
 
     const response = await request(app).post('/api/bookings').send({
-      homestayID: 5, guestID: 2, checkInDate: '2026-07-01', checkOutDate: '2026-07-04'
+      homestayID: 5, guestID: 2, numberOfGuests: 1, checkInDate: '2026-07-01', checkOutDate: '2026-07-04'
     });
 
     assert.strictEqual(response.status, 201);
@@ -60,7 +60,7 @@ describe('Booking API Endpoints', () => {
     });
 
     const response = await request(app).post('/api/bookings').send({
-      homestayID: 5, guestID: 2, checkInDate: '2026-07-01T10:00:00', checkOutDate: '2026-07-01T15:00:00'
+      homestayID: 5, guestID: 2, numberOfGuests: 2, checkInDate: '2026-07-01T10:00:00', checkOutDate: '2026-07-01T15:00:00'
     });
 
     assert.strictEqual(response.status, 409);

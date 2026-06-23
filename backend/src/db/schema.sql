@@ -53,6 +53,7 @@ CREATE TABLE IF NOT EXISTS bookings (
   booking_id    SERIAL      PRIMARY KEY,
   homestay_id   INT         NOT NULL REFERENCES homestays(homestay_id) ON DELETE CASCADE,
   guest_id      INT         NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+  number_of_guests  INT NOT NULL,
   check_in_date TIMESTAMPTZ NOT NULL,
   check_out_date TIMESTAMPTZ NOT NULL CHECK (check_out_date > check_in_date),
   total_price   NUMERIC(12, 2),

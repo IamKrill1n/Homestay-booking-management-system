@@ -14,6 +14,7 @@ class C_Booking {
       const fieldList = {
         homestayID: req.body.homestayID ?? req.body.homestayId,
         guestID: req.body.guestID ?? req.body.guestId,
+        numberOfGuests: req.body.numberOfGuests,
         checkInDate: req.body.checkInDate ?? req.body.checkIn,
         checkOutDate: req.body.checkOutDate ?? req.body.checkOut,
         status: "pending", 

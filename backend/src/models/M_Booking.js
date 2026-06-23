@@ -7,6 +7,7 @@ export class M_Booking {
     bookingID = null,
     homestayID,
     guestID,
+    numberOfGuests,
     checkInDate,
     checkOutDate,
     totalPrice = null,
@@ -16,6 +17,7 @@ export class M_Booking {
     this.bookingID = bookingID;
     this.homestayID = homestayID;
     this.guestID = guestID;
+    this.numberOfGuests = numberOfGuests;
     this.checkInDate = checkInDate;
     this.checkOutDate = checkOutDate;
     this.totalPrice = totalPrice;
@@ -28,7 +30,7 @@ export class M_Booking {
       return { valid: false, message: "Booking payload is required." };
     }
 
-    for (const field of ["homestayID", "guestID", "checkInDate", "checkOutDate"]) {
+    for (const field of ["homestayID", "guestID", "numberOfGuests", "checkInDate", "checkOutDate"]) {
       if (fieldList[field] == null || String(fieldList[field]).trim() === "") {
         return { valid: false, message: `Missing required field: ${field}` };
       }
