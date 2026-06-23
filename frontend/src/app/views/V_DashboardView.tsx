@@ -8,6 +8,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Checkbox } from '../components/ui/checkbox';
 import { Label } from '../components/ui/label';
 import { Homestay, homestayService } from '../../services/homestayService';
+import { MapPinIcon } from '@heroicons/react/24/outline';
+import { StarIcon } from '@heroicons/react/24/solid';
+import { Feedback, feedbackService } from '../../services/feedbackService';
 
 const amenitiesList = ['WiFi', 'Kitchen', 'Air Conditioning', 'TV', 'Parking', 'Bath Tub', 'Pets'];
 const defaultPriceRange = [0, 500000];
@@ -43,6 +46,7 @@ export function V_DashboardView() {
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [feedback, setFeedback] = useState<Feedback[]>([]);
 
   const query = searchParams.get('q') || '';
 
@@ -74,6 +78,7 @@ export function V_DashboardView() {
       .list({
         q: searchParams.get('q'),
         city: searchParams.get('city'),
+        address: searchParams.get('address'),
         minPrice: searchParams.get('minPrice'),
         maxPrice: searchParams.get('maxPrice'),
         maxGuests: searchParams.get('maxGuests'),
@@ -130,6 +135,12 @@ export function V_DashboardView() {
   const clearFilters = () => {
     setSearchParams({});
   };
+
+  const averageRating = useMemo(() => {
+    if (feedback.length === 0) return null;
+    const total = feedback.reduce((sum, item) => sum + item.rating, 0);
+    return total / feedback.length;
+  }, [feedback]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -251,6 +262,7 @@ export function V_DashboardView() {
             </Card>
           </div>
 
+          {/* Dashboard */}
           <div className="flex-1">
             {error && (
               <div className="mb-4 rounded-md border border-destructive p-4 text-sm text-destructive">
@@ -272,8 +284,19 @@ export function V_DashboardView() {
                       />
                     </div>
                     <CardContent className="p-4">
-                      <h3 className="mb-1">{homestay.title}</h3>
-                      <p className="text-sm text-muted-foreground mb-2">{homestay.city}</p>
+                      <div className="flex h-auto w-full mb-2 items-center justify-between">
+                        <h3 className="mb-1">{homestay.title}</h3>
+                        <div className="flex gap-1 items-center">
+                          <StarIcon className="size-5 text-yellow-400" />
+                          <div className="text-sm text-muted-foreground">5.0</div>
+                        </div>
+                      </div>
+
+                      <div className="flex h-4 w-auto gap-1 mb-2 items-center">
+                        <MapPinIcon className="h-full w-auto text-muted-foreground" />
+                        <p className="text-sm text-muted-foreground">{homestay.address}, {homestay.city}</p>
+                      </div>
+
                       <div className="flex items-center justify-between mb-2">
                         <p className="font-semibold text-primary">{formatPrice(homestay.pricePerHour)} / {homestay.rental_type === 'daily' ? 'night' : 'hour'}</p>
                         <Badge variant={homestay.availability === 'available' ? 'default' : 'secondary'}>
