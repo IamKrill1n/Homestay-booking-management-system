@@ -275,7 +275,7 @@ export function V_DashboardView() {
             ) : (
               <div className="grid grid-cols-3 gap-6">
                 {homestays.map((homestay) => (
-                  <Card key={homestay.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                  <Card key={homestay.id} className="flex flex-col overflow-hidden hover:shadow-lg transition-shadow">
                     <div className="aspect-[16/9] overflow-hidden">
                       <img 
                         src={homestay.images[0]} 
@@ -304,7 +304,7 @@ export function V_DashboardView() {
                         </Badge>
                       </div>
                     </CardContent>
-                    <CardFooter className="p-4 pt-0">
+                    <CardFooter className="mt-auto p-4 pt-0">
                       <Link to={`/homestay/${homestay.id}`} className="w-full">
                         <Button className="w-full">View Details</Button>
                       </Link>
