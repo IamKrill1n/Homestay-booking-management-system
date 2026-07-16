@@ -8,6 +8,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Checkbox } from '../components/ui/checkbox';
 import { Label } from '../components/ui/label';
 import { Homestay, homestayService } from '../../services/homestayService';
+import { MapPinIcon } from '@heroicons/react/24/outline';
+import { StarIcon } from '@heroicons/react/24/solid';
+import { Feedback, feedbackService } from '../../services/feedbackService';
 
 const amenitiesList = ['WiFi', 'Kitchen', 'Air Conditioning', 'TV', 'Parking', 'Bath Tub', 'Pets'];
 const defaultPriceRange = [0, 500000];
@@ -20,7 +23,10 @@ function formatPrice(value: number) {
   }).format(value);
 }
 
-function parseNumberParam(value: string | null, fallback: number) {
+function parseNumberParam(value: string | null | undefined, fallback: number): number {
+  if (value === null || value === undefined || value.trim() === '') {
+    return fallback;
+  }
   const number = Number(value);
   return Number.isFinite(number) ? number : fallback;
 }
@@ -32,6 +38,7 @@ function parseAmenities(value: string | null) {
 export function V_DashboardView() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [homestays, setHomestays] = useState<Homestay[]>([]);
+  const [rentalType, setRentalType] = useState('All');
   const [cityOptions, setCityOptions] = useState<string[]>(['All']);
   const [priceRange, setPriceRange] = useState(defaultPriceRange);
   const [selectedCity, setSelectedCity] = useState('All');
@@ -39,6 +46,7 @@ export function V_DashboardView() {
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [feedback, setFeedback] = useState<Feedback[]>([]);
 
   const query = searchParams.get('q') || '';
 
@@ -53,13 +61,13 @@ export function V_DashboardView() {
   }, []);
 
   useEffect(() => {
-    setPriceRange([
-      parseNumberParam(searchParams.get('minPrice'), defaultPriceRange[0]),
-      parseNumberParam(searchParams.get('maxPrice'), defaultPriceRange[1]),
-    ]);
+    const currentMin = parseNumberParam(searchParams.get('minPrice'), defaultPriceRange[0]);
+    const currentMax = parseNumberParam(searchParams.get('maxPrice'), defaultPriceRange[1]);
+    setPriceRange([currentMin, currentMax]);
     setSelectedCity(searchParams.get('city') || 'All');
     setMaxGuests(searchParams.get('maxGuests') || 'All');
     setSelectedAmenities(parseAmenities(searchParams.get('amenities')));
+    setRentalType(searchParams.get('rental_type') || 'All');
   }, [searchParams]);
 
   useEffect(() => {
@@ -70,10 +78,12 @@ export function V_DashboardView() {
       .list({
         q: searchParams.get('q'),
         city: searchParams.get('city'),
+        address: searchParams.get('address'),
         minPrice: searchParams.get('minPrice'),
         maxPrice: searchParams.get('maxPrice'),
         maxGuests: searchParams.get('maxGuests'),
         amenities: parseAmenities(searchParams.get('amenities')),
+        rental_type: searchParams.get('rental_type') as 'hourly' | 'daily' | null,
       })
       .then(setHomestays)
       .catch((err: Error) => {
@@ -126,17 +136,25 @@ export function V_DashboardView() {
     setSearchParams({});
   };
 
+  const averageRating = useMemo(() => {
+    if (feedback.length === 0) return null;
+    const total = feedback.reduce((sum, item) => sum + item.rating, 0);
+    return total / feedback.length;
+  }, [feedback]);
+
   return (
     <div className="min-h-screen bg-background">
       <div className="px-[80px] py-8">
         <h1 className="mb-6">{resultLabel}</h1>
         
         <div className="flex gap-6">
+
+          {/* Filter */}
           <div className="w-[280px] flex-shrink-0">
             <Card>
               <CardContent className="p-6 space-y-6">
                 <div>
-                  <Label className="mb-4 block">Price Range (VND/hour)</Label>
+                  <Label className="mb-4 block">Price Range (VND)</Label>
                   <Slider
                     value={priceRange}
                     onValueChange={setPriceRange}
@@ -152,6 +170,26 @@ export function V_DashboardView() {
                     <span>{formatPrice(priceRange[0])}</span>
                     <span>{formatPrice(priceRange[1])}</span>
                   </div>
+                </div>
+
+                <div>
+                  <Label className="mb-2 block">Rental Type</Label>
+                  <Select
+                    value={rentalType}
+                    onValueChange={(value) => {
+                      setRentalType(value);
+                      updateParam('rental_type', value);
+                    }}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="All" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="All">All Stays</SelectItem>
+                      <SelectItem value="hourly">Hourly Stays</SelectItem>
+                      <SelectItem value="daily">Daily Stays</SelectItem>
+                      </SelectContent>
+                  </Select>
                 </div>
 
                 <div>
@@ -224,6 +262,7 @@ export function V_DashboardView() {
             </Card>
           </div>
 
+          {/* Dashboard */}
           <div className="flex-1">
             {error && (
               <div className="mb-4 rounded-md border border-destructive p-4 text-sm text-destructive">
@@ -236,7 +275,7 @@ export function V_DashboardView() {
             ) : (
               <div className="grid grid-cols-3 gap-6">
                 {homestays.map((homestay) => (
-                  <Card key={homestay.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                  <Card key={homestay.id} className="flex flex-col overflow-hidden hover:shadow-lg transition-shadow">
                     <div className="aspect-[16/9] overflow-hidden">
                       <img 
                         src={homestay.images[0]} 
@@ -245,16 +284,27 @@ export function V_DashboardView() {
                       />
                     </div>
                     <CardContent className="p-4">
-                      <h3 className="mb-1">{homestay.title}</h3>
-                      <p className="text-sm text-muted-foreground mb-2">{homestay.city}</p>
+                      <div className="flex h-auto w-full mb-2 items-center justify-between">
+                        <h3 className="mb-1">{homestay.title}</h3>
+                        <div className="flex gap-1 items-center">
+                          <StarIcon className="size-5 text-yellow-400" />
+                          <div className="text-sm text-muted-foreground">5.0</div>
+                        </div>
+                      </div>
+
+                      <div className="flex h-4 w-auto gap-1 mb-2 items-center">
+                        <MapPinIcon className="h-full w-auto text-muted-foreground" />
+                        <p className="text-sm text-muted-foreground">{homestay.address}, {homestay.city}</p>
+                      </div>
+
                       <div className="flex items-center justify-between mb-2">
-                        <p className="font-semibold text-primary">{formatPrice(homestay.pricePerHour)}/hour</p>
+                        <p className="font-semibold text-primary">{formatPrice(homestay.pricePerHour)} / {homestay.rental_type === 'daily' ? 'night' : 'hour'}</p>
                         <Badge variant={homestay.availability === 'available' ? 'default' : 'secondary'}>
                           {homestay.availability}
                         </Badge>
                       </div>
                     </CardContent>
-                    <CardFooter className="p-4 pt-0">
+                    <CardFooter className="mt-auto p-4 pt-0">
                       <Link to={`/homestay/${homestay.id}`} className="w-full">
                         <Button className="w-full">View Details</Button>
                       </Link>

@@ -224,7 +224,7 @@ export function V_AdminVerificationView() {
       </div>
 
       <Sheet open={!!selectedHomestay} onOpenChange={(open) => !open && setSelectedHomestay(null)}>
-        <SheetContent className="sm:max-w-[600px] overflow-y-auto">
+        <SheetContent className="sm:max-w-[600px] overflow-y-auto px-4">
           {homestayDetail && (
             <>
               <SheetHeader>

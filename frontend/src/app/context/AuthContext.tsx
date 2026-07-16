@@ -10,6 +10,7 @@ interface AuthContextType {
   register: (userData: RegistrationPayload) => Promise<boolean>;
   isAuthenticated: boolean;
   logout: () => void;
+  updateUser: (newData: User) => Promise<boolean>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -59,6 +60,32 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   };
 
+  const updateUser = async (newData: User): Promise<boolean> => {
+    setIsLoading(true);
+    setError(null);
+
+    if (!user?.userID) {
+      setError("No active user session found.");
+      setIsLoading(false);
+      return false;
+    }
+
+    try {
+      const result = await userService.updateProfile(String(user.userID), newData);
+      console.log(result);
+      if (result.user) {
+        setUser(result.user);
+        return true;
+      }
+      return false;
+    } catch (err: any) {
+      setError(err.message || "An unknown error occurred");
+      return false;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -66,6 +93,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         login,
         logout,
         register,
+        updateUser,
         isAuthenticated: !!user,
         isLoading,
         error 

@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
-import { LogOut } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { Link, useNavigate } from 'react-router-dom';
+import { LogOut, User as UserIcon } from 'lucide-react';
 import { Avatar, AvatarFallback } from './ui/avatar';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from './ui/dropdown-menu';
 import { V_SearchBar } from './V_SearchBar';
@@ -8,6 +8,7 @@ import { V_SearchBar } from './V_SearchBar';
 export function Header() {
   // Destructure only 'user' and 'logout' from the cleaned context
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <header className="h-[72px] bg-card border-b border-border px-[80px] flex items-center justify-between sticky top-0 z-50">
@@ -52,6 +53,7 @@ export function Header() {
         {/* Use the existence of 'user' directly to choose between profile dropdown or login triggers */}
         {user ? (
           <DropdownMenu>
+
             <DropdownMenuTrigger className="outline-none">
               <Avatar className="h-8 w-8 cursor-pointer">
                 <AvatarFallback className="bg-primary text-primary-foreground">
@@ -59,17 +61,24 @@ export function Header() {
                 </AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
+
             <DropdownMenuContent align="end" className="w-48">
               <div className="px-2 py-1.5 text-sm">
                 <p className="font-medium">{user.firstName} {user.lastName}</p>
                 <p className="text-xs text-muted-foreground">{user.email}</p>
               </div>
               <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => navigate('/profile')} className="cursor-pointer">
+                <UserIcon className="mr-2 h-4 w-4" />
+                My Profile
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
               <DropdownMenuItem onClick={logout} className="cursor-pointer">
                 <LogOut className="mr-2 h-4 w-4" />
                 Logout
               </DropdownMenuItem>
             </DropdownMenuContent>
+
           </DropdownMenu>
         ) : (
           <div className="flex items-center gap-3">

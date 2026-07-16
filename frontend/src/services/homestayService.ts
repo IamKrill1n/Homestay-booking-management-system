@@ -22,6 +22,9 @@ export interface Homestay {
   rejectionReason?: string | null;
   latitude?: number | null;
   longitude?: number | null;
+  rental_type?: 'hourly' | 'daily';
+  check_in_time?: string;
+  check_out_time?: string;
 }
 
 interface ApiHomestay {
@@ -52,6 +55,9 @@ interface ApiHomestay {
     hasParking?: boolean;
     isPetFriendly?: boolean;
   };
+  rental_type?: 'hourly' | 'daily';
+  check_in_time?: string;
+  check_out_time?: string;
 }
 
 export interface HomestayFilters {
@@ -61,6 +67,8 @@ export interface HomestayFilters {
   maxPrice?: number | string | null;
   maxGuests?: number | string | null;
   amenities?: string[];
+  rental_type?: 'hourly' | 'daily' | null;
+  [key: string]: unknown;
 }
 
 export interface HomestayPayload {
@@ -144,6 +152,10 @@ export function toHomestay(apiHomestay: ApiHomestay): Homestay {
     rejectionReason: apiHomestay.rejectionReason,
     latitude: apiHomestay.location?.latitude ?? null,
     longitude: apiHomestay.location?.longitude ?? null,
+    
+    rental_type: apiHomestay.rental_type,
+    check_in_time: apiHomestay.check_in_time,
+    check_out_time: apiHomestay.check_out_time,
   };
 }
 

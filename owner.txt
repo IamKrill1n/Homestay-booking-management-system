@@ -1,0 +1,21 @@
+1. Owner Onboarding (Bank Details)
+Required Fields to Collect:
+
+bank_name (e.g., Vietcombank, Techcombank)
+
+bank_account_number (String, numbers only)
+
+bank_account_name (String, must match their ID)
+
+Note: Do not allow an owner to publish a homestay if these three fields are null.
+
+2. Listing Creation (Cancellation Policies)
+
+When an owner creates or edits a homestay, they must select a refund policy. This dictates the math when a guest cancels.
+
+UI Requirement: A dropdown or radio button selection during the "Create Homestay" flow.
+Database Target: homestays table -> cancellation_policy column.
+Valid Enum Values: 'flexible', 'moderate', 'strict'.
+
+3. Choose price listing (hourly/daily), and check in/ check out for daily
+See schema, homestays table 

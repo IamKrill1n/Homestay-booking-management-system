@@ -6,7 +6,8 @@ function mapRowToBooking(row) {
   return {
     bookingID   : row.booking_id, 
     homestayID  : row.homestay_id, 
-    guestID     : row.guest_id, 
+    guestID     : row.guest_id,
+    numberOfGuests: row.number_of_guests, 
     checkInDate : row.check_in_date,
     checkOutDate: row.check_out_date,
     totalPrice  : row.total_price == null ? null : Number(row.total_price),
@@ -48,13 +49,14 @@ async function syncBookingIdSequence() {
 async function insertBooking(booking) {
   const { rows } = await pool.query(
     `INSERT INTO bookings (
-       homestay_id, guest_id, check_in_date, check_out_date, total_price, status
+       homestay_id, guest_id, number_of_guests, check_in_date, check_out_date, total_price, status
      )
-     VALUES ($1, $2, $3, $4, $5, $6)
+     VALUES ($1, $2, $3, $4, $5, $6, $7)
      RETURNING *`,
     [
       booking.homestayID,
       booking.guestID,
+      booking.numberOfGuests,
       booking.checkInDate,
       booking.checkOutDate,
       booking.totalPrice,

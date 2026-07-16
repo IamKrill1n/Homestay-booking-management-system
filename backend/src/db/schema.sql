@@ -27,6 +27,8 @@ CREATE TABLE IF NOT EXISTS admins (
 
 CREATE TABLE IF NOT EXISTS owners (
   owner_id            INT         PRIMARY KEY REFERENCES users(user_id) ON DELETE CASCADE,
+  bank_name VARCHAR(100) NOT NULL,
+  bank_account_name VARCHAR(100) NOT NULL,
   bank_account_number VARCHAR(50) NOT NULL
 );
 
@@ -35,7 +37,10 @@ CREATE TABLE IF NOT EXISTS homestays (
   owner_id INT NOT NULL REFERENCES owners(owner_id) ON DELETE CASCADE,
   title VARCHAR(255) NOT NULL,
   description TEXT,
+  rental_type VARCHAR(10) NOT NULL default 'hourly' CHECK (rental_type IN ('hourly', 'daily')),
   price_per_hour NUMERIC(12, 2) NOT NULL,
+  check_in_time TIME DEFAULT '14:00:00',
+  check_out_time TIME DEFAULT '10:00:00',
   is_verified BOOLEAN DEFAULT FALSE,
   status VARCHAR(20) NOT NULL DEFAULT 'pending',
   rejection_reason TEXT,
@@ -48,6 +53,7 @@ CREATE TABLE IF NOT EXISTS bookings (
   booking_id    SERIAL      PRIMARY KEY,
   homestay_id   INT         NOT NULL REFERENCES homestays(homestay_id) ON DELETE CASCADE,
   guest_id      INT         NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+  number_of_guests  INT NOT NULL,
   check_in_date TIMESTAMPTZ NOT NULL,
   check_out_date TIMESTAMPTZ NOT NULL CHECK (check_out_date > check_in_date),
   total_price   NUMERIC(12, 2),
