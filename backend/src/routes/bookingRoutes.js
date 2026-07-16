@@ -9,5 +9,6 @@ router.get("/owner/:ownerId", C_Booking.getOwnerBookings);
 router.put("/:bookingId/approve", C_Booking.approveBooking);
 router.put("/:bookingId/reject", C_Booking.rejectBooking);
 router.put("/:bookingId/cancel", C_Booking.cancelBooking);
+router.get("/homestay/:homestayId/availability", C_Booking.getUnavailableDates);
 
 export default router;

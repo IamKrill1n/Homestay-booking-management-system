@@ -20,6 +20,9 @@ interface FormData {
   maxGuests: string;
   description: string;
   amenities: string[];
+  rental_type: 'hourly' | 'daily';
+  check_in_time: string;
+  check_out_time: string;
 }
 
 const emptyForm: FormData = {
@@ -30,6 +33,9 @@ const emptyForm: FormData = {
   maxGuests: '',
   description: '',
   amenities: [],
+  rental_type: 'hourly',
+  check_in_time: '14:00', 
+  check_out_time: '10:00',
 };
 
 function formFromHomestay(homestay: Homestay): FormData {
@@ -41,6 +47,9 @@ function formFromHomestay(homestay: Homestay): FormData {
     maxGuests: String(homestay.maxGuests),
     description: homestay.description,
     amenities: homestay.amenities,
+    rental_type: homestay.rental_type || 'hourly',
+    check_in_time: (homestay.check_in_time || '14:00').slice(0, 5),
+    check_out_time: (homestay.check_out_time || '10:00').slice(0, 5),
   };
 }
 
@@ -105,6 +114,9 @@ export function V_HomestayFormView() {
         maxGuests: Number(formData.maxGuests),
         description: formData.description,
         amenities: formData.amenities,
+        rental_type: formData.rental_type,
+        check_in_time: `${formData.check_in_time}:00`,
+        check_out_time: `${formData.check_out_time}:00`,
       };
 
       const result = isEdit && id
@@ -161,6 +173,19 @@ export function V_HomestayFormView() {
                     </div>
 
                     <div>
+                      <Label htmlFor="rental_type">Rental Type</Label>
+                      <select
+                        id="rental_type"
+                        value={formData.rental_type}
+                        onChange={(e) => handleChange('rental_type', e.target.value)}
+                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background mt-1"
+                      >
+                        <option value="hourly">Hourly Space</option>
+                        <option value="daily">Daily Homestay</option>
+                      </select>
+                    </div>
+
+                    <div>
                       <Label htmlFor="city">City</Label>
                       <Input
                         id="city"
@@ -183,7 +208,9 @@ export function V_HomestayFormView() {
                     </div>
 
                     <div>
-                      <Label htmlFor="pricePerHour">Price per Hour (VND)</Label>
+                      <Label htmlFor="pricePerHour">
+                        {formData.rental_type === 'daily' ? 'Price per Night (VND)' : 'Price per Hour (VND)'}
+                      </Label>
                       <Input
                         id="pricePerHour"
                         type="number"
@@ -194,6 +221,33 @@ export function V_HomestayFormView() {
                         className="mt-1"
                       />
                     </div>
+
+                    {formData.rental_type === 'daily' && (
+                      <>
+                        <div>
+                          <Label htmlFor="check_in_time">Check-in Time</Label>
+                          <Input
+                            id="check_in_time"
+                            type="time"
+                            value={formData.check_in_time}
+                            onChange={(e) => handleChange('check_in_time', e.target.value)}
+                            required
+                            className="mt-1"
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor="check_out_time">Check-out Time</Label>
+                          <Input
+                            id="check_out_time"
+                            type="time"
+                            value={formData.check_out_time}
+                            onChange={(e) => handleChange('check_out_time', e.target.value)}
+                            required
+                            className="mt-1"
+                          />
+                        </div>
+                      </>
+                    )}
 
                     <div>
                       <Label htmlFor="maxGuests">Max Guests</Label>

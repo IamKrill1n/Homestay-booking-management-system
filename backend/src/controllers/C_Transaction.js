@@ -91,9 +91,9 @@ class C_Transaction {
       const { bookingID, bookingId } = req.body;
       const finalBookingID = bookingID || bookingId;
 
-      // Fetch booking details AND the homestay's policy in one query
+      // 1. Fetch booking details, policy, and owner ID
       const bookingQuery = await pool.query(`
-        SELECT b.total_price, b.status, b.check_in_date, h.cancellation_policy 
+        SELECT b.total_price, b.status, b.check_in_date, h.cancellation_policy, h.owner_id 
         FROM bookings b
         JOIN homestays h ON b.homestay_id = h.homestay_id
         WHERE b.booking_id = $1
@@ -106,16 +106,16 @@ class C_Transaction {
       const booking = bookingQuery.rows[0];
 
       if (booking.status !== 'confirmed') {
-        return res.status(400).json({ status: "error", error: "Only confirmed bookings can be cancelled/refunded." });
+        return res.status(400).json({ status: "error", error: "Only confirmed bookings can be cancelled." });
       }
 
-      // Time math
+      // 2. Time math
       const now = new Date();
       const checkInDate = new Date(booking.check_in_date);
       const timeDiff = checkInDate.getTime() - now.getTime();
       const daysUntilCheckIn = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
-      // Calculate refund percentage
+      // 3. Calculate refund percentage based on policy
       let refundPercentage = 0;
       const policy = booking.cancellation_policy;
 
@@ -126,30 +126,49 @@ class C_Transaction {
       } 
       else if (policy === 'strict' && daysUntilCheckIn >= 7) refundPercentage = 0.5;
 
-      const refundAmount = Number(booking.total_price) * refundPercentage;
+      // 4. Financial Split Math
+      const totalPrice = Number(booking.total_price);
+      const guestRefundAmount = totalPrice * refundPercentage;
+      
+      // What remains belongs to the host (before your fee)
+      const hostGrossOwed = totalPrice - guestRefundAmount;
+      
+      // Pull your 13% fee from your environment variables
+      const feeRate = parseFloat(process.env.PLATFORM_FEE_PERCENTAGE) || 0.13;
+      const hostNetPayout = hostGrossOwed * (1 - feeRate);
 
-      // Update Database: Cancel booking
+      // 5. Update Database: Cancel booking
       await pool.query(
         `UPDATE bookings SET status = 'cancelled' WHERE booking_id = $1`,
         [finalBookingID]
       );
 
-      // Update Database: Log refund transaction if money is owed
+      // 6. Update Database: Log Guest Refund Transaction
       let savedRefund = null;
-      if (refundAmount > 0) {
+      if (guestRefundAmount > 0) {
         const refundTxn = await pool.query(
           `INSERT INTO transactions (booking_id, amount, payment_method, status)
            VALUES ($1, $2, 'System Refund', 'refunded') RETURNING *`,
-          [finalBookingID, refundAmount]
+          [finalBookingID, guestRefundAmount]
         );
         savedRefund = refundTxn.rows[0];
       }
 
+      // 7. Update Database: Queue Host Payout if they are owed money!
+      if (hostNetPayout > 0) {
+         await pool.query(
+          `INSERT INTO payouts (booking_id, owner_id, amount, status)
+           VALUES ($1, $2, $3, 'pending')`,
+          [finalBookingID, booking.owner_id, hostNetPayout]
+        );
+      }
+
       return res.status(200).json({
         status: "success",
-        message: "Booking cancelled successfully.",
+        message: "Booking cancelled. Funds distributed according to policy.",
         policyApplied: policy,
-        refundedAmount: refundAmount,
+        guestRefundedAmount: guestRefundAmount,
+        hostPayoutQueued: hostNetPayout,
         transaction: savedRefund
       });
 
@@ -169,7 +188,7 @@ class C_Transaction {
 
       // Fetch booking, owner ID, and bank details
       const payoutQuery = await pool.query(`
-        SELECT b.total_price, b.status, h.owner_id, o.bank_account_number 
+        SELECT b.total_price, b.status, b.check_out_date, h.owner_id, o.bank_account_number 
         FROM bookings b
         JOIN homestays h ON b.homestay_id = h.homestay_id
         JOIN owners o ON h.owner_id = o.owner_id
@@ -182,21 +201,38 @@ class C_Transaction {
 
       const data = payoutQuery.rows[0];
 
-      // Payouts should only happen for successful stays
-      if (data.status !== 'completed' && data.status !== 'confirmed') {
+      // 1. Payouts should only happen for completed stays ('confirmed' in your schema means paid but not fully closed)
+      if (data.status !== 'confirmed') {
         return res.status(400).json({ status: "error", error: "Booking is not eligible for a payout yet." });
       }
 
-      // Calculate the host's cut (Platform takes 10%)
-      const platformFeePercentage = 0.10;
-      const hostCut = Number(data.total_price) * (1 - platformFeePercentage);
+      // 2. The 24-Hour Safety Buffer check
+      const checkOut = new Date(data.check_out_date);
+      const now = new Date();
+      const hoursSinceCheckOut = (now.getTime() - checkOut.getTime()) / (1000 * 60 * 60);
 
-      // Simulate sending money to data.bank_account_number
-      // If successful, log it in the payouts table
+      if (hoursSinceCheckOut < 24) {
+        return res.status(400).json({ 
+          status: "error", 
+          error: `Cannot release funds yet. Please wait ${Math.ceil(24 - hoursSinceCheckOut)} more hours to ensure guest safety.` 
+        });
+      }
+
+      // 3. Calculate the host's cut using your .env fee (13%)
+      const feeRate = parseFloat(process.env.PLATFORM_FEE_PERCENTAGE) || 0.13;
+      const hostCut = Number(data.total_price) * (1 - feeRate);
+
+      // 4. Record the payout in the database as 'completed'
       const newPayout = await pool.query(
         `INSERT INTO payouts (booking_id, owner_id, amount, status, payout_date)
          VALUES ($1, $2, $3, 'completed', NOW()) RETURNING *`,
         [finalBookingID, data.owner_id, hostCut]
+      );
+
+      // 5. Update the booking status to 'completed' so it doesn't get paid twice
+      await pool.query(
+        `UPDATE bookings SET status = 'completed' WHERE booking_id = $1`,
+        [finalBookingID]
       );
 
       return res.status(201).json({
@@ -210,7 +246,6 @@ class C_Transaction {
       return res.status(500).json({ status: "error", error: "Failed to process payout." });
     }
   }
-
 } 
 
 export default new C_Transaction();

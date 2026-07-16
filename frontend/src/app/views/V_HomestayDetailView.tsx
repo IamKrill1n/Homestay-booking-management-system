@@ -226,7 +226,8 @@ export function V_HomestayDetailView() {
                 <div>
                   <div className="text-3xl font-semibold text-primary mb-1">
                     {formatPrice(homestay.pricePerHour)}
-                    <span className="text-base font-normal text-muted-foreground">/hour</span>
+                    <span className="text-base font-normal text-muted-foreground">
+                    /{homestay.rental_type === 'daily' ? 'night' : 'hour'}</span>
                   </div>
                 </div>
 

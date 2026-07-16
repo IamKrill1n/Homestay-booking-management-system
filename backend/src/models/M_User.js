@@ -27,15 +27,15 @@ export class M_User {
     phoneNumber,
     role = "common",
   } = {}) {
-    this.userID = userID;
-    this.password = password;
-    this.passwordHash = passwordHash;
-    this.passwordSalt = passwordSalt;
+    this.userID = userID; //
+    this.password = password; //
+    this.passwordHash = passwordHash; //
+    this.passwordSalt = passwordSalt; //
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.phoneNumber = phoneNumber;
-    this.role = String(role || "common").toLowerCase();
+    this.role = String(role || "common").toLowerCase(); //
   }
 
   static validateRegistration(fieldList) {
@@ -91,29 +91,22 @@ export class M_User {
 
   //  Part 2: Account, booking, review
   // Account
-  async logIn( {email, password} ) {
-    const user = await userRepo.findUserByEmail(email);
-    return userRepo.verifyPassword(password, user) ? user : null;
-  }
-
-  async logOut() {
-    return new M_User();
-  }
-
-  async viewProfile() {
-    return { ...this }
-  }
-
   editProfile(info) {
-    if (!info || typeof info !== "object") return;
+    if (!info || typeof info !== "object") {
+      return { valid: false, message: "Invalid payload provided." };
+    }
+    
+    const lockedFields = ["userID", "role", "password", "passwordHash", "passwordSalt"];
     
     for (const field in info) {
-      const lockedFields = ["userID", "role", "password", "passwordHash", "passwordSalt"];
-      if (!lockedFields.includes(field) && this.hasOwnProperty(field)) {
-        if (info[field] !== undefined && String(info[field]).trim() !== "")
-          this[field] = info[field];
+      if (!lockedFields.includes(field) && Object.prototype.hasOwnProperty.call(this, field)) {
+        if (info[field] !== undefined && String(info[field]).trim() !== "") {
+          this[field] = String(info[field]).trim();
+        }
       }
     }
+
+    return { valid: true };
   }
 
   // Utils

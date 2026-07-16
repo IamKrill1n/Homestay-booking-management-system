@@ -1,0 +1,41 @@
+How Payments & Refunds Work
+
+1. Fee Structure
+
+For Guests: 0% fees. What they see on the listing is exactly what they pay. 
+
+For Hosts: Deduct a flat 13% fee from the final payout.
+
+2. Booking a Stay
+
+When a guest finds the perfect place, they pay the full amount upfront to lock in the reservation.
+
+This amoutn is kept by the platform until 24 hours after checkout before paying the hosts.
+
+3. Cancellations & Refunds
+
+If a guest needs to cancel, the amount they get back depends on how close it is to the check-in date and which policy the host chose for their property.
+
+Here are the three options hosts can choose from:
+
+Flexible: * Cancel at least 1 day before check-in: 100% Refund
+
+Cancel less than 1 day before: No Refund
+
+Moderate: * Cancel 5 or more days before: 100% Refund
+
+Cancel 2 to 4 days before: 50% Refund
+
+Cancel less than 2 days before: No Refund
+
+Strict: * Cancel 7 or more days before: 50% Refund
+
+Cancel less than 7 days before: No Refund
+
+What happens to the rest of the money?
+
+If a guest cancels late and only gets a partial refund (or no refund), the 87% remaining money goes to the host, 13% to the platform.
+
+3. When Do Hosts Get Paid?
+
+To make sure everything goes smoothly, hosts are paid 24 hours after the guest checks out. This 24-hour window gives the guest time to contact us if there is a massive emergency (like arriving to find the house flooded or double-booked). If everyone is happy and the 24 hours pass seamlessly, we automatically release the money straight to the host's bank account.
