@@ -1,0 +1,131 @@
+- generic [ref=f7e3]:
+  - banner [ref=f7e4]:
+    - generic [ref=f7e5]:
+      - link "Homestay" [ref=f7e6] [cursor=pointer]:
+        - /url: /
+      - searchbox "Search homestays..." [active] [ref=f7e11]: Hanoi
+    - navigation [ref=f7e12]:
+      - link "Home" [ref=f7e13] [cursor=pointer]:
+        - /url: /
+      - generic [ref=f7e14]:
+        - link "Login" [ref=f7e15] [cursor=pointer]:
+          - /url: /login
+        - link "Register" [ref=f7e16] [cursor=pointer]:
+          - /url: /register
+  - main [ref=f7e17]:
+    - generic [ref=f7e19]:
+      - heading "Search results for \"Hanoi\"" [level=1] [ref=f7e250]
+      - generic [ref=f7e21]:
+        - generic [ref=f7e24]:
+          - generic [ref=f7e25]:
+            - generic [ref=f7e26]: Price Range (VND)
+            - generic [ref=f7e27]:
+              - slider "Minimum" [ref=f7e31]
+              - slider "Maximum" [ref=f7e33]
+            - generic [ref=f7e34]:
+              - generic [ref=f7e35]: 0 ₫
+              - generic [ref=f7e36]: 500.000 ₫
+          - generic [ref=f7e37]:
+            - generic [ref=f7e38]: Rental Type
+            - combobox [ref=f7e39]:
+              - generic: All Stays
+          - generic [ref=f7e40]:
+            - generic [ref=f7e41]: City
+            - combobox [ref=f7e42]:
+              - generic: All
+          - generic [ref=f7e43]:
+            - generic [ref=f7e44]: Guests
+            - combobox [ref=f7e45]:
+              - generic: All
+          - generic [ref=f7e46]:
+            - generic [ref=f7e47]: Amenities
+            - generic [ref=f7e48]:
+              - generic [ref=f7e49]:
+                - checkbox "WiFi" [ref=f7e50]
+                - generic [ref=f7e51] [cursor=pointer]: WiFi
+              - generic [ref=f7e52]:
+                - checkbox "Kitchen" [ref=f7e53]
+                - generic [ref=f7e54] [cursor=pointer]: Kitchen
+              - generic [ref=f7e55]:
+                - checkbox "Air Conditioning" [ref=f7e56]
+                - generic [ref=f7e57] [cursor=pointer]: Air Conditioning
+              - generic [ref=f7e58]:
+                - checkbox "TV" [ref=f7e59]
+                - generic [ref=f7e60] [cursor=pointer]: TV
+              - generic [ref=f7e61]:
+                - checkbox "Parking" [ref=f7e62]
+                - generic [ref=f7e63] [cursor=pointer]: Parking
+              - generic [ref=f7e64]:
+                - checkbox "Bath Tub" [ref=f7e65]
+                - generic [ref=f7e66] [cursor=pointer]: Bath Tub
+              - generic [ref=f7e67]:
+                - checkbox "Pets" [ref=f7e68]
+                - generic [ref=f7e69] [cursor=pointer]: Pets
+          - button "Clear Filters" [ref=f7e70]
+        - generic [ref=f7e72]:
+          - generic [ref=f7e251]:
+            - img "Hanoi Old Quarter Loft" [ref=f7e253]
+            - generic [ref=f7e254]:
+              - generic [ref=f7e255]:
+                - heading "Hanoi Old Quarter Loft" [level=3] [ref=f7e256]
+                - generic [ref=f7e257]: "5.0"
+              - paragraph [ref=f7e265]: 18 Hang Gai, Hanoi
+              - generic [ref=f7e266]:
+                - paragraph [ref=f7e267]: 180.000 ₫ / hour
+                - generic [ref=f7e268]: available
+            - link [ref=f7e270] [cursor=pointer]:
+              - /url: /homestay/5
+              - button "View Details" [ref=f7e271]
+          - generic [ref=f7e272]:
+            - img "Viettel AI" [ref=f7e274]
+            - generic [ref=f7e275]:
+              - generic [ref=f7e276]:
+                - heading "Viettel AI" [level=3] [ref=f7e277]
+                - generic [ref=f7e278]: "5.0"
+              - paragraph [ref=f7e286]: epic tower, Hanoi
+              - generic [ref=f7e287]:
+                - paragraph [ref=f7e288]: 1.000.000 ₫ / hour
+                - generic [ref=f7e289]: available
+            - link [ref=f7e291] [cursor=pointer]:
+              - /url: /homestay/11
+              - button "View Details" [ref=f7e292]
+          - generic [ref=f7e293]:
+            - img "Viettel AI" [ref=f7e295]
+            - generic [ref=f7e296]:
+              - generic [ref=f7e297]:
+                - heading "Viettel AI" [level=3] [ref=f7e298]
+                - generic [ref=f7e299]: "5.0"
+              - paragraph [ref=f7e307]: epic tower, Hanoi
+              - generic [ref=f7e308]:
+                - paragraph [ref=f7e309]: 1.000.000 ₫ / hour
+                - generic [ref=f7e310]: available
+            - link [ref=f7e312] [cursor=pointer]:
+              - /url: /homestay/12
+              - button "View Details" [ref=f7e313]
+          - generic [ref=f7e314]:
+            - img "Playwright Test Homestay 9876" [ref=f7e316]
+            - generic [ref=f7e317]:
+              - generic [ref=f7e318]:
+                - heading "Playwright Test Homestay 9876" [level=3] [ref=f7e319]
+                - generic [ref=f7e320]: "5.0"
+              - paragraph [ref=f7e328]: 99 Test Street, Hanoi
+              - generic [ref=f7e329]:
+                - paragraph [ref=f7e330]: 250.000 ₫ / hour
+                - generic [ref=f7e331]: available
+            - link [ref=f7e333] [cursor=pointer]:
+              - /url: /homestay/13
+              - button "View Details" [ref=f7e334]
+  - contentinfo [ref=f7e73]:
+    - generic [ref=f7e74]:
+      - link "About" [ref=f7e75] [cursor=pointer]:
+        - /url: /about
+      - generic [ref=f7e76]: "|"
+      - link "Terms" [ref=f7e77] [cursor=pointer]:
+        - /url: /terms
+      - generic [ref=f7e78]: "|"
+      - link "Privacy" [ref=f7e79] [cursor=pointer]:
+        - /url: /privacy
+      - generic [ref=f7e80]: "|"
+      - link "Contact" [ref=f7e81] [cursor=pointer]:
+        - /url: /contact
+  - region "Notifications alt+T"

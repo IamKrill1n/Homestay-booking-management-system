@@ -1,0 +1,90 @@
+- generic:
+  - generic:
+    - generic:
+      - banner:
+        - generic:
+          - link:
+            - /url: /
+            - text: Homestay
+          - generic:
+            - searchbox
+        - navigation:
+          - link:
+            - /url: /
+            - text: Home
+          - link:
+            - /url: /my-bookings
+            - text: My Bookings
+          - button:
+            - generic: CU
+      - main:
+        - generic:
+          - generic:
+            - generic:
+              - button: Back
+              - generic:
+                - generic:
+                  - heading [level=4]: Book Homestay
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - heading [level=3]: Playwright Test Homestay 9876
+                        - paragraph: 99 Test Street
+                        - paragraph: Hanoi
+                        - paragraph: 250.000 ₫/hour
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic: Date
+                        - textbox: 2026-08-25
+                      - generic:
+                        - generic: Number of guests
+                        - generic:
+                          - spinbutton: "2"
+                          - generic: people
+                    - generic:
+                      - generic:
+                        - generic: Start Time
+                        - combobox:
+                          - generic: 10:00
+                      - generic:
+                        - generic: Duration
+                        - generic:
+                          - spinbutton: "3"
+                          - generic: hours
+                  - generic:
+                    - heading [level=4]: Price Breakdown
+                    - generic:
+                      - generic: 250.000 ₫/hour x 3 hours
+                      - generic: 750.000 ₫
+                    - generic:
+                      - generic: Total
+                      - generic: 750.000 ₫
+                  - generic:
+                    - button: Confirm Booking
+                    - button: Cancel
+      - contentinfo:
+        - generic:
+          - link:
+            - /url: /about
+            - text: About
+          - generic: "|"
+          - link:
+            - /url: /terms
+            - text: Terms
+          - generic: "|"
+          - link:
+            - /url: /privacy
+            - text: Privacy
+          - generic: "|"
+          - link:
+            - /url: /contact
+            - text: Contact
+      - region "Notifications alt+T"
+  - dialog [ref=e1960]:
+    - generic [ref=e1961]:
+      - heading "Booking Successful!" [level=2] [ref=e1962]
+      - paragraph [ref=e1963]: Your booking request has been submitted. The owner will review and respond to your request soon.
+    - button "OK" [active] [ref=e1964]
+    - button "Close" [ref=e1965]

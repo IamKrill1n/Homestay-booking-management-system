@@ -1,0 +1,67 @@
+- generic [ref=f6e3]:
+  - banner [ref=f6e4]:
+    - generic [ref=f6e5]:
+      - link "Homestay" [ref=f6e6] [cursor=pointer]:
+        - /url: /
+      - searchbox "Search homestays..." [ref=f6e11]
+    - navigation [ref=f6e12]:
+      - link "Home" [ref=f6e13] [cursor=pointer]:
+        - /url: /
+      - generic [ref=f6e14]:
+        - link "Login" [ref=f6e15] [cursor=pointer]:
+          - /url: /login
+        - link "Register" [ref=f6e16] [cursor=pointer]:
+          - /url: /register
+  - main [ref=f6e17]:
+    - generic [ref=f6e19]:
+      - generic [ref=f6e20]:
+        - heading "Register" [level=4] [ref=f6e21]
+        - paragraph [ref=f6e22]: Create your account to start booking homestays
+      - generic [ref=f6e24]:
+        - generic [ref=f6e25]:
+          - generic [ref=f6e26]:
+            - generic [ref=f6e27]: First Name
+            - textbox "First Name" [ref=f6e28]
+          - generic [ref=f6e29]:
+            - generic [ref=f6e30]: Last Name
+            - textbox "Last Name" [ref=f6e31]
+        - generic [ref=f6e32]:
+          - generic [ref=f6e33]: Email
+          - textbox "Email" [ref=f6e34]
+        - generic [ref=f6e35]:
+          - generic [ref=f6e36]: Phone
+          - textbox "Phone" [ref=f6e37]
+        - generic [ref=f6e38]:
+          - text: "I want to register as a:"
+          - generic [ref=f6e39]:
+            - generic [ref=f6e40] [cursor=pointer]:
+              - radio "Guest / Customer" [checked] [ref=f6e41]
+              - generic [ref=f6e42]: Guest / Customer
+            - generic [ref=f6e43] [cursor=pointer]:
+              - radio "Homestay Owner" [ref=f6e44]
+              - generic [ref=f6e45]: Homestay Owner
+        - generic [ref=f6e46]:
+          - generic [ref=f6e47]: Password
+          - textbox "Password" [ref=f6e48]
+        - generic [ref=f6e49]:
+          - generic [ref=f6e50]: Confirm Password
+          - textbox "Confirm Password" [ref=f6e51]
+        - button "Register" [ref=f6e52]
+        - generic [ref=f6e53]:
+          - text: Already have an account?
+          - link "Login" [ref=f6e54] [cursor=pointer]:
+            - /url: /login
+  - contentinfo [ref=f6e55]:
+    - generic [ref=f6e56]:
+      - link "About" [ref=f6e57] [cursor=pointer]:
+        - /url: /about
+      - generic [ref=f6e58]: "|"
+      - link "Terms" [ref=f6e59] [cursor=pointer]:
+        - /url: /terms
+      - generic [ref=f6e60]: "|"
+      - link "Privacy" [ref=f6e61] [cursor=pointer]:
+        - /url: /privacy
+      - generic [ref=f6e62]: "|"
+      - link "Contact" [ref=f6e63] [cursor=pointer]:
+        - /url: /contact
+  - region "Notifications alt+T"

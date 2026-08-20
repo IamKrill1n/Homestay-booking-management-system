@@ -1,0 +1,99 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - link "Homestay" [ref=e6] [cursor=pointer]:
+        - /url: /
+      - searchbox "Search homestays..." [ref=e11]
+    - navigation [ref=e12]:
+      - link "Home" [ref=e13] [cursor=pointer]:
+        - /url: /
+      - link "My Homestays" [ref=e2302] [cursor=pointer]:
+        - /url: /my-homestays
+      - link "Manage Bookings" [active] [ref=e2303] [cursor=pointer]:
+        - /url: /owner/bookings
+      - button "OU" [ref=e2304]
+  - main [ref=e17]:
+    - generic [ref=e2531]:
+      - generic [ref=e2532]:
+        - heading "Manage Bookings" [level=1] [ref=e2533]
+        - paragraph [ref=e2534]: Review booking requests for your homestays. Approved bookings can be paid by the guest via bank transfer.
+      - generic [ref=e2535]:
+        - heading "Booking Requests (1 pending)" [level=4] [ref=e2537]
+        - table [ref=e2540]:
+          - rowgroup [ref=e2541]:
+            - row [ref=e2542]:
+              - columnheader "Guest" [ref=e2543]
+              - columnheader "Homestay" [ref=e2544]
+              - columnheader "Check-in" [ref=e2545]
+              - columnheader "Check-out" [ref=e2546]
+              - columnheader "Total" [ref=e2547]
+              - columnheader "Status" [ref=e2548]
+              - columnheader "Actions" [ref=e2549]
+          - rowgroup [ref=e2550]:
+            - row [ref=e2551]:
+              - cell "Common User user@example.com" [ref=e2552]:
+                - generic [ref=e2553]: Common User
+                - generic [ref=e2554]: user@example.com
+              - cell "Playwright Test Homestay 9876" [ref=e2555]
+              - cell "Aug 25, 2026 10:00" [ref=e2556]
+              - cell "Aug 25, 2026 13:00" [ref=e2557]
+              - cell "750.000 ₫" [ref=e2558]
+              - cell "pending" [ref=e2559]
+              - cell [ref=e2561]:
+                - generic [ref=e2562]:
+                  - button "Accept" [ref=e2563]
+                  - button "Reject" [ref=e2564]
+            - row [ref=e2565]:
+              - cell "Common User user@example.com" [ref=e2566]:
+                - generic [ref=e2567]: Common User
+                - generic [ref=e2568]: user@example.com
+              - cell "Viettel AI" [ref=e2569]
+              - cell "Feb 01, 8202 14:00" [ref=e2570]
+              - cell "Feb 01, 8202 15:00" [ref=e2571]
+              - cell "1.000.000 ₫" [ref=e2572]
+              - cell "approved" [ref=e2573]
+              - cell "No action" [ref=e2575]
+            - row [ref=e2576]:
+              - cell "Common User user@example.com" [ref=e2577]:
+                - generic [ref=e2578]: Common User
+                - generic [ref=e2579]: user@example.com
+              - cell "Homestay Da Lat View" [ref=e2580]
+              - cell "Jul 01, 2026 10:00" [ref=e2581]
+              - cell "Jul 01, 2026 14:00" [ref=e2582]
+              - cell "600.000 ₫" [ref=e2583]
+              - cell "rejected" [ref=e2584]
+              - cell "No action" [ref=e2586]
+            - row [ref=e2587]:
+              - cell "Common User user@example.com" [ref=e2588]:
+                - generic [ref=e2589]: Common User
+                - generic [ref=e2590]: user@example.com
+              - cell "Coastal Homestay Nha Trang" [ref=e2591]
+              - cell "Feb 01, 2026 10:00" [ref=e2592]
+              - cell "Feb 01, 2026 16:00" [ref=e2593]
+              - cell "1.200.000 ₫" [ref=e2594]
+              - cell "confirmed" [ref=e2595]
+              - cell "No action" [ref=e2597]
+            - row [ref=e2598]:
+              - cell "Common User user@example.com" [ref=e2599]:
+                - generic [ref=e2600]: Common User
+                - generic [ref=e2601]: user@example.com
+              - cell "Homestay Da Lat View" [ref=e2602]
+              - cell "Jan 15, 2026 09:00" [ref=e2603]
+              - cell "Jan 15, 2026 15:00" [ref=e2604]
+              - cell "900.000 ₫" [ref=e2605]
+              - cell "completed" [ref=e2606]
+              - cell "No action" [ref=e2608]
+  - contentinfo [ref=e73]:
+    - generic [ref=e74]:
+      - link "About" [ref=e75] [cursor=pointer]:
+        - /url: /about
+      - generic [ref=e76]: "|"
+      - link "Terms" [ref=e77] [cursor=pointer]:
+        - /url: /terms
+      - generic [ref=e78]: "|"
+      - link "Privacy" [ref=e79] [cursor=pointer]:
+        - /url: /privacy
+      - generic [ref=e80]: "|"
+      - link "Contact" [ref=e81] [cursor=pointer]:
+        - /url: /contact
+  - region "Notifications alt+T"

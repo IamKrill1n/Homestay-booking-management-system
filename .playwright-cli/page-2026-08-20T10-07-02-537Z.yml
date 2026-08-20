@@ -1,0 +1,97 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - link "Homestay" [ref=e6] [cursor=pointer]:
+        - /url: /
+      - searchbox "Search homestays..." [ref=e11]
+    - navigation [ref=e12]:
+      - link "Home" [ref=e13] [cursor=pointer]:
+        - /url: /
+      - link "My Bookings" [active] [ref=e1451] [cursor=pointer]:
+        - /url: /my-bookings
+      - button "CU" [ref=e1452]
+  - main [ref=e17]:
+    - generic [ref=e2191]:
+      - heading "My Bookings" [level=1] [ref=e2192]
+      - generic [ref=e2193]:
+        - heading "Your Booking History" [level=4] [ref=e2195]
+        - table [ref=e2198]:
+          - rowgroup [ref=e2199]:
+            - row [ref=e2200]:
+              - columnheader "Homestay" [ref=e2201]
+              - columnheader "Check-in" [ref=e2202]
+              - columnheader "Check-out" [ref=e2203]
+              - columnheader "Total Price" [ref=e2204]
+              - columnheader "Status" [ref=e2205]
+              - columnheader "Booked On" [ref=e2206]
+              - columnheader "Actions" [ref=e2207]
+          - rowgroup [ref=e2208]:
+            - row [ref=e2209]:
+              - cell "Playwright Test Homestay 9876" [ref=e2210]
+              - cell "Aug 25, 2026 10:00" [ref=e2211]
+              - cell "Aug 25, 2026 13:00" [ref=e2212]
+              - cell "750.000 ₫" [ref=e2213]
+              - cell "pending" [ref=e2214]
+              - cell "Aug 20, 2026" [ref=e2216]
+              - cell [ref=e2217]:
+                - generic [ref=e2218]:
+                  - button "Cancel" [ref=e2219]
+                  - button "View Details" [ref=e2220]
+            - row [ref=e2221]:
+              - cell "Viettel AI" [ref=e2222]
+              - cell "Feb 01, 8202 14:00" [ref=e2223]
+              - cell "Feb 01, 8202 15:00" [ref=e2224]
+              - cell "1.000.000 ₫" [ref=e2225]
+              - cell "approved" [ref=e2226]
+              - cell "Aug 20, 2026" [ref=e2228]
+              - cell [ref=e2229]:
+                - generic [ref=e2230]:
+                  - button "Pay" [ref=e2231]
+                  - button "View Details" [ref=e2232]
+            - row [ref=e2233]:
+              - cell "Homestay Da Lat View" [ref=e2234]
+              - cell "Jul 01, 2026 10:00" [ref=e2235]
+              - cell "Jul 01, 2026 14:00" [ref=e2236]
+              - cell "600.000 ₫" [ref=e2237]
+              - cell "rejected" [ref=e2238]
+              - cell "Jun 01, 2026" [ref=e2240]
+              - cell [ref=e2241]:
+                - generic [ref=e2242]:
+                  - button "Leave Feedback" [ref=e2243]
+                  - button "View Details" [ref=e2244]
+            - row [ref=e2245]:
+              - cell "Coastal Homestay Nha Trang" [ref=e2246]
+              - cell "Feb 01, 2026 10:00" [ref=e2247]
+              - cell "Feb 01, 2026 16:00" [ref=e2248]
+              - cell "1.200.000 ₫" [ref=e2249]
+              - cell "confirmed" [ref=e2250]
+              - cell "Jan 20, 2026" [ref=e2252]
+              - cell [ref=e2253]:
+                - generic [ref=e2254]:
+                  - button "Leave Feedback" [ref=e2255]
+                  - button "View Details" [ref=e2256]
+            - row [ref=e2257]:
+              - cell "Homestay Da Lat View" [ref=e2258]
+              - cell "Jan 15, 2026 09:00" [ref=e2259]
+              - cell "Jan 15, 2026 15:00" [ref=e2260]
+              - cell "900.000 ₫" [ref=e2261]
+              - cell "completed" [ref=e2262]
+              - cell "Jan 10, 2026" [ref=e2264]
+              - cell "Feedback sent View Details" [ref=e2265]:
+                - generic [ref=e2266]:
+                  - generic [ref=e2267]: Feedback sent
+                  - button "View Details" [ref=e2268]
+  - contentinfo [ref=e73]:
+    - generic [ref=e74]:
+      - link "About" [ref=e75] [cursor=pointer]:
+        - /url: /about
+      - generic [ref=e76]: "|"
+      - link "Terms" [ref=e77] [cursor=pointer]:
+        - /url: /terms
+      - generic [ref=e78]: "|"
+      - link "Privacy" [ref=e79] [cursor=pointer]:
+        - /url: /privacy
+      - generic [ref=e80]: "|"
+      - link "Contact" [ref=e81] [cursor=pointer]:
+        - /url: /contact
+  - region "Notifications alt+T"

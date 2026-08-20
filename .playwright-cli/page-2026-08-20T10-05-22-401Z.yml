@@ -1,0 +1,218 @@
+- generic:
+  - generic:
+    - generic:
+      - banner:
+        - generic:
+          - link:
+            - /url: /
+            - text: Homestay
+          - generic:
+            - searchbox
+        - navigation:
+          - link:
+            - /url: /
+            - text: Home
+          - link:
+            - /url: /admin
+            - text: Admin Panel
+          - button [expanded]:
+            - generic: AU
+      - main:
+        - generic:
+          - generic:
+            - heading [level=1]: Admin - Verify Homestays
+            - generic:
+              - generic:
+                - generic:
+                  - heading [level=4]: Pending Verification (1)
+                - generic:
+                  - generic:
+                    - table:
+                      - rowgroup:
+                        - row:
+                          - columnheader: Homestay
+                          - columnheader: Owner
+                          - columnheader: City
+                          - columnheader: Price/Hour
+                          - columnheader: Date Submitted
+                          - columnheader: Action
+                      - rowgroup:
+                        - row:
+                          - cell: Hue Riverside Heritage Room
+                          - cell: Owner 2
+                          - cell: Hue
+                          - cell: 130.000 ₫
+                          - cell: Jan 09, 2026
+                          - cell:
+                            - button: View
+              - generic:
+                - generic:
+                  - heading [level=4]: All Homestays
+                - generic:
+                  - generic:
+                    - table:
+                      - rowgroup:
+                        - row:
+                          - columnheader: Homestay
+                          - columnheader: Owner
+                          - columnheader: City
+                          - columnheader: Status
+                          - columnheader: Availability
+                          - columnheader: Action
+                      - rowgroup:
+                        - row:
+                          - cell: Homestay Da Lat View
+                          - cell: Owner 2
+                          - cell: Da Lat
+                          - cell:
+                            - generic: approved
+                          - cell:
+                            - generic: available
+                          - cell:
+                            - button: View
+                        - row:
+                          - cell: Coastal Homestay Nha Trang
+                          - cell: Owner 2
+                          - cell: Nha Trang
+                          - cell:
+                            - generic: approved
+                          - cell:
+                            - generic: available
+                          - cell:
+                            - button: View
+                        - row:
+                          - cell: Budget Room Da Lat
+                          - cell: Owner 2
+                          - cell: Da Lat
+                          - cell:
+                            - generic: rejected
+                          - cell:
+                            - generic: unavailable
+                          - cell:
+                            - button: View
+                        - row:
+                          - cell: Rejected Garden House
+                          - cell: Owner 2
+                          - cell: Ho Chi Minh City
+                          - cell:
+                            - generic: rejected
+                          - cell:
+                            - generic: unavailable
+                          - cell:
+                            - button: View
+                        - row:
+                          - cell: Hanoi Old Quarter Loft
+                          - cell: Owner 2
+                          - cell: Hanoi
+                          - cell:
+                            - generic: approved
+                          - cell:
+                            - generic: available
+                          - cell:
+                            - button: View
+                        - row:
+                          - cell: Hoi An Lantern Villa
+                          - cell: Owner 2
+                          - cell: Hoi An
+                          - cell:
+                            - generic: approved
+                          - cell:
+                            - generic: available
+                          - cell:
+                            - button: View
+                        - row:
+                          - cell: Da Nang Beach Studio
+                          - cell: Owner 2
+                          - cell: Da Nang
+                          - cell:
+                            - generic: rejected
+                          - cell:
+                            - generic: unavailable
+                          - cell:
+                            - button: View
+                        - row:
+                          - cell: Sa Pa Mountain Retreat
+                          - cell: Owner 2
+                          - cell: Sa Pa
+                          - cell:
+                            - generic: approved
+                          - cell:
+                            - generic: available
+                          - cell:
+                            - button: View
+                        - row:
+                          - cell: Hue Riverside Heritage Room
+                          - cell: Owner 2
+                          - cell: Hue
+                          - cell:
+                            - generic: pending
+                          - cell:
+                            - generic: unavailable
+                          - cell:
+                            - button: View
+                        - row:
+                          - cell: Phu Quoc Sunset Bungalow
+                          - cell: Owner 2
+                          - cell: Phu Quoc
+                          - cell:
+                            - generic: rejected
+                          - cell:
+                            - generic: unavailable
+                          - cell:
+                            - button: View
+                        - row:
+                          - cell: Viettel AI
+                          - cell: Owner 2
+                          - cell: Hanoi
+                          - cell:
+                            - generic: approved
+                          - cell:
+                            - generic: available
+                          - cell:
+                            - button: View
+                        - row:
+                          - cell: Viettel AI
+                          - cell: Owner 2
+                          - cell: Hanoi
+                          - cell:
+                            - generic: approved
+                          - cell:
+                            - generic: available
+                          - cell:
+                            - button: View
+                        - row:
+                          - cell: Playwright Test Homestay 9876
+                          - cell: Owner 2
+                          - cell: Hanoi
+                          - cell:
+                            - generic: approved
+                          - cell:
+                            - generic: available
+                          - cell:
+                            - button: View
+      - contentinfo:
+        - generic:
+          - link:
+            - /url: /about
+            - text: About
+          - generic: "|"
+          - link:
+            - /url: /terms
+            - text: Terms
+          - generic: "|"
+          - link:
+            - /url: /privacy
+            - text: Privacy
+          - generic: "|"
+          - link:
+            - /url: /contact
+            - text: Contact
+      - region "Notifications alt+T"
+  - menu "AU" [active] [ref=e1418]:
+    - generic [ref=e1419]:
+      - paragraph [ref=e1420]: Admin User
+      - paragraph [ref=e1421]: admin@example.com
+    - separator [ref=e1422]
+    - menuitem "My Profile" [ref=e1423] [cursor=pointer]
+    - separator [ref=e1424]
+    - menuitem "Logout" [ref=e1425] [cursor=pointer]

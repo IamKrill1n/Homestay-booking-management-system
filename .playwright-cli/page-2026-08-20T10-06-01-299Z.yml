@@ -1,0 +1,71 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - link "Homestay" [ref=e6] [cursor=pointer]:
+        - /url: /
+      - searchbox "Search homestays..." [ref=e11]
+    - navigation [ref=e12]:
+      - link "Home" [ref=e13] [cursor=pointer]:
+        - /url: /
+      - link "My Bookings" [ref=e1451] [cursor=pointer]:
+        - /url: /my-bookings
+      - button "CU" [ref=e1452]
+  - main [ref=e17]:
+    - generic [ref=e1679]:
+      - generic [ref=e1680]:
+        - img "Playwright Test Homestay 9876" [ref=e1682]
+        - generic [ref=e1683]:
+          - button [ref=e1684]:
+            - img "Playwright Test Homestay 9876 1" [ref=e1685]
+          - button [ref=e1686]:
+            - img "Playwright Test Homestay 9876 2" [ref=e1687]
+      - generic [ref=e1688]:
+        - generic [ref=e1689]:
+          - generic [ref=e1690]:
+            - heading "Playwright Test Homestay 9876" [level=1] [ref=e1691]
+            - generic [ref=e1692]: 99 Test Street, Hanoi
+            - generic [ref=e1697]:
+              - generic [ref=e1698]: available
+              - generic [ref=e1699]: approved
+          - generic [ref=e1701]:
+            - heading "Amenities" [level=3] [ref=e1702]
+            - generic [ref=e1703]:
+              - generic [ref=e1704]: WiFi
+              - generic [ref=e1709]: Air Conditioning
+              - generic [ref=e1714]: TV
+          - generic [ref=e1720]:
+            - heading "Description" [level=3] [ref=e1721]
+            - paragraph [ref=e1722]: Automated test homestay description for UI check
+          - generic [ref=e1725]:
+            - heading "Location" [level=3] [ref=e1726]
+            - link "View on Google Maps" [ref=e1727] [cursor=pointer]:
+              - /url: https://www.google.com/maps/search/?api=1&query=99%20Test%20Street%20Hanoi
+          - generic [ref=e1738]:
+            - heading "Guest Feedback" [level=3] [ref=e1739]
+            - paragraph [ref=e1740]: No feedback yet.
+        - generic [ref=e1743]:
+          - generic [ref=e1745]:
+            - text: 250.000 ₫
+            - generic [ref=e1746]: /hour
+          - generic [ref=e1747]:
+            - generic [ref=e1748]:
+              - generic [ref=e1749]: Availability
+              - generic [ref=e1750]: available
+            - generic [ref=e1751]:
+              - generic [ref=e1752]: Max Guests
+              - generic [ref=e1753]: "5"
+          - button "Book Homestay" [ref=e1760]
+  - contentinfo [ref=e73]:
+    - generic [ref=e74]:
+      - link "About" [ref=e75] [cursor=pointer]:
+        - /url: /about
+      - generic [ref=e76]: "|"
+      - link "Terms" [ref=e77] [cursor=pointer]:
+        - /url: /terms
+      - generic [ref=e78]: "|"
+      - link "Privacy" [ref=e79] [cursor=pointer]:
+        - /url: /privacy
+      - generic [ref=e80]: "|"
+      - link "Contact" [ref=e81] [cursor=pointer]:
+        - /url: /contact
+  - region "Notifications alt+T"

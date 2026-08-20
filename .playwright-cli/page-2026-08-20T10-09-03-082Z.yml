@@ -1,0 +1,53 @@
+- generic [ref=f2e3]:
+  - banner [ref=f2e4]:
+    - generic [ref=f2e5]:
+      - link "Homestay" [ref=f2e6] [cursor=pointer]:
+        - /url: /
+      - searchbox "Search homestays..." [ref=f2e11]
+    - navigation [ref=f2e12]:
+      - link "Home" [ref=f2e13] [cursor=pointer]:
+        - /url: /
+      - generic [ref=f2e14]:
+        - link "Login" [ref=f2e15] [cursor=pointer]:
+          - /url: /login
+        - link "Register" [ref=f2e16] [cursor=pointer]:
+          - /url: /register
+  - main [ref=f2e17]:
+    - generic [ref=f2e19]:
+      - generic [ref=f2e20]:
+        - heading "Login" [level=4] [ref=f2e21]
+        - paragraph [ref=f2e22]: Enter your credentials to access your account
+      - generic [ref=f2e24]:
+        - generic [ref=f2e25]:
+          - generic [ref=f2e26]: Email
+          - textbox "Email" [ref=f2e27]:
+            - /placeholder: you@example.com
+        - generic [ref=f2e28]:
+          - generic [ref=f2e29]: Password
+          - textbox "Password" [ref=f2e30]:
+            - /placeholder: ••••••••
+        - button "Login" [ref=f2e31]
+        - generic [ref=f2e32]:
+          - text: Don't have an account?
+          - link "Register" [ref=f2e33] [cursor=pointer]:
+            - /url: /register
+        - generic [ref=f2e34]:
+          - paragraph [ref=f2e35]: "Quick login options:"
+          - paragraph [ref=f2e36]: "- Admin: admin@example.com"
+          - paragraph [ref=f2e37]: "- Owner: owner@example.com"
+          - paragraph [ref=f2e38]: "- User: user@example.com"
+          - paragraph [ref=f2e39]: "Password: password123"
+  - contentinfo [ref=f2e40]:
+    - generic [ref=f2e41]:
+      - link "About" [ref=f2e42] [cursor=pointer]:
+        - /url: /about
+      - generic [ref=f2e43]: "|"
+      - link "Terms" [ref=f2e44] [cursor=pointer]:
+        - /url: /terms
+      - generic [ref=f2e45]: "|"
+      - link "Privacy" [ref=f2e46] [cursor=pointer]:
+        - /url: /privacy
+      - generic [ref=f2e47]: "|"
+      - link "Contact" [ref=f2e48] [cursor=pointer]:
+        - /url: /contact
+  - region "Notifications alt+T"

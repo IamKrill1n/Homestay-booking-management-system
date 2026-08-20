@@ -1,0 +1,125 @@
+- generic:
+  - generic:
+    - generic:
+      - banner:
+        - generic:
+          - link:
+            - /url: /
+            - text: Homestay
+          - generic:
+            - searchbox
+        - navigation:
+          - link:
+            - /url: /
+            - text: Home
+          - link:
+            - /url: /my-bookings
+            - text: My Bookings
+          - button [expanded]:
+            - generic: CU
+      - main:
+        - generic:
+          - generic:
+            - heading [level=1]: My Bookings
+            - generic:
+              - generic:
+                - heading [level=4]: Your Booking History
+              - generic:
+                - generic:
+                  - table:
+                    - rowgroup:
+                      - row:
+                        - columnheader: Homestay
+                        - columnheader: Check-in
+                        - columnheader: Check-out
+                        - columnheader: Total Price
+                        - columnheader: Status
+                        - columnheader: Booked On
+                        - columnheader: Actions
+                    - rowgroup:
+                      - row:
+                        - cell: Playwright Test Homestay 9876
+                        - cell: Aug 25, 2026 10:00
+                        - cell: Aug 25, 2026 13:00
+                        - cell: 750.000 ₫
+                        - cell:
+                          - generic: pending
+                        - cell: Aug 20, 2026
+                        - cell:
+                          - generic:
+                            - button: Cancel
+                            - button: View Details
+                      - row:
+                        - cell: Viettel AI
+                        - cell: Feb 01, 8202 14:00
+                        - cell: Feb 01, 8202 15:00
+                        - cell: 1.000.000 ₫
+                        - cell:
+                          - generic: approved
+                        - cell: Aug 20, 2026
+                        - cell:
+                          - generic:
+                            - button: Pay
+                            - button: View Details
+                      - row:
+                        - cell: Homestay Da Lat View
+                        - cell: Jul 01, 2026 10:00
+                        - cell: Jul 01, 2026 14:00
+                        - cell: 600.000 ₫
+                        - cell:
+                          - generic: rejected
+                        - cell: Jun 01, 2026
+                        - cell:
+                          - generic:
+                            - button: Leave Feedback
+                            - button: View Details
+                      - row:
+                        - cell: Coastal Homestay Nha Trang
+                        - cell: Feb 01, 2026 10:00
+                        - cell: Feb 01, 2026 16:00
+                        - cell: 1.200.000 ₫
+                        - cell:
+                          - generic: confirmed
+                        - cell: Jan 20, 2026
+                        - cell:
+                          - generic:
+                            - button: Leave Feedback
+                            - button: View Details
+                      - row:
+                        - cell: Homestay Da Lat View
+                        - cell: Jan 15, 2026 09:00
+                        - cell: Jan 15, 2026 15:00
+                        - cell: 900.000 ₫
+                        - cell:
+                          - generic: completed
+                        - cell: Jan 10, 2026
+                        - cell:
+                          - generic:
+                            - generic: Feedback sent
+                            - button: View Details
+      - contentinfo:
+        - generic:
+          - link:
+            - /url: /about
+            - text: About
+          - generic: "|"
+          - link:
+            - /url: /terms
+            - text: Terms
+          - generic: "|"
+          - link:
+            - /url: /privacy
+            - text: Privacy
+          - generic: "|"
+          - link:
+            - /url: /contact
+            - text: Contact
+      - region "Notifications alt+T"
+  - menu "CU" [active] [ref=e2269]:
+    - generic [ref=e2270]:
+      - paragraph [ref=e2271]: Common User
+      - paragraph [ref=e2272]: user@example.com
+    - separator [ref=e2273]
+    - menuitem "My Profile" [ref=e2274] [cursor=pointer]
+    - separator [ref=e2275]
+    - menuitem "Logout" [ref=e2276] [cursor=pointer]

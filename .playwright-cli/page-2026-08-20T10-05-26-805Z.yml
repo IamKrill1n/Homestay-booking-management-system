@@ -1,0 +1,53 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - link "Homestay" [ref=e6] [cursor=pointer]:
+        - /url: /
+      - searchbox "Search homestays..." [ref=e11]
+    - navigation [ref=e12]:
+      - link "Home" [ref=e13] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e1426]:
+        - link "Login" [ref=e1427] [cursor=pointer]:
+          - /url: /login
+        - link "Register" [ref=e1428] [cursor=pointer]:
+          - /url: /register
+  - main [ref=e17]:
+    - generic [ref=e1430]:
+      - generic [ref=e1431]:
+        - heading "Login" [level=4] [ref=e1432]
+        - paragraph [ref=e1433]: Enter your credentials to access your account
+      - generic [ref=e1435]:
+        - generic [ref=e1436]:
+          - generic [ref=e1437]: Email
+          - textbox "Email" [ref=e1438]:
+            - /placeholder: you@example.com
+        - generic [ref=e1439]:
+          - generic [ref=e1440]: Password
+          - textbox "Password" [ref=e1441]:
+            - /placeholder: ••••••••
+        - button "Login" [ref=e1442]
+        - generic [ref=e1443]:
+          - text: Don't have an account?
+          - link "Register" [ref=e1444] [cursor=pointer]:
+            - /url: /register
+        - generic [ref=e1445]:
+          - paragraph [ref=e1446]: "Quick login options:"
+          - paragraph [ref=e1447]: "- Admin: admin@example.com"
+          - paragraph [ref=e1448]: "- Owner: owner@example.com"
+          - paragraph [ref=e1449]: "- User: user@example.com"
+          - paragraph [ref=e1450]: "Password: password123"
+  - contentinfo [ref=e73]:
+    - generic [ref=e74]:
+      - link "About" [ref=e75] [cursor=pointer]:
+        - /url: /about
+      - generic [ref=e76]: "|"
+      - link "Terms" [ref=e77] [cursor=pointer]:
+        - /url: /terms
+      - generic [ref=e78]: "|"
+      - link "Privacy" [ref=e79] [cursor=pointer]:
+        - /url: /privacy
+      - generic [ref=e80]: "|"
+      - link "Contact" [ref=e81] [cursor=pointer]:
+        - /url: /contact
+  - region "Notifications alt+T"

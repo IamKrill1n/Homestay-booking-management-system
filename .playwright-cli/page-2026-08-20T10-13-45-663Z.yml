@@ -1,0 +1,214 @@
+- generic:
+  - generic:
+    - generic:
+      - banner:
+        - generic:
+          - link:
+            - /url: /
+            - text: Homestay
+          - generic:
+            - searchbox
+        - navigation:
+          - link:
+            - /url: /
+            - text: Home
+          - link:
+            - /url: /my-bookings
+            - text: My Bookings
+          - button [expanded]:
+            - generic: CU
+      - main:
+        - generic:
+          - generic:
+            - heading [level=1]: Browse Homestays
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic: Price Range (VND)
+                      - generic:
+                        - generic:
+                          - slider
+                        - generic:
+                          - slider
+                      - generic:
+                        - generic: 0 ₫
+                        - generic: 500.000 ₫
+                    - generic:
+                      - generic: Rental Type
+                      - combobox:
+                        - generic: All Stays
+                    - generic:
+                      - generic: City
+                      - combobox:
+                        - generic: All
+                    - generic:
+                      - generic: Guests
+                      - combobox:
+                        - generic: All
+                    - generic:
+                      - generic: Amenities
+                      - generic:
+                        - generic:
+                          - checkbox
+                          - generic: WiFi
+                        - generic:
+                          - checkbox
+                          - generic: Kitchen
+                        - generic:
+                          - checkbox
+                          - generic: Air Conditioning
+                        - generic:
+                          - checkbox
+                          - generic: TV
+                        - generic:
+                          - checkbox
+                          - generic: Parking
+                        - generic:
+                          - checkbox
+                          - generic: Bath Tub
+                        - generic:
+                          - checkbox
+                          - generic: Pets
+                    - button: Clear Filters
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - heading [level=3]: Homestay Da Lat View
+                        - generic: "5.0"
+                      - generic:
+                        - paragraph: 123 Tran Phu, Da Lat
+                      - generic:
+                        - paragraph: 150.000 ₫ / hour
+                        - generic: available
+                    - generic:
+                      - link:
+                        - /url: /homestay/1
+                        - button: View Details
+                  - generic:
+                    - generic:
+                      - generic:
+                        - heading [level=3]: Coastal Homestay Nha Trang
+                        - generic: "5.0"
+                      - generic:
+                        - paragraph: 45 Tran Phu, Nha Trang
+                      - generic:
+                        - paragraph: 200.000 ₫ / hour
+                        - generic: available
+                    - generic:
+                      - link:
+                        - /url: /homestay/2
+                        - button: View Details
+                  - generic:
+                    - generic:
+                      - generic:
+                        - heading [level=3]: Hanoi Old Quarter Loft
+                        - generic: "5.0"
+                      - generic:
+                        - paragraph: 18 Hang Gai, Hanoi
+                      - generic:
+                        - paragraph: 180.000 ₫ / hour
+                        - generic: available
+                    - generic:
+                      - link:
+                        - /url: /homestay/5
+                        - button: View Details
+                  - generic:
+                    - generic:
+                      - generic:
+                        - heading [level=3]: Hoi An Lantern Villa
+                        - generic: "5.0"
+                      - generic:
+                        - paragraph: 27 Nguyen Thai Hoc, Hoi An
+                      - generic:
+                        - paragraph: 2.000.000 ₫ / night
+                        - generic: available
+                    - generic:
+                      - link:
+                        - /url: /homestay/6
+                        - button: View Details
+                  - generic:
+                    - generic:
+                      - generic:
+                        - heading [level=3]: Sa Pa Mountain Retreat
+                        - generic: "5.0"
+                      - generic:
+                        - paragraph: 15 Fansipan, Sa Pa
+                      - generic:
+                        - paragraph: 160.000 ₫ / hour
+                        - generic: available
+                    - generic:
+                      - link:
+                        - /url: /homestay/8
+                        - button: View Details
+                  - generic:
+                    - generic:
+                      - generic:
+                        - heading [level=3]: Viettel AI
+                        - generic: "5.0"
+                      - generic:
+                        - paragraph: epic tower, Hanoi
+                      - generic:
+                        - paragraph: 1.000.000 ₫ / hour
+                        - generic: available
+                    - generic:
+                      - link:
+                        - /url: /homestay/11
+                        - button: View Details
+                  - generic:
+                    - generic:
+                      - generic:
+                        - heading [level=3]: Viettel AI
+                        - generic: "5.0"
+                      - generic:
+                        - paragraph: epic tower, Hanoi
+                      - generic:
+                        - paragraph: 1.000.000 ₫ / hour
+                        - generic: available
+                    - generic:
+                      - link:
+                        - /url: /homestay/12
+                        - button: View Details
+                  - generic:
+                    - generic:
+                      - generic:
+                        - heading [level=3]: Playwright Test Homestay 9876
+                        - generic: "5.0"
+                      - generic:
+                        - paragraph: 99 Test Street, Hanoi
+                      - generic:
+                        - paragraph: 250.000 ₫ / hour
+                        - generic: available
+                    - generic:
+                      - link:
+                        - /url: /homestay/13
+                        - button: View Details
+      - contentinfo:
+        - generic:
+          - link:
+            - /url: /about
+            - text: About
+          - generic: "|"
+          - link:
+            - /url: /terms
+            - text: Terms
+          - generic: "|"
+          - link:
+            - /url: /privacy
+            - text: Privacy
+          - generic: "|"
+          - link:
+            - /url: /contact
+            - text: Contact
+      - region "Notifications alt+T"
+  - menu "CU" [active] [ref=f11e276]:
+    - generic [ref=f11e277]:
+      - paragraph [ref=f11e278]: Common User
+      - paragraph [ref=f11e279]: user@example.com
+    - separator [ref=f11e280]
+    - menuitem "My Profile" [ref=f11e281] [cursor=pointer]
+    - separator [ref=f11e282]
+    - menuitem "Logout" [ref=f11e283] [cursor=pointer]

@@ -1,0 +1,30 @@
+- generic [ref=f8e3]:
+  - banner [ref=f8e4]:
+    - generic [ref=f8e5]:
+      - link "Homestay" [ref=f8e6] [cursor=pointer]:
+        - /url: /
+      - searchbox "Search homestays..." [ref=f8e11]
+    - navigation [ref=f8e12]:
+      - link "Home" [ref=f8e13] [cursor=pointer]:
+        - /url: /
+      - generic [ref=f8e14]:
+        - link "Login" [ref=f8e15] [cursor=pointer]:
+          - /url: /login
+        - link "Register" [ref=f8e16] [cursor=pointer]:
+          - /url: /register
+  - main [ref=f8e17]:
+    - paragraph [ref=f8e19]: Loading homestay...
+  - contentinfo [ref=f8e20]:
+    - generic [ref=f8e21]:
+      - link "About" [ref=f8e22] [cursor=pointer]:
+        - /url: /about
+      - generic [ref=f8e23]: "|"
+      - link "Terms" [ref=f8e24] [cursor=pointer]:
+        - /url: /terms
+      - generic [ref=f8e25]: "|"
+      - link "Privacy" [ref=f8e26] [cursor=pointer]:
+        - /url: /privacy
+      - generic [ref=f8e27]: "|"
+      - link "Contact" [ref=f8e28] [cursor=pointer]:
+        - /url: /contact
+  - region "Notifications alt+T"

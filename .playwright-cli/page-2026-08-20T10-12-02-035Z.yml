@@ -1,0 +1,70 @@
+- generic [ref=f8e3]:
+  - banner [ref=f8e4]:
+    - generic [ref=f8e5]:
+      - link "Homestay" [ref=f8e6] [cursor=pointer]:
+        - /url: /
+      - searchbox "Search homestays..." [ref=f8e11]
+    - navigation [ref=f8e12]:
+      - link "Home" [ref=f8e13] [cursor=pointer]:
+        - /url: /
+      - link "My Bookings" [ref=f8e134] [cursor=pointer]:
+        - /url: /my-bookings
+      - button "CU" [ref=f8e135]
+  - main [ref=f8e17]:
+    - generic [ref=f8e451]:
+      - button "Back" [ref=f8e452]
+      - generic [ref=f8e453]:
+        - heading "Book Homestay" [level=4] [ref=f8e455]
+        - generic [ref=f8e456]:
+          - generic [ref=f8e458]:
+            - img "Sa Pa Mountain Retreat" [ref=f8e459]
+            - generic [ref=f8e460]:
+              - heading "Sa Pa Mountain Retreat" [level=3] [ref=f8e461]
+              - paragraph [ref=f8e462]: 15 Fansipan
+              - paragraph [ref=f8e463]: Sa Pa
+              - paragraph [ref=f8e464]: 160.000 ₫/hour
+          - generic [ref=f8e465]:
+            - generic [ref=f8e466]:
+              - generic [ref=f8e467]:
+                - generic [ref=f8e468]: Date
+                - textbox "Date" [ref=f8e469]: 2026-08-27
+              - generic [ref=f8e470]:
+                - generic [ref=f8e471]: Number of guests
+                - generic [ref=f8e472]:
+                  - spinbutton "Enter number of guests" [ref=f8e473]: "3"
+                  - generic [ref=f8e474]: people
+            - generic [ref=f8e475]:
+              - generic [ref=f8e476]:
+                - generic [ref=f8e477]: Start Time
+                - combobox [active] [ref=f8e478]:
+                  - generic: 10:00
+              - generic [ref=f8e479]:
+                - generic [ref=f8e480]: Duration
+                - generic [ref=f8e481]:
+                  - spinbutton "Enter hours" [ref=f8e482]: "1"
+                  - generic [ref=f8e483]: hour
+          - generic [ref=f8e638]:
+            - heading "Price Breakdown" [level=4] [ref=f8e639]
+            - generic [ref=f8e640]:
+              - generic [ref=f8e641]: 160.000 ₫/hour x 1 hour
+              - generic [ref=f8e642]: 160.000 ₫
+            - generic [ref=f8e643]:
+              - generic [ref=f8e644]: Total
+              - generic [ref=f8e645]: 160.000 ₫
+          - generic [ref=f8e484]:
+            - button "Confirm Booking" [ref=f8e646]
+            - button "Cancel" [ref=f8e485]
+  - contentinfo [ref=f8e20]:
+    - generic [ref=f8e21]:
+      - link "About" [ref=f8e22] [cursor=pointer]:
+        - /url: /about
+      - generic [ref=f8e23]: "|"
+      - link "Terms" [ref=f8e24] [cursor=pointer]:
+        - /url: /terms
+      - generic [ref=f8e25]: "|"
+      - link "Privacy" [ref=f8e26] [cursor=pointer]:
+        - /url: /privacy
+      - generic [ref=f8e27]: "|"
+      - link "Contact" [ref=f8e28] [cursor=pointer]:
+        - /url: /contact
+  - region "Notifications alt+T"

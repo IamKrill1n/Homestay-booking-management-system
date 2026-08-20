@@ -1,0 +1,62 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - link "Homestay" [ref=e6] [cursor=pointer]:
+        - /url: /
+      - searchbox "Search homestays..." [ref=e11]
+    - navigation [ref=e12]:
+      - link "Home" [ref=e13] [cursor=pointer]:
+        - /url: /
+      - link "My Bookings" [ref=e1451] [cursor=pointer]:
+        - /url: /my-bookings
+      - button "CU" [ref=e1452]
+  - main [ref=e17]:
+    - generic [ref=e1763]:
+      - button "Back" [ref=e1764]
+      - generic [ref=e1765]:
+        - heading "Book Homestay" [level=4] [ref=e1767]
+        - generic [ref=e1768]:
+          - generic [ref=e1770]:
+            - img "Playwright Test Homestay 9876" [ref=e1771]
+            - generic [ref=e1772]:
+              - heading "Playwright Test Homestay 9876" [level=3] [ref=e1773]
+              - paragraph [ref=e1774]: 99 Test Street
+              - paragraph [ref=e1775]: Hanoi
+              - paragraph [ref=e1776]: 250.000 ₫/hour
+          - generic [ref=e1777]:
+            - generic [ref=e1778]:
+              - generic [ref=e1779]:
+                - generic [ref=e1780]: Date
+                - textbox "Date" [ref=e1781]
+              - generic [ref=e1782]:
+                - generic [ref=e1783]: Number of guests
+                - generic [ref=e1784]:
+                  - spinbutton "Enter number of guests" [ref=e1785]: "1"
+                  - generic [ref=e1786]: person
+            - generic [ref=e1787]:
+              - generic [ref=e1788]:
+                - generic [ref=e1789]: Start Time
+                - combobox [ref=e1790]:
+                  - generic: 14:00
+              - generic [ref=e1791]:
+                - generic [ref=e1792]: Duration
+                - generic [ref=e1793]:
+                  - spinbutton "Enter hours" [ref=e1794]: "1"
+                  - generic [ref=e1795]: hour
+          - generic [ref=e1796]:
+            - button "Confirm Booking" [disabled]
+            - button "Cancel" [ref=e1797]
+  - contentinfo [ref=e73]:
+    - generic [ref=e74]:
+      - link "About" [ref=e75] [cursor=pointer]:
+        - /url: /about
+      - generic [ref=e76]: "|"
+      - link "Terms" [ref=e77] [cursor=pointer]:
+        - /url: /terms
+      - generic [ref=e78]: "|"
+      - link "Privacy" [ref=e79] [cursor=pointer]:
+        - /url: /privacy
+      - generic [ref=e80]: "|"
+      - link "Contact" [ref=e81] [cursor=pointer]:
+        - /url: /contact
+  - region "Notifications alt+T"

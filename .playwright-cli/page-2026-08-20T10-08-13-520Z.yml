@@ -1,0 +1,57 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - link "Homestay" [ref=e6] [cursor=pointer]:
+        - /url: /
+      - searchbox "Search homestays..." [ref=e11]
+    - navigation [ref=e12]:
+      - link "Home" [ref=e13] [cursor=pointer]:
+        - /url: /
+      - link "My Bookings" [ref=e2652] [cursor=pointer]:
+        - /url: /my-bookings
+      - button "CU" [ref=e2653]
+  - main [ref=e17]:
+    - generic [ref=e2959]:
+      - button "Back" [ref=e2960]
+      - generic [ref=e2961]:
+        - generic [ref=e2962]:
+          - heading "Complete Payment" [level=4] [ref=e2963]
+          - paragraph [ref=e2964]: "Booking Reference: #5"
+        - generic [ref=e2965]:
+          - generic [ref=e2966]:
+            - paragraph [ref=e2967]: Total Amount Due
+            - paragraph [ref=e2968]: 750.000 ₫
+          - generic [ref=e2969]:
+            - generic [ref=e2970]: Select Payment Method
+            - radiogroup [ref=e2971]:
+              - generic [ref=e2972]:
+                - radio "Credit / Debit Card" [ref=e2973]
+                - generic [ref=e2974] [cursor=pointer]: Credit / Debit Card
+              - generic [ref=e2975]:
+                - radio "Bank Transfer" [checked] [ref=e2976]
+                - generic [ref=e2979] [cursor=pointer]: Bank Transfer
+          - generic [ref=e2980]:
+            - generic [ref=e2981]:
+              - paragraph [ref=e2982]: Bank
+              - paragraph [ref=e2983]: TPBank
+            - generic [ref=e2984]:
+              - paragraph [ref=e2985]: Account Number
+              - paragraph [ref=e2986]: "00339705529"
+            - generic [ref=e2987]:
+              - paragraph [ref=e2988]: Transfer Content
+              - paragraph [ref=e2989]: BOOKING-5
+        - button "Confirm 750.000 ₫ Payment" [ref=e2991]
+  - contentinfo [ref=e73]:
+    - generic [ref=e74]:
+      - link "About" [ref=e75] [cursor=pointer]:
+        - /url: /about
+      - generic [ref=e76]: "|"
+      - link "Terms" [ref=e77] [cursor=pointer]:
+        - /url: /terms
+      - generic [ref=e78]: "|"
+      - link "Privacy" [ref=e79] [cursor=pointer]:
+        - /url: /privacy
+      - generic [ref=e80]: "|"
+      - link "Contact" [ref=e81] [cursor=pointer]:
+        - /url: /contact
+  - region "Notifications alt+T"

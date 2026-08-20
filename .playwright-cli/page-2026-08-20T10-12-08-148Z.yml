@@ -1,0 +1,90 @@
+- generic:
+  - generic:
+    - generic:
+      - banner:
+        - generic:
+          - link:
+            - /url: /
+            - text: Homestay
+          - generic:
+            - searchbox
+        - navigation:
+          - link:
+            - /url: /
+            - text: Home
+          - link:
+            - /url: /my-bookings
+            - text: My Bookings
+          - button:
+            - generic: CU
+      - main:
+        - generic:
+          - generic:
+            - generic:
+              - button: Back
+              - generic:
+                - generic:
+                  - heading [level=4]: Book Homestay
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - heading [level=3]: Sa Pa Mountain Retreat
+                        - paragraph: 15 Fansipan
+                        - paragraph: Sa Pa
+                        - paragraph: 160.000 ₫/hour
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic: Date
+                        - textbox: 2026-08-27
+                      - generic:
+                        - generic: Number of guests
+                        - generic:
+                          - spinbutton: "3"
+                          - generic: people
+                    - generic:
+                      - generic:
+                        - generic: Start Time
+                        - combobox:
+                          - generic: 10:00
+                      - generic:
+                        - generic: Duration
+                        - generic:
+                          - spinbutton: "2"
+                          - generic: hours
+                  - generic:
+                    - heading [level=4]: Price Breakdown
+                    - generic:
+                      - generic: 160.000 ₫/hour x 2 hours
+                      - generic: 320.000 ₫
+                    - generic:
+                      - generic: Total
+                      - generic: 320.000 ₫
+                  - generic:
+                    - button: Confirm Booking
+                    - button: Cancel
+      - contentinfo:
+        - generic:
+          - link:
+            - /url: /about
+            - text: About
+          - generic: "|"
+          - link:
+            - /url: /terms
+            - text: Terms
+          - generic: "|"
+          - link:
+            - /url: /privacy
+            - text: Privacy
+          - generic: "|"
+          - link:
+            - /url: /contact
+            - text: Contact
+      - region "Notifications alt+T"
+  - dialog [ref=f8e648]:
+    - generic [ref=f8e649]:
+      - heading "Booking Successful!" [level=2] [ref=f8e650]
+      - paragraph [ref=f8e651]: Your booking request has been submitted. The owner will review and respond to your request soon.
+    - button "OK" [active] [ref=f8e652]
+    - button "Close" [ref=f8e653]

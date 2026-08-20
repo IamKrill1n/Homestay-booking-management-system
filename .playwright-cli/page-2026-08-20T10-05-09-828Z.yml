@@ -1,0 +1,256 @@
+- generic:
+  - generic:
+    - generic:
+      - banner:
+        - generic:
+          - link:
+            - /url: /
+            - text: Homestay
+          - generic:
+            - searchbox
+        - navigation:
+          - link:
+            - /url: /
+            - text: Home
+          - link:
+            - /url: /admin
+            - text: Admin Panel
+          - button:
+            - generic: AU
+      - main:
+        - generic:
+          - generic:
+            - heading [level=1]: Admin - Verify Homestays
+            - generic:
+              - generic:
+                - generic:
+                  - heading [level=4]: Pending Verification (2)
+                - generic:
+                  - generic:
+                    - table:
+                      - rowgroup:
+                        - row:
+                          - columnheader: Homestay
+                          - columnheader: Owner
+                          - columnheader: City
+                          - columnheader: Price/Hour
+                          - columnheader: Date Submitted
+                          - columnheader: Action
+                      - rowgroup:
+                        - row:
+                          - cell: Hue Riverside Heritage Room
+                          - cell: Owner 2
+                          - cell: Hue
+                          - cell: 130.000 ₫
+                          - cell: Jan 09, 2026
+                          - cell:
+                            - button: View
+                        - row:
+                          - cell: Playwright Test Homestay 9876
+                          - cell: Owner 2
+                          - cell: Hanoi
+                          - cell: 250.000 ₫
+                          - cell: Aug 20, 2026
+                          - cell:
+                            - button: View
+              - generic:
+                - generic:
+                  - heading [level=4]: All Homestays
+                - generic:
+                  - generic:
+                    - table:
+                      - rowgroup:
+                        - row:
+                          - columnheader: Homestay
+                          - columnheader: Owner
+                          - columnheader: City
+                          - columnheader: Status
+                          - columnheader: Availability
+                          - columnheader: Action
+                      - rowgroup:
+                        - row:
+                          - cell: Homestay Da Lat View
+                          - cell: Owner 2
+                          - cell: Da Lat
+                          - cell:
+                            - generic: approved
+                          - cell:
+                            - generic: available
+                          - cell:
+                            - button: View
+                        - row:
+                          - cell: Coastal Homestay Nha Trang
+                          - cell: Owner 2
+                          - cell: Nha Trang
+                          - cell:
+                            - generic: approved
+                          - cell:
+                            - generic: available
+                          - cell:
+                            - button: View
+                        - row:
+                          - cell: Budget Room Da Lat
+                          - cell: Owner 2
+                          - cell: Da Lat
+                          - cell:
+                            - generic: rejected
+                          - cell:
+                            - generic: unavailable
+                          - cell:
+                            - button: View
+                        - row:
+                          - cell: Rejected Garden House
+                          - cell: Owner 2
+                          - cell: Ho Chi Minh City
+                          - cell:
+                            - generic: rejected
+                          - cell:
+                            - generic: unavailable
+                          - cell:
+                            - button: View
+                        - row:
+                          - cell: Hanoi Old Quarter Loft
+                          - cell: Owner 2
+                          - cell: Hanoi
+                          - cell:
+                            - generic: approved
+                          - cell:
+                            - generic: available
+                          - cell:
+                            - button: View
+                        - row:
+                          - cell: Hoi An Lantern Villa
+                          - cell: Owner 2
+                          - cell: Hoi An
+                          - cell:
+                            - generic: approved
+                          - cell:
+                            - generic: available
+                          - cell:
+                            - button: View
+                        - row:
+                          - cell: Da Nang Beach Studio
+                          - cell: Owner 2
+                          - cell: Da Nang
+                          - cell:
+                            - generic: rejected
+                          - cell:
+                            - generic: unavailable
+                          - cell:
+                            - button: View
+                        - row:
+                          - cell: Sa Pa Mountain Retreat
+                          - cell: Owner 2
+                          - cell: Sa Pa
+                          - cell:
+                            - generic: approved
+                          - cell:
+                            - generic: available
+                          - cell:
+                            - button: View
+                        - row:
+                          - cell: Hue Riverside Heritage Room
+                          - cell: Owner 2
+                          - cell: Hue
+                          - cell:
+                            - generic: pending
+                          - cell:
+                            - generic: unavailable
+                          - cell:
+                            - button: View
+                        - row:
+                          - cell: Phu Quoc Sunset Bungalow
+                          - cell: Owner 2
+                          - cell: Phu Quoc
+                          - cell:
+                            - generic: rejected
+                          - cell:
+                            - generic: unavailable
+                          - cell:
+                            - button: View
+                        - row:
+                          - cell: Viettel AI
+                          - cell: Owner 2
+                          - cell: Hanoi
+                          - cell:
+                            - generic: approved
+                          - cell:
+                            - generic: available
+                          - cell:
+                            - button: View
+                        - row:
+                          - cell: Viettel AI
+                          - cell: Owner 2
+                          - cell: Hanoi
+                          - cell:
+                            - generic: approved
+                          - cell:
+                            - generic: available
+                          - cell:
+                            - button: View
+                        - row:
+                          - cell: Playwright Test Homestay 9876
+                          - cell: Owner 2
+                          - cell: Hanoi
+                          - cell:
+                            - generic: pending
+                          - cell:
+                            - generic: unavailable
+                          - cell:
+                            - button: View
+      - contentinfo:
+        - generic:
+          - link:
+            - /url: /about
+            - text: About
+          - generic: "|"
+          - link:
+            - /url: /terms
+            - text: Terms
+          - generic: "|"
+          - link:
+            - /url: /privacy
+            - text: Privacy
+          - generic: "|"
+          - link:
+            - /url: /contact
+            - text: Contact
+      - region "Notifications alt+T"
+  - dialog [ref=e1365]:
+    - generic [ref=e1366]:
+      - heading "Review Homestay" [level=2] [ref=e1367]
+      - paragraph [ref=e1368]: Review the homestay details and approve or reject the listing.
+    - generic [ref=e1369]:
+      - generic [ref=e1370]:
+        - img "Playwright Test Homestay 9876 1" [ref=e1371]
+        - img "Playwright Test Homestay 9876 2" [ref=e1372]
+      - generic [ref=e1373]:
+        - heading "Playwright Test Homestay 9876" [level=3] [ref=e1374]
+        - paragraph [ref=e1375]: 99 Test Street
+        - paragraph [ref=e1376]: Hanoi
+      - generic [ref=e1377]:
+        - generic [ref=e1378]:
+          - generic [ref=e1379]: Price per Hour
+          - paragraph [ref=e1380]: 250.000 ₫
+        - generic [ref=e1381]:
+          - generic [ref=e1382]: Max Guests
+          - paragraph [ref=e1383]: "5"
+      - generic [ref=e1384]:
+        - generic [ref=e1385]: Status
+        - generic [ref=e1386]: pending
+      - generic [ref=e1388]:
+        - generic [ref=e1389]: Amenities
+        - generic [ref=e1390]:
+          - generic [ref=e1391]: WiFi
+          - generic [ref=e1392]: Air Conditioning
+          - generic [ref=e1393]: TV
+      - generic [ref=e1394]:
+        - generic [ref=e1395]: Description
+        - paragraph [ref=e1396]: Automated test homestay description for UI check
+      - generic [ref=e1397]:
+        - generic [ref=e1398]: Submitted On
+        - paragraph [ref=e1399]: August 20, 2026
+      - generic [ref=e1400]:
+        - button "Approve" [active] [ref=e1401]
+        - button "Reject" [ref=e1402]
+    - button "Close" [ref=e1403]

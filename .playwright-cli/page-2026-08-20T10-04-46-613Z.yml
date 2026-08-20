@@ -1,0 +1,292 @@
+- generic:
+  - generic:
+    - generic:
+      - banner:
+        - generic:
+          - link:
+            - /url: /
+            - text: Homestay
+          - generic:
+            - searchbox
+        - navigation:
+          - link:
+            - /url: /
+            - text: Home
+          - link:
+            - /url: /my-homestays
+            - text: My Homestays
+          - link:
+            - /url: /owner/bookings
+            - text: Manage Bookings
+          - button [expanded]:
+            - generic: OU
+      - main:
+        - generic:
+          - generic:
+            - generic:
+              - heading [level=1]: My Homestays
+              - link:
+                - /url: /homestay/new
+                - button: + Add New Homestay
+            - generic:
+              - generic:
+                - heading [level=4]: Manage Your Homestays
+              - generic:
+                - generic:
+                  - table:
+                    - rowgroup:
+                      - row:
+                        - columnheader: Title
+                        - columnheader: City
+                        - columnheader: Price
+                        - columnheader: Status
+                        - columnheader: Availability
+                        - columnheader: Actions
+                    - rowgroup:
+                      - row:
+                        - cell: Homestay Da Lat View
+                        - cell: Da Lat
+                        - cell: 150.000 ₫/hr
+                        - cell:
+                          - generic: approved
+                        - cell:
+                          - generic: available
+                        - cell:
+                          - generic:
+                            - link:
+                              - /url: /homestay/1
+                              - button
+                            - link:
+                              - /url: /homestay/edit/1
+                              - button
+                            - button
+                      - row:
+                        - cell: Coastal Homestay Nha Trang
+                        - cell: Nha Trang
+                        - cell: 200.000 ₫/hr
+                        - cell:
+                          - generic: approved
+                        - cell:
+                          - generic: available
+                        - cell:
+                          - generic:
+                            - link:
+                              - /url: /homestay/2
+                              - button
+                            - link:
+                              - /url: /homestay/edit/2
+                              - button
+                            - button
+                      - row:
+                        - cell: Budget Room Da Lat
+                        - cell: Da Lat
+                        - cell: 1.200.000 ₫/night
+                        - cell:
+                          - generic: rejected
+                        - cell:
+                          - generic: unavailable
+                        - cell:
+                          - generic:
+                            - link:
+                              - /url: /homestay/3
+                              - button
+                            - link:
+                              - /url: /homestay/edit/3
+                              - button
+                            - button
+                      - row:
+                        - cell: Rejected Garden House
+                        - cell: Ho Chi Minh City
+                        - cell: 120.000 ₫/hr
+                        - cell:
+                          - generic: rejected
+                        - cell:
+                          - generic: unavailable
+                        - cell:
+                          - generic:
+                            - link:
+                              - /url: /homestay/4
+                              - button
+                            - link:
+                              - /url: /homestay/edit/4
+                              - button
+                            - button
+                      - row:
+                        - cell: Hanoi Old Quarter Loft
+                        - cell: Hanoi
+                        - cell: 180.000 ₫/hr
+                        - cell:
+                          - generic: approved
+                        - cell:
+                          - generic: available
+                        - cell:
+                          - generic:
+                            - link:
+                              - /url: /homestay/5
+                              - button
+                            - link:
+                              - /url: /homestay/edit/5
+                              - button
+                            - button
+                      - row:
+                        - cell: Hoi An Lantern Villa
+                        - cell: Hoi An
+                        - cell: 2.000.000 ₫/night
+                        - cell:
+                          - generic: approved
+                        - cell:
+                          - generic: available
+                        - cell:
+                          - generic:
+                            - link:
+                              - /url: /homestay/6
+                              - button
+                            - link:
+                              - /url: /homestay/edit/6
+                              - button
+                            - button
+                      - row:
+                        - cell: Da Nang Beach Studio
+                        - cell: Da Nang
+                        - cell: 170.000 ₫/hr
+                        - cell:
+                          - generic: rejected
+                        - cell:
+                          - generic: unavailable
+                        - cell:
+                          - generic:
+                            - link:
+                              - /url: /homestay/7
+                              - button
+                            - link:
+                              - /url: /homestay/edit/7
+                              - button
+                            - button
+                      - row:
+                        - cell: Sa Pa Mountain Retreat
+                        - cell: Sa Pa
+                        - cell: 160.000 ₫/hr
+                        - cell:
+                          - generic: approved
+                        - cell:
+                          - generic: available
+                        - cell:
+                          - generic:
+                            - link:
+                              - /url: /homestay/8
+                              - button
+                            - link:
+                              - /url: /homestay/edit/8
+                              - button
+                            - button
+                      - row:
+                        - cell: Hue Riverside Heritage Room
+                        - cell: Hue
+                        - cell: 130.000 ₫/hr
+                        - cell:
+                          - generic: pending
+                        - cell:
+                          - generic: unavailable
+                        - cell:
+                          - generic:
+                            - link:
+                              - /url: /homestay/9
+                              - button
+                            - link:
+                              - /url: /homestay/edit/9
+                              - button
+                            - button
+                      - row:
+                        - cell: Phu Quoc Sunset Bungalow
+                        - cell: Phu Quoc
+                        - cell: 240.000 ₫/hr
+                        - cell:
+                          - generic: rejected
+                        - cell:
+                          - generic: unavailable
+                        - cell:
+                          - generic:
+                            - link:
+                              - /url: /homestay/10
+                              - button
+                            - link:
+                              - /url: /homestay/edit/10
+                              - button
+                            - button
+                      - row:
+                        - cell: Viettel AI
+                        - cell: Hanoi
+                        - cell: 1.000.000 ₫/hr
+                        - cell:
+                          - generic: approved
+                        - cell:
+                          - generic: available
+                        - cell:
+                          - generic:
+                            - link:
+                              - /url: /homestay/11
+                              - button
+                            - link:
+                              - /url: /homestay/edit/11
+                              - button
+                            - button
+                      - row:
+                        - cell: Viettel AI
+                        - cell: Hanoi
+                        - cell: 1.000.000 ₫/hr
+                        - cell:
+                          - generic: approved
+                        - cell:
+                          - generic: available
+                        - cell:
+                          - generic:
+                            - link:
+                              - /url: /homestay/12
+                              - button
+                            - link:
+                              - /url: /homestay/edit/12
+                              - button
+                            - button
+                      - row:
+                        - cell: Playwright Test Homestay 9876
+                        - cell: Hanoi
+                        - cell: 250.000 ₫/hr
+                        - cell:
+                          - generic: pending
+                        - cell:
+                          - generic: unavailable
+                        - cell:
+                          - generic:
+                            - link:
+                              - /url: /homestay/13
+                              - button
+                            - link:
+                              - /url: /homestay/edit/13
+                              - button
+                            - button
+      - contentinfo:
+        - generic:
+          - link:
+            - /url: /about
+            - text: About
+          - generic: "|"
+          - link:
+            - /url: /terms
+            - text: Terms
+          - generic: "|"
+          - link:
+            - /url: /privacy
+            - text: Privacy
+          - generic: "|"
+          - link:
+            - /url: /contact
+            - text: Contact
+      - region "Notifications alt+T"
+  - menu "OU" [active] [ref=e945]:
+    - generic [ref=e946]:
+      - paragraph [ref=e947]: Owner User
+      - paragraph [ref=e948]: owner@example.com
+    - separator [ref=e949]
+    - menuitem "My Profile" [ref=e950] [cursor=pointer]
+    - separator [ref=e951]
+    - menuitem "Logout" [ref=e952] [cursor=pointer]

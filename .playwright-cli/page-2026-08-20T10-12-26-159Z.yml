@@ -1,0 +1,183 @@
+- generic [ref=f8e3]:
+  - banner [ref=f8e4]:
+    - generic [ref=f8e5]:
+      - link "Homestay" [ref=f8e6] [cursor=pointer]:
+        - /url: /
+      - searchbox "Search homestays..." [ref=f8e11]
+    - navigation [ref=f8e12]:
+      - link "Home" [ref=f8e13] [cursor=pointer]:
+        - /url: /
+      - generic [ref=f8e886]:
+        - link "Login" [ref=f8e887] [cursor=pointer]:
+          - /url: /login
+        - link "Register" [ref=f8e888] [cursor=pointer]:
+          - /url: /register
+  - main [ref=f8e17]:
+    - generic [ref=f8e656]:
+      - heading "Browse Homestays" [level=1] [ref=f8e657]
+      - generic [ref=f8e658]:
+        - generic [ref=f8e661]:
+          - generic [ref=f8e662]:
+            - generic [ref=f8e663]: Price Range (VND)
+            - generic [ref=f8e664]:
+              - slider "Minimum" [ref=f8e668]
+              - slider "Maximum" [ref=f8e670]
+            - generic [ref=f8e671]:
+              - generic [ref=f8e672]: 0 ₫
+              - generic [ref=f8e673]: 500.000 ₫
+          - generic [ref=f8e674]:
+            - generic [ref=f8e675]: Rental Type
+            - combobox [ref=f8e676]:
+              - generic: All Stays
+          - generic [ref=f8e677]:
+            - generic [ref=f8e678]: City
+            - combobox [ref=f8e679]:
+              - generic: All
+          - generic [ref=f8e680]:
+            - generic [ref=f8e681]: Guests
+            - combobox [ref=f8e682]:
+              - generic: All
+          - generic [ref=f8e683]:
+            - generic [ref=f8e684]: Amenities
+            - generic [ref=f8e685]:
+              - generic [ref=f8e686]:
+                - checkbox "WiFi" [ref=f8e687]
+                - generic [ref=f8e688] [cursor=pointer]: WiFi
+              - generic [ref=f8e689]:
+                - checkbox "Kitchen" [ref=f8e690]
+                - generic [ref=f8e691] [cursor=pointer]: Kitchen
+              - generic [ref=f8e692]:
+                - checkbox "Air Conditioning" [ref=f8e693]
+                - generic [ref=f8e694] [cursor=pointer]: Air Conditioning
+              - generic [ref=f8e695]:
+                - checkbox "TV" [ref=f8e696]
+                - generic [ref=f8e697] [cursor=pointer]: TV
+              - generic [ref=f8e698]:
+                - checkbox "Parking" [ref=f8e699]
+                - generic [ref=f8e700] [cursor=pointer]: Parking
+              - generic [ref=f8e701]:
+                - checkbox "Bath Tub" [ref=f8e702]
+                - generic [ref=f8e703] [cursor=pointer]: Bath Tub
+              - generic [ref=f8e704]:
+                - checkbox "Pets" [ref=f8e705]
+                - generic [ref=f8e706] [cursor=pointer]: Pets
+          - button "Clear Filters" [ref=f8e707]
+        - generic [ref=f8e709]:
+          - generic [ref=f8e710]:
+            - img "Homestay Da Lat View" [ref=f8e712]
+            - generic [ref=f8e713]:
+              - generic [ref=f8e714]:
+                - heading "Homestay Da Lat View" [level=3] [ref=f8e715]
+                - generic [ref=f8e716]: "5.0"
+              - paragraph [ref=f8e724]: 123 Tran Phu, Da Lat
+              - generic [ref=f8e725]:
+                - paragraph [ref=f8e726]: 150.000 ₫ / hour
+                - generic [ref=f8e727]: available
+            - link [ref=f8e729] [cursor=pointer]:
+              - /url: /homestay/1
+              - button "View Details" [ref=f8e730]
+          - generic [ref=f8e731]:
+            - img "Coastal Homestay Nha Trang" [ref=f8e733]
+            - generic [ref=f8e734]:
+              - generic [ref=f8e735]:
+                - heading "Coastal Homestay Nha Trang" [level=3] [ref=f8e736]
+                - generic [ref=f8e737]: "5.0"
+              - paragraph [ref=f8e745]: 45 Tran Phu, Nha Trang
+              - generic [ref=f8e746]:
+                - paragraph [ref=f8e747]: 200.000 ₫ / hour
+                - generic [ref=f8e748]: available
+            - link [ref=f8e750] [cursor=pointer]:
+              - /url: /homestay/2
+              - button "View Details" [ref=f8e751]
+          - generic [ref=f8e752]:
+            - img "Hanoi Old Quarter Loft" [ref=f8e754]
+            - generic [ref=f8e755]:
+              - generic [ref=f8e756]:
+                - heading "Hanoi Old Quarter Loft" [level=3] [ref=f8e757]
+                - generic [ref=f8e758]: "5.0"
+              - paragraph [ref=f8e766]: 18 Hang Gai, Hanoi
+              - generic [ref=f8e767]:
+                - paragraph [ref=f8e768]: 180.000 ₫ / hour
+                - generic [ref=f8e769]: available
+            - link [ref=f8e771] [cursor=pointer]:
+              - /url: /homestay/5
+              - button "View Details" [ref=f8e772]
+          - generic [ref=f8e773]:
+            - img "Hoi An Lantern Villa" [ref=f8e775]
+            - generic [ref=f8e776]:
+              - generic [ref=f8e777]:
+                - heading "Hoi An Lantern Villa" [level=3] [ref=f8e778]
+                - generic [ref=f8e779]: "5.0"
+              - paragraph [ref=f8e787]: 27 Nguyen Thai Hoc, Hoi An
+              - generic [ref=f8e788]:
+                - paragraph [ref=f8e789]: 2.000.000 ₫ / night
+                - generic [ref=f8e790]: available
+            - link [ref=f8e792] [cursor=pointer]:
+              - /url: /homestay/6
+              - button "View Details" [ref=f8e793]
+          - generic [ref=f8e794]:
+            - img "Sa Pa Mountain Retreat" [ref=f8e796]
+            - generic [ref=f8e797]:
+              - generic [ref=f8e798]:
+                - heading "Sa Pa Mountain Retreat" [level=3] [ref=f8e799]
+                - generic [ref=f8e800]: "5.0"
+              - paragraph [ref=f8e808]: 15 Fansipan, Sa Pa
+              - generic [ref=f8e809]:
+                - paragraph [ref=f8e810]: 160.000 ₫ / hour
+                - generic [ref=f8e811]: available
+            - link [ref=f8e813] [cursor=pointer]:
+              - /url: /homestay/8
+              - button "View Details" [ref=f8e814]
+          - generic [ref=f8e815]:
+            - img "Viettel AI" [ref=f8e817]
+            - generic [ref=f8e818]:
+              - generic [ref=f8e819]:
+                - heading "Viettel AI" [level=3] [ref=f8e820]
+                - generic [ref=f8e821]: "5.0"
+              - paragraph [ref=f8e829]: epic tower, Hanoi
+              - generic [ref=f8e830]:
+                - paragraph [ref=f8e831]: 1.000.000 ₫ / hour
+                - generic [ref=f8e832]: available
+            - link [ref=f8e834] [cursor=pointer]:
+              - /url: /homestay/11
+              - button "View Details" [ref=f8e835]
+          - generic [ref=f8e836]:
+            - img "Viettel AI" [ref=f8e838]
+            - generic [ref=f8e839]:
+              - generic [ref=f8e840]:
+                - heading "Viettel AI" [level=3] [ref=f8e841]
+                - generic [ref=f8e842]: "5.0"
+              - paragraph [ref=f8e850]: epic tower, Hanoi
+              - generic [ref=f8e851]:
+                - paragraph [ref=f8e852]: 1.000.000 ₫ / hour
+                - generic [ref=f8e853]: available
+            - link [ref=f8e855] [cursor=pointer]:
+              - /url: /homestay/12
+              - button "View Details" [ref=f8e856]
+          - generic [ref=f8e857]:
+            - img "Playwright Test Homestay 9876" [ref=f8e859]
+            - generic [ref=f8e860]:
+              - generic [ref=f8e861]:
+                - heading "Playwright Test Homestay 9876" [level=3] [ref=f8e862]
+                - generic [ref=f8e863]: "5.0"
+              - paragraph [ref=f8e871]: 99 Test Street, Hanoi
+              - generic [ref=f8e872]:
+                - paragraph [ref=f8e873]: 250.000 ₫ / hour
+                - generic [ref=f8e874]: available
+            - link [ref=f8e876] [cursor=pointer]:
+              - /url: /homestay/13
+              - button "View Details" [ref=f8e877]
+  - contentinfo [ref=f8e20]:
+    - generic [ref=f8e21]:
+      - link "About" [ref=f8e22] [cursor=pointer]:
+        - /url: /about
+      - generic [ref=f8e23]: "|"
+      - link "Terms" [ref=f8e24] [cursor=pointer]:
+        - /url: /terms
+      - generic [ref=f8e25]: "|"
+      - link "Privacy" [ref=f8e26] [cursor=pointer]:
+        - /url: /privacy
+      - generic [ref=f8e27]: "|"
+      - link "Contact" [ref=f8e28] [cursor=pointer]:
+        - /url: /contact
+  - region "Notifications alt+T"

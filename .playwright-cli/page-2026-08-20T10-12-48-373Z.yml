@@ -1,0 +1,109 @@
+- generic [ref=f9e3]:
+  - banner [ref=f9e4]:
+    - generic [ref=f9e5]:
+      - link "Homestay" [ref=f9e6] [cursor=pointer]:
+        - /url: /
+      - searchbox "Search homestays..." [ref=f9e11]
+    - navigation [ref=f9e12]:
+      - link "Home" [ref=f9e13] [cursor=pointer]:
+        - /url: /
+      - link "My Homestays" [ref=f9e49] [cursor=pointer]:
+        - /url: /my-homestays
+      - link "Manage Bookings" [active] [ref=f9e50] [cursor=pointer]:
+        - /url: /owner/bookings
+      - button "OU" [ref=f9e51]
+  - main [ref=f9e17]:
+    - generic [ref=f9e278]:
+      - generic [ref=f9e279]:
+        - heading "Manage Bookings" [level=1] [ref=f9e280]
+        - paragraph [ref=f9e281]: Review booking requests for your homestays. Approved bookings can be paid by the guest via bank transfer.
+      - generic [ref=f9e282]:
+        - heading "Booking Requests (1 pending)" [level=4] [ref=f9e284]
+        - table [ref=f9e287]:
+          - rowgroup [ref=f9e288]:
+            - row [ref=f9e289]:
+              - columnheader "Guest" [ref=f9e290]
+              - columnheader "Homestay" [ref=f9e291]
+              - columnheader "Check-in" [ref=f9e292]
+              - columnheader "Check-out" [ref=f9e293]
+              - columnheader "Total" [ref=f9e294]
+              - columnheader "Status" [ref=f9e295]
+              - columnheader "Actions" [ref=f9e296]
+          - rowgroup [ref=f9e297]:
+            - row [ref=f9e298]:
+              - cell "Common User user@example.com" [ref=f9e299]:
+                - generic [ref=f9e300]: Common User
+                - generic [ref=f9e301]: user@example.com
+              - cell "Sa Pa Mountain Retreat" [ref=f9e302]
+              - cell "Aug 27, 2026 10:00" [ref=f9e303]
+              - cell "Aug 27, 2026 12:00" [ref=f9e304]
+              - cell "320.000 ₫" [ref=f9e305]
+              - cell "pending" [ref=f9e306]
+              - cell [ref=f9e308]:
+                - generic [ref=f9e309]:
+                  - button "Accept" [ref=f9e310]
+                  - button "Reject" [ref=f9e311]
+            - row [ref=f9e312]:
+              - cell "Common User user@example.com" [ref=f9e313]:
+                - generic [ref=f9e314]: Common User
+                - generic [ref=f9e315]: user@example.com
+              - cell "Playwright Test Homestay 9876" [ref=f9e316]
+              - cell "Aug 25, 2026 10:00" [ref=f9e317]
+              - cell "Aug 25, 2026 13:00" [ref=f9e318]
+              - cell "750.000 ₫" [ref=f9e319]
+              - cell "confirmed" [ref=f9e320]
+              - cell "No action" [ref=f9e322]
+            - row [ref=f9e323]:
+              - cell "Common User user@example.com" [ref=f9e324]:
+                - generic [ref=f9e325]: Common User
+                - generic [ref=f9e326]: user@example.com
+              - cell "Viettel AI" [ref=f9e327]
+              - cell "Feb 01, 8202 14:00" [ref=f9e328]
+              - cell "Feb 01, 8202 15:00" [ref=f9e329]
+              - cell "1.000.000 ₫" [ref=f9e330]
+              - cell "approved" [ref=f9e331]
+              - cell "No action" [ref=f9e333]
+            - row [ref=f9e334]:
+              - cell "Common User user@example.com" [ref=f9e335]:
+                - generic [ref=f9e336]: Common User
+                - generic [ref=f9e337]: user@example.com
+              - cell "Homestay Da Lat View" [ref=f9e338]
+              - cell "Jul 01, 2026 10:00" [ref=f9e339]
+              - cell "Jul 01, 2026 14:00" [ref=f9e340]
+              - cell "600.000 ₫" [ref=f9e341]
+              - cell "rejected" [ref=f9e342]
+              - cell "No action" [ref=f9e344]
+            - row [ref=f9e345]:
+              - cell "Common User user@example.com" [ref=f9e346]:
+                - generic [ref=f9e347]: Common User
+                - generic [ref=f9e348]: user@example.com
+              - cell "Coastal Homestay Nha Trang" [ref=f9e349]
+              - cell "Feb 01, 2026 10:00" [ref=f9e350]
+              - cell "Feb 01, 2026 16:00" [ref=f9e351]
+              - cell "1.200.000 ₫" [ref=f9e352]
+              - cell "confirmed" [ref=f9e353]
+              - cell "No action" [ref=f9e355]
+            - row [ref=f9e356]:
+              - cell "Common User user@example.com" [ref=f9e357]:
+                - generic [ref=f9e358]: Common User
+                - generic [ref=f9e359]: user@example.com
+              - cell "Homestay Da Lat View" [ref=f9e360]
+              - cell "Jan 15, 2026 09:00" [ref=f9e361]
+              - cell "Jan 15, 2026 15:00" [ref=f9e362]
+              - cell "900.000 ₫" [ref=f9e363]
+              - cell "completed" [ref=f9e364]
+              - cell "No action" [ref=f9e366]
+  - contentinfo [ref=f9e40]:
+    - generic [ref=f9e41]:
+      - link "About" [ref=f9e42] [cursor=pointer]:
+        - /url: /about
+      - generic [ref=f9e43]: "|"
+      - link "Terms" [ref=f9e44] [cursor=pointer]:
+        - /url: /terms
+      - generic [ref=f9e45]: "|"
+      - link "Privacy" [ref=f9e46] [cursor=pointer]:
+        - /url: /privacy
+      - generic [ref=f9e47]: "|"
+      - link "Contact" [ref=f9e48] [cursor=pointer]:
+        - /url: /contact
+  - region "Notifications alt+T"

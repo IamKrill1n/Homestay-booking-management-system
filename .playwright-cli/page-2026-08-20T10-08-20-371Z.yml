@@ -1,0 +1,86 @@
+- generic:
+  - generic:
+    - generic:
+      - banner:
+        - generic:
+          - link:
+            - /url: /
+            - text: Homestay
+          - generic:
+            - searchbox
+        - navigation:
+          - link:
+            - /url: /
+            - text: Home
+          - link:
+            - /url: /my-bookings
+            - text: My Bookings
+          - button:
+            - generic: CU
+      - main:
+        - generic:
+          - generic:
+            - button: Back
+            - generic:
+              - generic:
+                - heading [level=4]: Complete Payment
+                - paragraph: "Booking Reference: #5"
+              - generic:
+                - generic:
+                  - paragraph: Total Amount Due
+                  - paragraph: 750.000 ₫
+                - generic:
+                  - generic: Select Payment Method
+                  - radiogroup:
+                    - generic:
+                      - radio
+                      - generic: Credit / Debit Card
+                    - generic:
+                      - radio [checked]
+                      - generic: Bank Transfer
+                - generic:
+                  - generic:
+                    - paragraph: Bank
+                    - paragraph: TPBank
+                  - generic:
+                    - paragraph: Account Number
+                    - paragraph: "00339705529"
+                  - generic:
+                    - paragraph: Transfer Content
+                    - paragraph: BOOKING-5
+              - generic:
+                - button: Confirm 750.000 ₫ Payment
+      - contentinfo:
+        - generic:
+          - link:
+            - /url: /about
+            - text: About
+          - generic: "|"
+          - link:
+            - /url: /terms
+            - text: Terms
+          - generic: "|"
+          - link:
+            - /url: /privacy
+            - text: Privacy
+          - generic: "|"
+          - link:
+            - /url: /contact
+            - text: Contact
+      - region "Notifications alt+T"
+  - dialog [ref=e2993]:
+    - generic [ref=e2994]:
+      - heading "Payment Successful" [level=2] [ref=e2995]
+      - paragraph [ref=e2996]: Your booking is now confirmed.
+    - generic [ref=e2997]:
+      - generic [ref=e2998]:
+        - generic [ref=e2999]: "Receipt No:"
+        - strong [ref=e3000]: TXN-3-5
+      - generic [ref=e3001]:
+        - generic [ref=e3002]: "Amount Paid:"
+        - strong [ref=e3003]: 750.000 ₫
+      - generic [ref=e3004]:
+        - generic [ref=e3005]: "Method:"
+        - generic [ref=e3006]: bank transfer
+    - button "View My Bookings" [active] [ref=e3007]
+    - button "Close" [ref=e3008]

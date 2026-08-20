@@ -1,0 +1,72 @@
+- generic [ref=f8e3]:
+  - banner [ref=f8e4]:
+    - generic [ref=f8e5]:
+      - link "Homestay" [ref=f8e6] [cursor=pointer]:
+        - /url: /
+      - searchbox "Search homestays..." [ref=f8e11]
+    - navigation [ref=f8e12]:
+      - link "Home" [ref=f8e13] [cursor=pointer]:
+        - /url: /
+      - link "My Bookings" [ref=f8e134] [cursor=pointer]:
+        - /url: /my-bookings
+      - button "CU" [ref=f8e135]
+  - main [ref=f8e17]:
+    - generic [ref=f8e362]:
+      - generic [ref=f8e363]:
+        - img "Sa Pa Mountain Retreat" [ref=f8e365]
+        - generic [ref=f8e366]:
+          - button [ref=f8e367]:
+            - img "Sa Pa Mountain Retreat 1" [ref=f8e368]
+          - button [ref=f8e369]:
+            - img "Sa Pa Mountain Retreat 2" [ref=f8e370]
+      - generic [ref=f8e371]:
+        - generic [ref=f8e372]:
+          - generic [ref=f8e373]:
+            - heading "Sa Pa Mountain Retreat" [level=1] [ref=f8e374]
+            - generic [ref=f8e375]: 15 Fansipan, Sa Pa
+            - generic [ref=f8e380]:
+              - generic [ref=f8e381]: available
+              - generic [ref=f8e382]: approved
+          - generic [ref=f8e384]:
+            - heading "Amenities" [level=3] [ref=f8e385]
+            - generic [ref=f8e386]:
+              - generic [ref=f8e387]: WiFi
+              - generic [ref=f8e392]: Kitchen
+              - generic [ref=f8e397]: Parking
+              - generic [ref=f8e402]: Pets
+          - generic [ref=f8e408]:
+            - heading "Description" [level=3] [ref=f8e409]
+            - paragraph [ref=f8e410]: Wooden retreat overlooking terraced rice fields, suitable for guests planning trekking trips.
+          - generic [ref=f8e413]:
+            - heading "Location" [level=3] [ref=f8e414]
+            - link "View on Google Maps" [ref=f8e415] [cursor=pointer]:
+              - /url: https://www.google.com/maps/search/?api=1&query=22.33636%2C103.843786
+          - generic [ref=f8e426]:
+            - heading "Guest Feedback" [level=3] [ref=f8e427]
+            - paragraph [ref=f8e428]: No feedback yet.
+        - generic [ref=f8e431]:
+          - generic [ref=f8e433]:
+            - text: 160.000 ₫
+            - generic [ref=f8e434]: /hour
+          - generic [ref=f8e435]:
+            - generic [ref=f8e436]:
+              - generic [ref=f8e437]: Availability
+              - generic [ref=f8e438]: available
+            - generic [ref=f8e439]:
+              - generic [ref=f8e440]: Max Guests
+              - generic [ref=f8e441]: "5"
+          - button "Book Homestay" [ref=f8e448]
+  - contentinfo [ref=f8e20]:
+    - generic [ref=f8e21]:
+      - link "About" [ref=f8e22] [cursor=pointer]:
+        - /url: /about
+      - generic [ref=f8e23]: "|"
+      - link "Terms" [ref=f8e24] [cursor=pointer]:
+        - /url: /terms
+      - generic [ref=f8e25]: "|"
+      - link "Privacy" [ref=f8e26] [cursor=pointer]:
+        - /url: /privacy
+      - generic [ref=f8e27]: "|"
+      - link "Contact" [ref=f8e28] [cursor=pointer]:
+        - /url: /contact
+  - region "Notifications alt+T"

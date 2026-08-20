@@ -1,0 +1,133 @@
+- generic:
+  - generic:
+    - generic:
+      - banner:
+        - generic:
+          - link:
+            - /url: /
+            - text: Homestay
+          - generic:
+            - searchbox
+        - navigation:
+          - link:
+            - /url: /
+            - text: Home
+          - link:
+            - /url: /my-bookings
+            - text: My Bookings
+          - button:
+            - generic: CU
+      - main:
+        - generic:
+          - generic:
+            - generic:
+              - button: Back
+              - generic:
+                - generic:
+                  - heading [level=4]: Book Homestay
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - heading [level=3]: Sa Pa Mountain Retreat
+                        - paragraph: 15 Fansipan
+                        - paragraph: Sa Pa
+                        - paragraph: 160.000 ₫/hour
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic: Date
+                        - textbox: 2026-08-27
+                      - generic:
+                        - generic: Number of guests
+                        - generic:
+                          - spinbutton: "3"
+                          - generic: people
+                    - generic:
+                      - generic:
+                        - generic: Start Time
+                        - combobox [expanded]:
+                          - generic: 14:00
+                      - generic:
+                        - generic: Duration
+                        - generic:
+                          - spinbutton: "1"
+                          - generic: hour
+                  - generic:
+                    - heading [level=4]: Price Breakdown
+                    - generic:
+                      - generic: 160.000 ₫/hour x 1 hour
+                      - generic: 160.000 ₫
+                    - generic:
+                      - generic: Total
+                      - generic: 160.000 ₫
+                  - generic:
+                    - button: Confirm Booking
+                    - button: Cancel
+      - contentinfo:
+        - generic:
+          - link:
+            - /url: /about
+            - text: About
+          - generic: "|"
+          - link:
+            - /url: /terms
+            - text: Terms
+          - generic: "|"
+          - link:
+            - /url: /privacy
+            - text: Privacy
+          - generic: "|"
+          - link:
+            - /url: /contact
+            - text: Contact
+      - region "Notifications alt+T"
+  - listbox [ref=f8e486]:
+    - option "00:00" [ref=f8e490]
+    - option "00:30" [ref=f8e493]
+    - option "01:00" [ref=f8e496]
+    - option "01:30" [ref=f8e499]
+    - option "02:00" [ref=f8e502]
+    - option "02:30" [ref=f8e505]
+    - option "03:00" [ref=f8e508]
+    - option "03:30" [ref=f8e511]
+    - option "04:00" [ref=f8e514]
+    - option "04:30" [ref=f8e517]
+    - option "05:00" [ref=f8e520]
+    - option "05:30" [ref=f8e523]
+    - option "06:00" [ref=f8e526]
+    - option "06:30" [ref=f8e529]
+    - option "07:00" [ref=f8e532]
+    - option "07:30" [ref=f8e535]
+    - option "08:00" [ref=f8e538]
+    - option "08:30" [ref=f8e541]
+    - option "09:00" [ref=f8e544]
+    - option "09:30" [ref=f8e547]
+    - option "10:00" [ref=f8e550]
+    - option "10:30" [ref=f8e553]
+    - option "11:00" [ref=f8e556]
+    - option "11:30" [ref=f8e559]
+    - option "12:00" [ref=f8e562]
+    - option "12:30" [ref=f8e565]
+    - option "13:00" [ref=f8e568]
+    - option "13:30" [ref=f8e571]
+    - option "14:00" [active] [selected] [ref=f8e574]
+    - option "14:30" [ref=f8e578]
+    - option "15:00" [ref=f8e581]
+    - option "15:30" [ref=f8e584]
+    - option "16:00" [ref=f8e587]
+    - option "16:30" [ref=f8e590]
+    - option "17:00" [ref=f8e593]
+    - option "17:30" [ref=f8e596]
+    - option "18:00" [ref=f8e599]
+    - option "18:30" [ref=f8e602]
+    - option "19:00" [ref=f8e605]
+    - option "19:30" [ref=f8e608]
+    - option "20:00" [ref=f8e611]
+    - option "20:30" [ref=f8e614]
+    - option "21:00" [ref=f8e617]
+    - option "21:30" [ref=f8e620]
+    - option "22:00" [ref=f8e623]
+    - option "22:30" [ref=f8e626]
+    - option "23:00" [ref=f8e629]
+    - option "23:30" [ref=f8e632]

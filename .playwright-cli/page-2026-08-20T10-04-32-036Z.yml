@@ -1,0 +1,117 @@
+- generic:
+  - generic:
+    - generic:
+      - banner:
+        - generic:
+          - link:
+            - /url: /
+            - text: Homestay
+          - generic:
+            - searchbox
+        - navigation:
+          - link:
+            - /url: /
+            - text: Home
+          - link:
+            - /url: /my-homestays
+            - text: My Homestays
+          - link:
+            - /url: /owner/bookings
+            - text: Manage Bookings
+          - button:
+            - generic: OU
+      - main:
+        - generic:
+          - generic:
+            - generic:
+              - button: Back to My Homestays
+              - generic:
+                - generic:
+                  - heading [level=4]: Create Homestay
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic: Title
+                        - textbox: Playwright Test Homestay 9876
+                      - generic:
+                        - generic: Rental Type
+                        - combobox
+                      - generic:
+                        - generic: City
+                        - textbox: Hanoi
+                      - generic:
+                        - generic: Address
+                        - textbox: 99 Test Street
+                      - generic:
+                        - generic: Price per Hour (VND)
+                        - spinbutton: "250000"
+                      - generic:
+                        - generic: Max Guests
+                        - spinbutton: "5"
+                      - generic:
+                        - generic: Amenities
+                        - generic:
+                          - generic:
+                            - checkbox [checked]
+                            - checkbox [checked]
+                            - generic: WiFi
+                          - generic:
+                            - checkbox
+                            - checkbox
+                            - generic: Kitchen
+                          - generic:
+                            - checkbox [checked]
+                            - checkbox [checked]
+                            - generic: Air Conditioning
+                          - generic:
+                            - checkbox [checked]
+                            - checkbox [checked]
+                            - generic: TV
+                          - generic:
+                            - checkbox
+                            - checkbox
+                            - generic: Parking
+                          - generic:
+                            - checkbox
+                            - checkbox
+                            - generic: Bath Tub
+                          - generic:
+                            - checkbox
+                            - checkbox
+                            - generic: Pets
+                      - generic:
+                        - generic: Description
+                        - textbox: Automated test homestay description for UI check
+                      - generic:
+                        - generic: Images
+                        - button [disabled]
+                        - paragraph: Image persistence is not enabled yet; listings use fallback images.
+                    - generic:
+                      - button: Submit Homestay
+                      - button: Cancel
+                    - paragraph: Your homestay will be pending admin approval after submission.
+      - contentinfo:
+        - generic:
+          - link:
+            - /url: /about
+            - text: About
+          - generic: "|"
+          - link:
+            - /url: /terms
+            - text: Terms
+          - generic: "|"
+          - link:
+            - /url: /privacy
+            - text: Privacy
+          - generic: "|"
+          - link:
+            - /url: /contact
+            - text: Contact
+      - region "Notifications alt+T"
+  - dialog [ref=e722]:
+    - generic [ref=e723]:
+      - heading "Homestay Submitted!" [level=2] [ref=e724]
+      - paragraph [ref=e725]: Homestay created. Pending admin approval.
+    - button "OK" [active] [ref=e726]
+    - button "Close" [ref=e727]

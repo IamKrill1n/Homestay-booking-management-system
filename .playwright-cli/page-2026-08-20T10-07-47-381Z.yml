@@ -1,0 +1,125 @@
+- generic:
+  - generic:
+    - generic:
+      - banner:
+        - generic:
+          - link:
+            - /url: /
+            - text: Homestay
+          - generic:
+            - searchbox
+        - navigation:
+          - link:
+            - /url: /
+            - text: Home
+          - link:
+            - /url: /my-homestays
+            - text: My Homestays
+          - link:
+            - /url: /owner/bookings
+            - text: Manage Bookings
+          - button [expanded]:
+            - generic: OU
+      - main:
+        - generic:
+          - generic:
+            - generic:
+              - heading [level=1]: Manage Bookings
+              - paragraph: Review booking requests for your homestays. Approved bookings can be paid by the guest via bank transfer.
+            - generic:
+              - generic:
+                - heading [level=4]: Booking Requests (0 pending)
+              - generic:
+                - generic:
+                  - table:
+                    - rowgroup:
+                      - row:
+                        - columnheader: Guest
+                        - columnheader: Homestay
+                        - columnheader: Check-in
+                        - columnheader: Check-out
+                        - columnheader: Total
+                        - columnheader: Status
+                        - columnheader: Actions
+                    - rowgroup:
+                      - row:
+                        - cell:
+                          - generic: Common User
+                          - generic: user@example.com
+                        - cell: Playwright Test Homestay 9876
+                        - cell: Aug 25, 2026 10:00
+                        - cell: Aug 25, 2026 13:00
+                        - cell: 750.000 ₫
+                        - cell:
+                          - generic: approved
+                        - cell: No action
+                      - row:
+                        - cell:
+                          - generic: Common User
+                          - generic: user@example.com
+                        - cell: Viettel AI
+                        - cell: Feb 01, 8202 14:00
+                        - cell: Feb 01, 8202 15:00
+                        - cell: 1.000.000 ₫
+                        - cell:
+                          - generic: approved
+                        - cell: No action
+                      - row:
+                        - cell:
+                          - generic: Common User
+                          - generic: user@example.com
+                        - cell: Homestay Da Lat View
+                        - cell: Jul 01, 2026 10:00
+                        - cell: Jul 01, 2026 14:00
+                        - cell: 600.000 ₫
+                        - cell:
+                          - generic: rejected
+                        - cell: No action
+                      - row:
+                        - cell:
+                          - generic: Common User
+                          - generic: user@example.com
+                        - cell: Coastal Homestay Nha Trang
+                        - cell: Feb 01, 2026 10:00
+                        - cell: Feb 01, 2026 16:00
+                        - cell: 1.200.000 ₫
+                        - cell:
+                          - generic: confirmed
+                        - cell: No action
+                      - row:
+                        - cell:
+                          - generic: Common User
+                          - generic: user@example.com
+                        - cell: Homestay Da Lat View
+                        - cell: Jan 15, 2026 09:00
+                        - cell: Jan 15, 2026 15:00
+                        - cell: 900.000 ₫
+                        - cell:
+                          - generic: completed
+                        - cell: No action
+      - contentinfo:
+        - generic:
+          - link:
+            - /url: /about
+            - text: About
+          - generic: "|"
+          - link:
+            - /url: /terms
+            - text: Terms
+          - generic: "|"
+          - link:
+            - /url: /privacy
+            - text: Privacy
+          - generic: "|"
+          - link:
+            - /url: /contact
+            - text: Contact
+      - region "Notifications alt+T"
+  - menu "OU" [active] [ref=e2619]:
+    - generic [ref=e2620]:
+      - paragraph [ref=e2621]: Owner User
+      - paragraph [ref=e2622]: owner@example.com
+    - separator [ref=e2623]
+    - menuitem "My Profile" [ref=e2624] [cursor=pointer]
+    - separator [ref=e2625]
+    - menuitem "Logout" [ref=e2626] [cursor=pointer]

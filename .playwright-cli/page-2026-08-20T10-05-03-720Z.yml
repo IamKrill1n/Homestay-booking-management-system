@@ -1,0 +1,174 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - link "Homestay" [ref=e6] [cursor=pointer]:
+        - /url: /
+      - searchbox "Search homestays..." [ref=e11]
+    - navigation [ref=e12]:
+      - link "Home" [ref=e13] [cursor=pointer]:
+        - /url: /
+      - link "Admin Panel" [active] [ref=e978] [cursor=pointer]:
+        - /url: /admin
+      - button "AU" [ref=e979]
+  - main [ref=e17]:
+    - generic [ref=e1185]:
+      - heading "Admin - Verify Homestays" [level=1] [ref=e1186]
+      - generic [ref=e1187]:
+        - generic [ref=e1188]:
+          - heading "Pending Verification (2)" [level=4] [ref=e1190]
+          - table [ref=e1193]:
+            - rowgroup [ref=e1194]:
+              - row [ref=e1195]:
+                - columnheader "Homestay" [ref=e1196]
+                - columnheader "Owner" [ref=e1197]
+                - columnheader "City" [ref=e1198]
+                - columnheader "Price/Hour" [ref=e1199]
+                - columnheader "Date Submitted" [ref=e1200]
+                - columnheader "Action" [ref=e1201]
+            - rowgroup [ref=e1202]:
+              - row [ref=e1203]:
+                - cell "Hue Riverside Heritage Room" [ref=e1204]
+                - cell "Owner 2" [ref=e1205]
+                - cell "Hue" [ref=e1206]
+                - cell "130.000 ₫" [ref=e1207]
+                - cell "Jan 09, 2026" [ref=e1208]
+                - cell [ref=e1209]:
+                  - button "View" [ref=e1210]
+              - row [ref=e1211]:
+                - cell "Playwright Test Homestay 9876" [ref=e1212]
+                - cell "Owner 2" [ref=e1213]
+                - cell "Hanoi" [ref=e1214]
+                - cell "250.000 ₫" [ref=e1215]
+                - cell "Aug 20, 2026" [ref=e1216]
+                - cell [ref=e1217]:
+                  - button "View" [ref=e1218]
+        - generic [ref=e1219]:
+          - heading "All Homestays" [level=4] [ref=e1221]
+          - table [ref=e1224]:
+            - rowgroup [ref=e1225]:
+              - row [ref=e1226]:
+                - columnheader "Homestay" [ref=e1227]
+                - columnheader "Owner" [ref=e1228]
+                - columnheader "City" [ref=e1229]
+                - columnheader "Status" [ref=e1230]
+                - columnheader "Availability" [ref=e1231]
+                - columnheader "Action" [ref=e1232]
+            - rowgroup [ref=e1233]:
+              - row [ref=e1234]:
+                - cell "Homestay Da Lat View" [ref=e1235]
+                - cell "Owner 2" [ref=e1236]
+                - cell "Da Lat" [ref=e1237]
+                - cell "approved" [ref=e1238]
+                - cell "available" [ref=e1240]
+                - cell [ref=e1242]:
+                  - button "View" [ref=e1243]
+              - row [ref=e1244]:
+                - cell "Coastal Homestay Nha Trang" [ref=e1245]
+                - cell "Owner 2" [ref=e1246]
+                - cell "Nha Trang" [ref=e1247]
+                - cell "approved" [ref=e1248]
+                - cell "available" [ref=e1250]
+                - cell [ref=e1252]:
+                  - button "View" [ref=e1253]
+              - row [ref=e1254]:
+                - cell "Budget Room Da Lat" [ref=e1255]
+                - cell "Owner 2" [ref=e1256]
+                - cell "Da Lat" [ref=e1257]
+                - cell "rejected" [ref=e1258]
+                - cell "unavailable" [ref=e1260]
+                - cell [ref=e1262]:
+                  - button "View" [ref=e1263]
+              - row [ref=e1264]:
+                - cell "Rejected Garden House" [ref=e1265]
+                - cell "Owner 2" [ref=e1266]
+                - cell "Ho Chi Minh City" [ref=e1267]
+                - cell "rejected" [ref=e1268]
+                - cell "unavailable" [ref=e1270]
+                - cell [ref=e1272]:
+                  - button "View" [ref=e1273]
+              - row [ref=e1274]:
+                - cell "Hanoi Old Quarter Loft" [ref=e1275]
+                - cell "Owner 2" [ref=e1276]
+                - cell "Hanoi" [ref=e1277]
+                - cell "approved" [ref=e1278]
+                - cell "available" [ref=e1280]
+                - cell [ref=e1282]:
+                  - button "View" [ref=e1283]
+              - row [ref=e1284]:
+                - cell "Hoi An Lantern Villa" [ref=e1285]
+                - cell "Owner 2" [ref=e1286]
+                - cell "Hoi An" [ref=e1287]
+                - cell "approved" [ref=e1288]
+                - cell "available" [ref=e1290]
+                - cell [ref=e1292]:
+                  - button "View" [ref=e1293]
+              - row [ref=e1294]:
+                - cell "Da Nang Beach Studio" [ref=e1295]
+                - cell "Owner 2" [ref=e1296]
+                - cell "Da Nang" [ref=e1297]
+                - cell "rejected" [ref=e1298]
+                - cell "unavailable" [ref=e1300]
+                - cell [ref=e1302]:
+                  - button "View" [ref=e1303]
+              - row [ref=e1304]:
+                - cell "Sa Pa Mountain Retreat" [ref=e1305]
+                - cell "Owner 2" [ref=e1306]
+                - cell "Sa Pa" [ref=e1307]
+                - cell "approved" [ref=e1308]
+                - cell "available" [ref=e1310]
+                - cell [ref=e1312]:
+                  - button "View" [ref=e1313]
+              - row [ref=e1314]:
+                - cell "Hue Riverside Heritage Room" [ref=e1315]
+                - cell "Owner 2" [ref=e1316]
+                - cell "Hue" [ref=e1317]
+                - cell "pending" [ref=e1318]
+                - cell "unavailable" [ref=e1320]
+                - cell [ref=e1322]:
+                  - button "View" [ref=e1323]
+              - row [ref=e1324]:
+                - cell "Phu Quoc Sunset Bungalow" [ref=e1325]
+                - cell "Owner 2" [ref=e1326]
+                - cell "Phu Quoc" [ref=e1327]
+                - cell "rejected" [ref=e1328]
+                - cell "unavailable" [ref=e1330]
+                - cell [ref=e1332]:
+                  - button "View" [ref=e1333]
+              - row [ref=e1334]:
+                - cell "Viettel AI" [ref=e1335]
+                - cell "Owner 2" [ref=e1336]
+                - cell "Hanoi" [ref=e1337]
+                - cell "approved" [ref=e1338]
+                - cell "available" [ref=e1340]
+                - cell [ref=e1342]:
+                  - button "View" [ref=e1343]
+              - row [ref=e1344]:
+                - cell "Viettel AI" [ref=e1345]
+                - cell "Owner 2" [ref=e1346]
+                - cell "Hanoi" [ref=e1347]
+                - cell "approved" [ref=e1348]
+                - cell "available" [ref=e1350]
+                - cell [ref=e1352]:
+                  - button "View" [ref=e1353]
+              - row [ref=e1354]:
+                - cell "Playwright Test Homestay 9876" [ref=e1355]
+                - cell "Owner 2" [ref=e1356]
+                - cell "Hanoi" [ref=e1357]
+                - cell "pending" [ref=e1358]
+                - cell "unavailable" [ref=e1360]
+                - cell [ref=e1362]:
+                  - button "View" [ref=e1363]
+  - contentinfo [ref=e73]:
+    - generic [ref=e74]:
+      - link "About" [ref=e75] [cursor=pointer]:
+        - /url: /about
+      - generic [ref=e76]: "|"
+      - link "Terms" [ref=e77] [cursor=pointer]:
+        - /url: /terms
+      - generic [ref=e78]: "|"
+      - link "Privacy" [ref=e79] [cursor=pointer]:
+        - /url: /privacy
+      - generic [ref=e80]: "|"
+      - link "Contact" [ref=e81] [cursor=pointer]:
+        - /url: /contact
+  - region "Notifications alt+T"

@@ -1,0 +1,242 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - link "Homestay" [ref=e6] [cursor=pointer]:
+        - /url: /
+      - searchbox "Search homestays..." [ref=e11]
+    - navigation [ref=e12]:
+      - link "Home" [ref=e13] [cursor=pointer]:
+        - /url: /
+      - link "My Homestays" [ref=e251] [cursor=pointer]:
+        - /url: /my-homestays
+      - link "Manage Bookings" [ref=e252] [cursor=pointer]:
+        - /url: /owner/bookings
+      - button "OU" [ref=e253]
+  - main [ref=e17]:
+    - generic [ref=e730]:
+      - generic [ref=e731]:
+        - heading "My Homestays" [level=1] [ref=e732]
+        - link [ref=e733] [cursor=pointer]:
+          - /url: /homestay/new
+          - button "+ Add New Homestay" [ref=e734]
+      - generic [ref=e735]:
+        - heading "Manage Your Homestays" [level=4] [ref=e737]
+        - table [ref=e740]:
+          - rowgroup [ref=e741]:
+            - row [ref=e742]:
+              - columnheader "Title" [ref=e743]
+              - columnheader "City" [ref=e744]
+              - columnheader "Price" [ref=e745]
+              - columnheader "Status" [ref=e746]
+              - columnheader "Availability" [ref=e747]
+              - columnheader "Actions" [ref=e748]
+          - rowgroup [ref=e749]:
+            - row [ref=e750]:
+              - cell "Homestay Da Lat View" [ref=e751]
+              - cell "Da Lat" [ref=e752]
+              - cell "150.000 ₫/hr" [ref=e753]
+              - cell "approved" [ref=e754]
+              - cell "available" [ref=e756]
+              - cell [ref=e758]:
+                - generic [ref=e759]:
+                  - link [ref=e760] [cursor=pointer]:
+                    - /url: /homestay/1
+                    - button [ref=e761]
+                  - link [ref=e762] [cursor=pointer]:
+                    - /url: /homestay/edit/1
+                    - button [ref=e763]
+                  - button [ref=e764]
+            - row [ref=e765]:
+              - cell "Coastal Homestay Nha Trang" [ref=e766]
+              - cell "Nha Trang" [ref=e767]
+              - cell "200.000 ₫/hr" [ref=e768]
+              - cell "approved" [ref=e769]
+              - cell "available" [ref=e771]
+              - cell [ref=e773]:
+                - generic [ref=e774]:
+                  - link [ref=e775] [cursor=pointer]:
+                    - /url: /homestay/2
+                    - button [ref=e776]
+                  - link [ref=e777] [cursor=pointer]:
+                    - /url: /homestay/edit/2
+                    - button [ref=e778]
+                  - button [ref=e779]
+            - row [ref=e780]:
+              - cell "Budget Room Da Lat" [ref=e781]
+              - cell "Da Lat" [ref=e782]
+              - cell "1.200.000 ₫/night" [ref=e783]
+              - cell "rejected" [ref=e784]
+              - cell "unavailable" [ref=e786]
+              - cell [ref=e788]:
+                - generic [ref=e789]:
+                  - link [ref=e790] [cursor=pointer]:
+                    - /url: /homestay/3
+                    - button [ref=e791]
+                  - link [ref=e792] [cursor=pointer]:
+                    - /url: /homestay/edit/3
+                    - button [ref=e793]
+                  - button [ref=e794]
+            - row [ref=e795]:
+              - cell "Rejected Garden House" [ref=e796]
+              - cell "Ho Chi Minh City" [ref=e797]
+              - cell "120.000 ₫/hr" [ref=e798]
+              - cell "rejected" [ref=e799]
+              - cell "unavailable" [ref=e801]
+              - cell [ref=e803]:
+                - generic [ref=e804]:
+                  - link [ref=e805] [cursor=pointer]:
+                    - /url: /homestay/4
+                    - button [ref=e806]
+                  - link [ref=e807] [cursor=pointer]:
+                    - /url: /homestay/edit/4
+                    - button [ref=e808]
+                  - button [ref=e809]
+            - row [ref=e810]:
+              - cell "Hanoi Old Quarter Loft" [ref=e811]
+              - cell "Hanoi" [ref=e812]
+              - cell "180.000 ₫/hr" [ref=e813]
+              - cell "approved" [ref=e814]
+              - cell "available" [ref=e816]
+              - cell [ref=e818]:
+                - generic [ref=e819]:
+                  - link [ref=e820] [cursor=pointer]:
+                    - /url: /homestay/5
+                    - button [ref=e821]
+                  - link [ref=e822] [cursor=pointer]:
+                    - /url: /homestay/edit/5
+                    - button [ref=e823]
+                  - button [ref=e824]
+            - row [ref=e825]:
+              - cell "Hoi An Lantern Villa" [ref=e826]
+              - cell "Hoi An" [ref=e827]
+              - cell "2.000.000 ₫/night" [ref=e828]
+              - cell "approved" [ref=e829]
+              - cell "available" [ref=e831]
+              - cell [ref=e833]:
+                - generic [ref=e834]:
+                  - link [ref=e835] [cursor=pointer]:
+                    - /url: /homestay/6
+                    - button [ref=e836]
+                  - link [ref=e837] [cursor=pointer]:
+                    - /url: /homestay/edit/6
+                    - button [ref=e838]
+                  - button [ref=e839]
+            - row [ref=e840]:
+              - cell "Da Nang Beach Studio" [ref=e841]
+              - cell "Da Nang" [ref=e842]
+              - cell "170.000 ₫/hr" [ref=e843]
+              - cell "rejected" [ref=e844]
+              - cell "unavailable" [ref=e846]
+              - cell [ref=e848]:
+                - generic [ref=e849]:
+                  - link [ref=e850] [cursor=pointer]:
+                    - /url: /homestay/7
+                    - button [ref=e851]
+                  - link [ref=e852] [cursor=pointer]:
+                    - /url: /homestay/edit/7
+                    - button [ref=e853]
+                  - button [ref=e854]
+            - row [ref=e855]:
+              - cell "Sa Pa Mountain Retreat" [ref=e856]
+              - cell "Sa Pa" [ref=e857]
+              - cell "160.000 ₫/hr" [ref=e858]
+              - cell "approved" [ref=e859]
+              - cell "available" [ref=e861]
+              - cell [ref=e863]:
+                - generic [ref=e864]:
+                  - link [ref=e865] [cursor=pointer]:
+                    - /url: /homestay/8
+                    - button [ref=e866]
+                  - link [ref=e867] [cursor=pointer]:
+                    - /url: /homestay/edit/8
+                    - button [ref=e868]
+                  - button [ref=e869]
+            - row [ref=e870]:
+              - cell "Hue Riverside Heritage Room" [ref=e871]
+              - cell "Hue" [ref=e872]
+              - cell "130.000 ₫/hr" [ref=e873]
+              - cell "pending" [ref=e874]
+              - cell "unavailable" [ref=e876]
+              - cell [ref=e878]:
+                - generic [ref=e879]:
+                  - link [ref=e880] [cursor=pointer]:
+                    - /url: /homestay/9
+                    - button [ref=e881]
+                  - link [ref=e882] [cursor=pointer]:
+                    - /url: /homestay/edit/9
+                    - button [ref=e883]
+                  - button [ref=e884]
+            - row [ref=e885]:
+              - cell "Phu Quoc Sunset Bungalow" [ref=e886]
+              - cell "Phu Quoc" [ref=e887]
+              - cell "240.000 ₫/hr" [ref=e888]
+              - cell "rejected" [ref=e889]
+              - cell "unavailable" [ref=e891]
+              - cell [ref=e893]:
+                - generic [ref=e894]:
+                  - link [ref=e895] [cursor=pointer]:
+                    - /url: /homestay/10
+                    - button [ref=e896]
+                  - link [ref=e897] [cursor=pointer]:
+                    - /url: /homestay/edit/10
+                    - button [ref=e898]
+                  - button [ref=e899]
+            - row [ref=e900]:
+              - cell "Viettel AI" [ref=e901]
+              - cell "Hanoi" [ref=e902]
+              - cell "1.000.000 ₫/hr" [ref=e903]
+              - cell "approved" [ref=e904]
+              - cell "available" [ref=e906]
+              - cell [ref=e908]:
+                - generic [ref=e909]:
+                  - link [ref=e910] [cursor=pointer]:
+                    - /url: /homestay/11
+                    - button [ref=e911]
+                  - link [ref=e912] [cursor=pointer]:
+                    - /url: /homestay/edit/11
+                    - button [ref=e913]
+                  - button [ref=e914]
+            - row [ref=e915]:
+              - cell "Viettel AI" [ref=e916]
+              - cell "Hanoi" [ref=e917]
+              - cell "1.000.000 ₫/hr" [ref=e918]
+              - cell "approved" [ref=e919]
+              - cell "available" [ref=e921]
+              - cell [ref=e923]:
+                - generic [ref=e924]:
+                  - link [ref=e925] [cursor=pointer]:
+                    - /url: /homestay/12
+                    - button [ref=e926]
+                  - link [ref=e927] [cursor=pointer]:
+                    - /url: /homestay/edit/12
+                    - button [ref=e928]
+                  - button [ref=e929]
+            - row [ref=e930]:
+              - cell "Playwright Test Homestay 9876" [ref=e931]
+              - cell "Hanoi" [ref=e932]
+              - cell "250.000 ₫/hr" [ref=e933]
+              - cell "pending" [ref=e934]
+              - cell "unavailable" [ref=e936]
+              - cell [ref=e938]:
+                - generic [ref=e939]:
+                  - link [ref=e940] [cursor=pointer]:
+                    - /url: /homestay/13
+                    - button [ref=e941]
+                  - link [ref=e942] [cursor=pointer]:
+                    - /url: /homestay/edit/13
+                    - button [ref=e943]
+                  - button [ref=e944]
+  - contentinfo [ref=e73]:
+    - generic [ref=e74]:
+      - link "About" [ref=e75] [cursor=pointer]:
+        - /url: /about
+      - generic [ref=e76]: "|"
+      - link "Terms" [ref=e77] [cursor=pointer]:
+        - /url: /terms
+      - generic [ref=e78]: "|"
+      - link "Privacy" [ref=e79] [cursor=pointer]:
+        - /url: /privacy
+      - generic [ref=e80]: "|"
+      - link "Contact" [ref=e81] [cursor=pointer]:
+        - /url: /contact
+  - region "Notifications alt+T"

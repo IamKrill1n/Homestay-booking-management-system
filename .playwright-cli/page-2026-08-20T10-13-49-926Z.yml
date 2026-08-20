@@ -1,0 +1,53 @@
+- generic [ref=f11e3]:
+  - banner [ref=f11e4]:
+    - generic [ref=f11e5]:
+      - link "Homestay" [ref=f11e6] [cursor=pointer]:
+        - /url: /
+      - searchbox "Search homestays..." [ref=f11e11]
+    - navigation [ref=f11e12]:
+      - link "Home" [ref=f11e13] [cursor=pointer]:
+        - /url: /
+      - link "My Bookings" [ref=f11e49] [cursor=pointer]:
+        - /url: /my-bookings
+      - button "CU" [active] [ref=f11e50]
+  - main [ref=f11e17]:
+    - generic [ref=f11e285]:
+      - generic [ref=f11e286]:
+        - generic [ref=f11e287]: CU
+        - generic [ref=f11e289]:
+          - heading "Common User" [level=1] [ref=f11e290]
+          - paragraph [ref=f11e291]: user@example.com
+          - generic [ref=f11e292]: Guest / Customer
+        - button "Edit Profile" [ref=f11e294]
+      - generic [ref=f11e295]:
+        - heading "Profile Details" [level=3] [ref=f11e296]
+        - generic [ref=f11e297]:
+          - generic [ref=f11e298]:
+            - generic [ref=f11e299]: First Name
+            - generic [ref=f11e300]: Common
+          - generic [ref=f11e301]:
+            - generic [ref=f11e302]: Last Name
+            - generic [ref=f11e303]: User
+          - generic [ref=f11e304]:
+            - generic [ref=f11e305]: Email Address
+            - generic [ref=f11e306]: user@example.com
+          - generic [ref=f11e307]:
+            - generic [ref=f11e308]: Phone Number
+            - generic [ref=f11e309]: "+8411111111"
+          - generic [ref=f11e310]:
+            - generic [ref=f11e311]: Account Reference Key
+            - generic [ref=f11e312]: SYS-ID-1
+  - contentinfo [ref=f11e40]:
+    - generic [ref=f11e41]:
+      - link "About" [ref=f11e42] [cursor=pointer]:
+        - /url: /about
+      - generic [ref=f11e43]: "|"
+      - link "Terms" [ref=f11e44] [cursor=pointer]:
+        - /url: /terms
+      - generic [ref=f11e45]: "|"
+      - link "Privacy" [ref=f11e46] [cursor=pointer]:
+        - /url: /privacy
+      - generic [ref=f11e47]: "|"
+      - link "Contact" [ref=f11e48] [cursor=pointer]:
+        - /url: /contact
+  - region "Notifications alt+T"

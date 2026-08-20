@@ -1,0 +1,97 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - link "Homestay" [ref=e6] [cursor=pointer]:
+        - /url: /
+      - searchbox "Search homestays..." [ref=e11]
+    - navigation [ref=e12]:
+      - link "Home" [ref=e13] [cursor=pointer]:
+        - /url: /
+      - link "My Homestays" [ref=e251] [cursor=pointer]:
+        - /url: /my-homestays
+      - link "Manage Bookings" [ref=e252] [cursor=pointer]:
+        - /url: /owner/bookings
+      - button "OU" [ref=e253]
+  - main [ref=e17]:
+    - generic [ref=e661]:
+      - button "Back to My Homestays" [ref=e662]
+      - generic [ref=e663]:
+        - heading "Create Homestay" [level=4] [ref=e665]
+        - generic [ref=e667]:
+          - generic [ref=e668]:
+            - generic [ref=e669]:
+              - generic [ref=e670]: Title
+              - textbox "Title" [ref=e671]: Playwright Test Homestay 9876
+            - generic [ref=e672]:
+              - generic [ref=e673]: Rental Type
+              - combobox "Rental Type" [ref=e674]:
+                - option "Hourly Space" [selected]
+                - option "Daily Homestay"
+            - generic [ref=e675]:
+              - generic [ref=e676]: City
+              - textbox "City" [ref=e677]: Hanoi
+            - generic [ref=e678]:
+              - generic [ref=e679]: Address
+              - textbox "Address" [ref=e680]: 99 Test Street
+            - generic [ref=e681]:
+              - generic [ref=e682]: Price per Hour (VND)
+              - spinbutton "Price per Hour (VND)" [ref=e683]: "250000"
+            - generic [ref=e684]:
+              - generic [ref=e685]: Max Guests
+              - spinbutton "Max Guests" [ref=e686]: "5"
+            - generic [ref=e687]:
+              - generic [ref=e688]: Amenities
+              - generic [ref=e689]:
+                - generic [ref=e690]:
+                  - checkbox "WiFi" [checked] [ref=e691]
+                  - checkbox [checked]
+                  - generic [ref=e692] [cursor=pointer]: WiFi
+                - generic [ref=e693]:
+                  - checkbox "Kitchen" [ref=e694]
+                  - checkbox
+                  - generic [ref=e695] [cursor=pointer]: Kitchen
+                - generic [ref=e696]:
+                  - checkbox "Air Conditioning" [checked] [active] [ref=e697]
+                  - checkbox [checked]
+                  - generic [ref=e698] [cursor=pointer]: Air Conditioning
+                - generic [ref=e699]:
+                  - checkbox "TV" [checked] [ref=e700]
+                  - checkbox [checked]
+                  - generic [ref=e701] [cursor=pointer]: TV
+                - generic [ref=e702]:
+                  - checkbox "Parking" [ref=e703]
+                  - checkbox
+                  - generic [ref=e704] [cursor=pointer]: Parking
+                - generic [ref=e705]:
+                  - checkbox "Bath Tub" [ref=e706]
+                  - checkbox
+                  - generic [ref=e707] [cursor=pointer]: Bath Tub
+                - generic [ref=e708]:
+                  - checkbox "Pets" [ref=e709]
+                  - checkbox
+                  - generic [ref=e710] [cursor=pointer]: Pets
+            - generic [ref=e711]:
+              - generic [ref=e712]: Description
+              - textbox "Description" [ref=e713]: Automated test homestay description for UI check
+            - generic [ref=e714]:
+              - generic [ref=e715]: Images
+              - button "Images" [disabled]
+              - paragraph [ref=e716]: Image persistence is not enabled yet; listings use fallback images.
+          - generic [ref=e717]:
+            - button "Submit Homestay" [ref=e718]
+            - button "Cancel" [ref=e719]
+          - paragraph [ref=e720]: Your homestay will be pending admin approval after submission.
+  - contentinfo [ref=e73]:
+    - generic [ref=e74]:
+      - link "About" [ref=e75] [cursor=pointer]:
+        - /url: /about
+      - generic [ref=e76]: "|"
+      - link "Terms" [ref=e77] [cursor=pointer]:
+        - /url: /terms
+      - generic [ref=e78]: "|"
+      - link "Privacy" [ref=e79] [cursor=pointer]:
+        - /url: /privacy
+      - generic [ref=e80]: "|"
+      - link "Contact" [ref=e81] [cursor=pointer]:
+        - /url: /contact
+  - region "Notifications alt+T"
