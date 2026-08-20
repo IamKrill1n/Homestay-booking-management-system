@@ -115,6 +115,11 @@ CREATE TABLE IF NOT EXISTS amenities (
 
 
 
--- -- Idempotent upgrades for existing databases (re-runnable via npm run db:init).
--- ALTER TABLE homestays ADD COLUMN IF NOT EXISTS status VARCHAR(20) NOT NULL DEFAULT 'pending';
--- ALTER TABLE homestays ADD COLUMN IF NOT EXISTS rejection_reason TEXT;
+-- Idempotent upgrades for existing databases (re-runnable via npm run db:init without dropping data).
+ALTER TABLE homestays ADD COLUMN IF NOT EXISTS rental_type VARCHAR(10) NOT NULL DEFAULT 'hourly' CHECK (rental_type IN ('hourly', 'daily'));
+ALTER TABLE homestays ADD COLUMN IF NOT EXISTS check_in_time TIME DEFAULT '14:00:00';
+ALTER TABLE homestays ADD COLUMN IF NOT EXISTS check_out_time TIME DEFAULT '10:00:00';
+ALTER TABLE homestays ADD COLUMN IF NOT EXISTS is_verified BOOLEAN DEFAULT FALSE;
+ALTER TABLE homestays ADD COLUMN IF NOT EXISTS status VARCHAR(20) NOT NULL DEFAULT 'pending';
+ALTER TABLE homestays ADD COLUMN IF NOT EXISTS rejection_reason TEXT;
+ALTER TABLE homestays ADD COLUMN IF NOT EXISTS cancellation_policy VARCHAR(20) NOT NULL DEFAULT 'flexible' CHECK (cancellation_policy IN ('flexible', 'moderate', 'strict'));
