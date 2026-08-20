@@ -123,3 +123,12 @@ ALTER TABLE homestays ADD COLUMN IF NOT EXISTS is_verified BOOLEAN DEFAULT FALSE
 ALTER TABLE homestays ADD COLUMN IF NOT EXISTS status VARCHAR(20) NOT NULL DEFAULT 'pending';
 ALTER TABLE homestays ADD COLUMN IF NOT EXISTS rejection_reason TEXT;
 ALTER TABLE homestays ADD COLUMN IF NOT EXISTS cancellation_policy VARCHAR(20) NOT NULL DEFAULT 'flexible' CHECK (cancellation_policy IN ('flexible', 'moderate', 'strict'));
+
+-- Fix sequences that may be out of sync after manual inserts or stale seeds (safe to re-run).
+SELECT setval('users_user_id_seq', COALESCE((SELECT MAX(user_id) FROM users), 0) + 1, false);
+SELECT setval('homestays_homestay_id_seq', COALESCE((SELECT MAX(homestay_id) FROM homestays), 0) + 1, false);
+SELECT setval('bookings_booking_id_seq', COALESCE((SELECT MAX(booking_id) FROM bookings), 0) + 1, false);
+SELECT setval('transactions_transaction_id_seq', COALESCE((SELECT MAX(transaction_id) FROM transactions), 0) + 1, false);
+SELECT setval('feedbacks_feedback_id_seq', COALESCE((SELECT MAX(feedback_id) FROM feedbacks), 0) + 1, false);
+SELECT setval('locations_location_id_seq', COALESCE((SELECT MAX(location_id) FROM locations), 0) + 1, false);
+SELECT setval('payouts_payout_id_seq', COALESCE((SELECT MAX(payout_id) FROM payouts), 0) + 1, false);
